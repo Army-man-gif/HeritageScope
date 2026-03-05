@@ -1,4 +1,3 @@
-import {lat, long} from './constants.js';
 import {createMap} from './createMap.js';
 
 // Load GeoJSON file
@@ -17,7 +16,6 @@ try{
     }
 
     function onEachFeature(feature,layer){
-        const languageFullNames = ["English","French","Spanish",""]
         if(feature.properties){
             let popupText = '';
             const languages = Object.keys(feature.properties)
