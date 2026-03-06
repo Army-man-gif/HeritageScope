@@ -3,3 +3,11 @@
     margin: 2px;
     padding: 4px 8px;
 }
+body.high-contrast {
+    background: #000000 !important;
+    color: #ffffff !important;
+}
+
+body.high-contrast .leaflet-tile {
+    filter: invert(100%) hue-rotate(180deg);
+}

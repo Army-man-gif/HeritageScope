@@ -27,16 +27,17 @@
         <style>
             #map { height: 100vh; }
         </style>
-
+        <script src="accessibility.js"></script>
         <script type="module" defer src="importSites.js"></script>
         <link rel="stylesheet" href="accessibility.css">
-        <script src="accessibility.js"></script>
+        
         </head>
     <body>
         <div id="toolbar">
             <button class="font-btn" onclick="applyFontSize('normal')">A</button>
             <button class="font-btn" onclick="applyFontSize('large')">A+</button>
             <button class="font-btn" onclick="applyFontSize('xlarge')">A++</button>
+            <button id="contrast-btn" onclick="toggleHighContrast()">High Contrast</button>
         </div>
         <div id="map"></div>
 

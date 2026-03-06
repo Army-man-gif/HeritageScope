@@ -1,9 +1,20 @@
-function applyFontSize(size){
-    const size = {normal: '16px', large: '20px', xlarge: '24px'};
+function applyFontSize(size) {
+    const sizes = { normal: '16px', large: '20px', xlarge: '24px' };
     document.documentElement.style.fontSize = sizes[size];
     localStorage.setItem('fontSize', size);
-
 }
 
-const saved = localStorage.getItem('fontSize') || 'normal';
-applyFontSize(saved);
+function toggleHighContrast() {
+    const isOn = document.body.classList.toggle('high-contrast');
+    localStorage.setItem('highContrast', isOn);
+}
+
+// Load saved preferences on page load
+window.onload = function() {
+    const savedSize = localStorage.getItem('fontSize') || 'normal';
+    applyFontSize(savedSize);
+
+    if (localStorage.getItem('highContrast') === 'true') {
+        document.body.classList.add('high-contrast');
+    }
+};
