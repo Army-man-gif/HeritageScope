@@ -15,13 +15,16 @@ export class Highlight {
     return void 0;
   }
 
-  add(lid){
-    const poly = this.lid2poly(lid);
-    if (poly) {
-        this.highlightLayer.addLayer(poly);
-        this.layerTable[lid] = poly;
-    }
+add(lid){
+  if (this.layerTable[lid]) return;
+
+  const poly = this.lid2poly(lid);
+
+  if (poly) {
+      this.highlightLayer.addLayer(poly);
+      this.layerTable[lid] = poly;
   }
+}
 
   remove(lid){
     const poly = this.layerTable[lid];
