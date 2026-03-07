@@ -9,7 +9,6 @@ write intro to project here
 
 ##  Prototype achievements and what is left for future development:
 ### Feature List
-## Split of Work Between Group Members
 
 | ID | Description | Develop | Progress |
 |----|-------------|--------|----------|
