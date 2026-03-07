@@ -1,0 +1,12 @@
+.leaflet-control .Langlabel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    cursor: pointer;
+    gap: 20 px;
+}
+
+.leaflet-control .Langlabel input {
+    margin: 0;
+}
