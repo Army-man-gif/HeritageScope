@@ -142,12 +142,14 @@
   display: flex;
   gap: 30px;
 }
+
 .simulation{
   width: 550px;
-  height: 250px;
+  /* so objects relate to this */
+  position: relative;
 }
 
-#greenImage{
+#simBackground{
   width:100%;
   height:auto;
 }
@@ -155,4 +157,14 @@
 .simulationText{
   /* takes remaining space of flex*/
   flex: 1;
+}
+
+/* simulation objects */
+#cars img,
+#trees img,
+#flood img,
+#buildings img,
+#litter img,
+#people img{
+  position: absolute;
 }
