@@ -1,7 +1,16 @@
+// Armaan
+
 import {createMap} from './createMap.js';
 import { MarkerHighlight, createDefaultIcon } from './markerHighlight.js';
 let currentLanguage = "en";
+
+
+// Accessiblity metrics: air quality, business
+// certain areas highlighted
+// Layers toggle on and off
+// Write some test scripts
 // Load GeoJSON file
+// Location text size
 // Now I can import whole file stuff. Instead I will try to add specific live sites
 try{
     const fetchData = await fetch("dataset.geojson");
