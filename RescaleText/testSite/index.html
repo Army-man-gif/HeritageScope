@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rescale Text Test Site</title>
+  <script src="../rescale.js" defer></script>
+  <script src="./app.js" defer></script>
+
   <style>
     :root {
       --base-size: 16px;
@@ -100,7 +103,7 @@
 <body>
   <div class="container">
     <div class="toolbar">
-      <button id="smaller" type="button" aria-label="Decrease font size">A-</button>
+      <button id="smaller" type="button" aria-label="Decrease font size" >A-</button>
       <button id="larger" type="button" aria-label="Increase font size">A+</button>
       <button id="reset" type="button" aria-label="Reset font size">Reset</button>
       <span class="size-value" id="sizeLabel">??px</span>
