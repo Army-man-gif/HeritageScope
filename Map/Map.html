@@ -1,49 +1,56 @@
 <!-- All this code is slowly copy pasted from the tutorial. I'm learning the library this is not my project implementation-->
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Heritage Scope</title>
-        <!-- Character encoding -->
-        <meta charset="UTF-8">
-        <!-- Makes it responsive on phones -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Optional: description for SEO -->
-        <meta name="description" content="Heritage and cultural site map and simulation">
-        <!-- Links to leaflet CSS file [following a tutorial rn]-->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-            crossorigin=""/>
-            
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-            crossorigin="">
+
+<head>
+    <title>Heritage Scope</title>
+    <!-- Character encoding -->
+    <meta charset="UTF-8">
+    <!-- Makes it responsive on phones -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Optional: description for SEO -->
+    <meta name="description" content="Heritage and cultural site map and simulation">
+    <!-- Links to leaflet CSS file [following a tutorial rn]-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="">
         </script>
-        <!-- Import leaflet cluster CSS and JS-->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
-        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js" ></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="styles.css">
-        <style>
-            #map { height: 100vh; }
-        </style>
-        <script src="accessibility.js"></script>
-        <script type="module" defer src="importSites.js"></script>
-        <link rel="stylesheet" href="accessibility.css">
-        
-        </head>
-    <body>
-        <div id="accessibility_toolbar" class = "toolbar">
+    <!-- Import leaflet cluster CSS and JS-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #map {
+            height: 100vh;
+        }
+    </style>
+    <script src="accessibility.js"></script>
+    <script type="module" defer src="importSites.js"></script>
+    <link rel="stylesheet" href="accessibility.css">
+
+</head>
+
+<body>
+    <div class="toolbarContainer">
+        <div id="accessibility_toolbar" class="toolbar">
             <button class="font-btn" data-size="normal" onclick="applyFontSize('normal')">A</button>
             <button class="font-btn" data-size="large" onclick="applyFontSize('large')">A+</button>
             <button class="font-btn" data-size="xlarge" onclick="applyFontSize('xlarge')">A++</button>
             <button id="contrast-btn" onclick="toggleHighContrast()">High Contrast</button>
         </div>
-        <div>
-            <input type="number" id="numInput" placeholder="Enter a number">
-            <button id="runBtn">Run</button>
+        <div id="areaHighlightToolbar" class="toolbar">
+            <input type="number" id="lidInput" placeholder="Enter a locationID (for demo)" style="width: 200px;">
+            <button id="areaMarkRun">Run</button>
         </div>
-        <div id="map"></div>
+    </div>
 
-    </body>
-</html><!-- All this code is slowly copy pasted from the tutorial. I'm learning the library this is not my project implementation-->
+    <div id="map"></div>
+
+</body>
+
+</html>
+<!-- All this code is slowly copy pasted from the tutorial. I'm learning the library this is not my project implementation-->
 <!DOCTYPE html>
