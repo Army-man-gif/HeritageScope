@@ -6,21 +6,39 @@ export class RescaleText {
     var step = 1;
     var current = 16;
   }
-
-  increaseFont() {
+  /* f means focus */
+  f_increaseFont() {
     fontSize += 2;
     document.body.style.fontSize = fontSize + "px";
   }
 
-  decreaseFont() {
+  f_decreaseFont() {
     fontSize -= 2;
     document.body.style.fontSize = fontSize + "px";
   }
 
-  resetFont() {
+  f_resetFont() {
     fontSize = 16;
     document.body.style.fontSize = "16px";
   }
 
+
+  /* c means by class */
+
+  c_init(className){
+
+    if (!className) {
+      if (!this.className) {
+        console.error("Class name is required to initialize RescaleText.");
+        return;
+      }
+      this.c_init(this.className);
+    }
+    this.className = className;
+    this.elements = document.getElementsByClassName(className);
+    this.fontSize = 16;
+  }
+
   
+
 }
