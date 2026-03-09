@@ -2,6 +2,10 @@ import {createMap} from './createMap.js';
 import { MarkerHighlight, createDefaultIcon } from './markerHighlight.js';
 let currentLanguage = "en";
 
+
+// Accessiblity metrics: air quality, business
+// certain areas highlighted
+// Layers toggle on and off
 // Write some test scripts
 // Load GeoJSON file
 // Now I can import whole file stuff. Instead I will try to add specific live sites
