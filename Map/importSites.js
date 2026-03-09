@@ -1,6 +1,8 @@
 import {createMap} from './createMap.js';
 import { MarkerHighlight, createDefaultIcon } from './markerHighlight.js';
 let currentLanguage = "en";
+
+// Write some test scripts
 // Load GeoJSON file
 // Now I can import whole file stuff. Instead I will try to add specific live sites
 try{
