@@ -1,25 +1,35 @@
-export class RescaleText {
+class RescaleText {
   constructor() {
-    var sizeLabel = "rescaleable";
-    var min = 10;
-    var max = 40;
-    var step = 1;
-    var current = 16;
+    this.min = 10;
+    this.max = 40;
+    this.step = 2;
+    this.fontSize = 16;
+    this.sizeLabelId = "sizeLabel";
   }
   /* f means focus */
   f_increaseFont() {
-    fontSize += 2;
-    document.body.style.fontSize = fontSize + "px";
+    this.fontSize = Math.min(this.max, this.fontSize + this.step);
+    document.body.style.fontSize = this.fontSize + "px";
+    this.updateLabel();
   }
 
   f_decreaseFont() {
-    fontSize -= 2;
-    document.body.style.fontSize = fontSize + "px";
+    this.fontSize = Math.max(this.min, this.fontSize - this.step);
+    document.body.style.fontSize = this.fontSize + "px";
+    this.updateLabel();
   }
 
   f_resetFont() {
-    fontSize = 16;
+    this.fontSize = 16;
     document.body.style.fontSize = "16px";
+    this.updateLabel();
+  }
+
+  updateLabel() {
+    const sizeLabel = document.getElementById(this.sizeLabelId);
+    if (sizeLabel) {
+      sizeLabel.textContent = this.fontSize + "px";
+    }
   }
 
 
@@ -37,20 +47,23 @@ export class RescaleText {
     this.className = className;
     this.elements = document.querySelectorAll(className);
     this.fontSize = 16;
+    this.updateLabel();
   }
 
   c_increaseFont() {
-    this.fontSize += 2;
+    this.fontSize = Math.min(this.max, this.fontSize + this.step);
     this.elements.forEach(element => {
       element.style.fontSize = this.fontSize + "px";
     });
+    this.updateLabel();
   }
 
   c_decreaseFont() {
-    this.fontSize -= 2;
+    this.fontSize = Math.max(this.min, this.fontSize - this.step);
     this.elements.forEach(element => {
       element.style.fontSize = this.fontSize + "px";
     });
+    this.updateLabel();
   }
 
   c_resetFont() {
@@ -58,8 +71,11 @@ export class RescaleText {
     this.elements.forEach(element => {
       element.style.fontSize = "16px";
     });
+    this.updateLabel();
   }
 
-  
+
 
 }
+
+
