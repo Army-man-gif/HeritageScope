@@ -1,3 +1,5 @@
+// Example: Yi
+
 // Custom highlighted marker icon (yellow)
 export function createHighlightIcon() {
     return L.divIcon({

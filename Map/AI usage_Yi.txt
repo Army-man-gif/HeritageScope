@@ -1,1 +1,7 @@
 <highlight.js><chatgpt>I should probably have the framework now. Please help me write a simple explanation of the usage process in English.
+
+Yi:
+
+I used chatgpt to help me generate the genral idea structure
+for the "highlight.js" I coded the actual syntax but the I was
+helped in writing the comments part by AI.
