@@ -1,4 +1,5 @@
 import {createMap} from './createMap.js';
+import { MarkerHighlight, createDefaultIcon } from './markerHighlight.js';
 let currentLanguage = "en";
 // Load GeoJSON file
 // Now I can import whole file stuff. Instead I will try to add specific live sites
@@ -7,6 +8,7 @@ try{
     const jsonData = await fetchData.json();
     console.log("Successfully imported file data and json parsed it");
     const map = createMap();
+    const highlighter = new MarkerHighlight(map);
     const initialFeature  = jsonData.features[0];
     const languages = Object.keys(initialFeature.properties)
         .filter(key => key.startsWith("name_"))
@@ -45,8 +47,12 @@ try{
     // There's a lot of points so I will use marker cluster to speed things up
 
     // Initialize marker cluster object
-    function convPointToLayer(feature,latlng){
-        return L.marker(latlng);
+    function convPointToLayer(feature, latlng) {
+        const marker = L.marker(latlng, { icon: createDefaultIcon() });
+        marker.on('click', function() {
+            highlighter.highlight(marker, latlng);
+        });
+        return marker;
     }
     function updateLanguage(lang){
         currentLanguage = lang;
