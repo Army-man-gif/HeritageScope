@@ -1,3 +1,4 @@
+/* Yi creates */
 class RescaleText {
   constructor() {
     this.min = 10;
