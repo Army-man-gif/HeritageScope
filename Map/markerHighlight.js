@@ -1,4 +1,4 @@
-// Example: Yi
+/* kelly's job */
 
 // Custom highlighted marker icon (yellow)
 export function createHighlightIcon() {
@@ -70,93 +70,114 @@ export class MarkerHighlight {
     }
 }
 
+/* Yi's job */
 export class AreaHighlight {
-  constructor(map) {
-    this.map = map;
-    this.highlightLayer = L.layerGroup().addTo(map);
-
-    /* layerTable = {
-    "lid1": polygonObj,
-    "lid2": polygonObj
-    } */
-    this.layerTable = {};
-  }
-
-  /* locationID -> polygon */
-  async fetchMockingData(path) {
-    try {
-      const response = await fetch(path);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        this.m_data = data;
-      } catch (error) {
-        console.error('Error fetching mocking data:', error);
+    constructor(map, defaultStyle = {}) {
+        this.map = map;
+        this.highlightLayer = L.layerGroup().addTo(map);
+        this.layerTable = {};
         this.m_data = null;
-      }
+        this.defaultStyle = {
+            color: '#FFD700',
+            fillColor: '#FFD700',
+            fillOpacity: 0.35,
+            weight: 2,
+            ...defaultStyle
+        };
     }
 
-
-
-/* this only read mocking data for demonstration */
-  lid2poly(lid){
-    if (!this.m_data) {
-      console.warn("Mocking data not loaded. Call fetchMockingData() first.");
-      return void 0;
-    }
-    const polyData = this.m_data[lid];
-    if (!polyData) {
-      console.warn(`No polygon data found for location ID: ${lid}`);
-      return {code: -1, message: `No polygon data for lid: ${lid}`};
-    }
-    /* const latlngs = polyData.map(coord => [coord.lat, coord.lng]); */
-    data = L.polygon(polyData, {
-      color: 'yellow',
-      fillColor: 'yellow',
-      fillOpacity: 0.6,
-      weight: 2
-    });
-
-    return {code: 0, message: "Polygon created successfully", data: data};
-  }
-
-  add(lid){
-    data = this.lid2poly(lid);
-    if (data.code !== 0) {
-      console.warn(`Failed to create polygon for lid: ${lid}. Reason: ${data.message}`);
-      return;
+    /* locationID -> polygon coords */
+    async fetchMockingData(path) {
+        try {
+            const response = await fetch(path);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            if (!data || typeof data !== 'object') {
+                throw new Error('Mocking data must be a JSON object');
+            }
+            this.m_data = data;
+            return { code: 0, message: 'Mocking data loaded successfully' };
+        } catch (error) {
+            console.error('Error fetching mocking data:', error);
+            this.m_data = null;
+            return { code: -1, message: error.message };
+        }
     }
 
-    const poly = data.data;
-    if (this.layerTable[lid]) {
-      console.warn(`Polygon for location ID: ${lid} already exists. Skipping add.`);
-      return;
-    }
-    this.highlightLayer.addLayer(poly);
-    this.layerTable[lid] = poly;
-  }
+    /* this only reads mocking data for demonstration */
+    lid2poly(lid, styleOverride = {}) {
+        if (!this.m_data) {
+            return { code: -1, message: 'Data not loaded. Call fetchMockingData() first.' };
+        }
 
-  remove(lid){
-    const poly = this.layerTable[lid];
-    if (poly) {
+        const key = String(lid);
+        const polyData = this.m_data[key];
+        if (!Array.isArray(polyData) || polyData.length < 3) {
+            return { code: -1, message: `No valid polygon data for lid: ${lid}` };
+        }
+
+        const isValid = polyData.every(
+            (coord) => Array.isArray(coord) &&
+                coord.length === 2 &&
+                Number.isFinite(coord[0]) &&
+                Number.isFinite(coord[1])
+        );
+        if (!isValid) {
+            return { code: -1, message: `Invalid coordinate format for lid: ${lid}` };
+        }
+
+        const polygon = L.polygon(polyData, { ...this.defaultStyle, ...styleOverride });
+        return { code: 0, message: 'Polygon created successfully', data: polygon };
+    }
+
+    add(lid, styleOverride = {}) {
+        const key = String(lid);
+        if (this.layerTable[key]) {
+            return { code: 1, message: `Polygon for lid ${lid} already exists`, data: this.layerTable[key] };
+        }
+
+        const result = this.lid2poly(key, styleOverride);
+        if (result.code !== 0) {
+            console.warn(`Failed to create polygon for lid ${lid}. Reason: ${result.message}`);
+            return result;
+        }
+
+        this.highlightLayer.addLayer(result.data);
+        this.layerTable[key] = result.data;
+        return { code: 0, message: `Polygon added for lid ${lid}`, data: result.data };
+    }
+
+    remove(lid) {
+        const key = String(lid);
+        const poly = this.layerTable[key];
+        if (!poly) {
+            return { code: 1, message: `No polygon found for lid: ${lid}` };
+        }
+
         this.highlightLayer.removeLayer(poly);
-        delete this.layerTable[lid];
+        delete this.layerTable[key];
+        return { code: 0, message: `Polygon removed for lid ${lid}` };
     }
-  }
 
-  style(lid, style){
-    const poly = this.layerTable[lid];
-    if (poly) {
-        poly.setStyle(style);
-    }
-    else {
-        console.warn(`No polygon found for location ID: ${lid}`);
-    }
-  }
+    style(lid, styleOverride) {
+        const key = String(lid);
+        const poly = this.layerTable[key];
+        if (!poly) {
+            return { code: -1, message: `No polygon found for lid: ${lid}` };
+        }
+        if (!styleOverride || typeof styleOverride !== 'object') {
+            return { code: -1, message: 'styleOverride must be an object' };
+        }
 
-  clearHighlight(){
-    this.highlightLayer.clearLayers();
-    this.layerTable = {};
-  }
+        poly.setStyle(styleOverride);
+        return { code: 0, message: `Style updated for lid ${lid}`, data: poly };
+    }
+
+    clearHighlight() {
+        this.highlightLayer.clearLayers();
+        this.layerTable = {};
+        return { code: 0, message: 'All area highlights cleared' };
+    }
 }
