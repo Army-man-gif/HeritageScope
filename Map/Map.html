@@ -32,11 +32,15 @@
         
         </head>
     <body>
-        <div id="toolbar">
+        <div id="accessibility_toolbar" class = "toolbar">
             <button class="font-btn" data-size="normal" onclick="applyFontSize('normal')">A</button>
             <button class="font-btn" data-size="large" onclick="applyFontSize('large')">A+</button>
             <button class="font-btn" data-size="xlarge" onclick="applyFontSize('xlarge')">A++</button>
             <button id="contrast-btn" onclick="toggleHighContrast()">High Contrast</button>
+        </div>
+        <div>
+            <input type="number" id="numInput" placeholder="Enter a number">
+            <button id="runBtn">Run</button>
         </div>
         <div id="map"></div>
 
