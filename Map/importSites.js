@@ -17,6 +17,8 @@ try{
     const jsonData = await fetchData.json();
     console.log("Successfully imported file data and json parsed it");
     const map = createMap();
+    window.hsMap = map;
+    window.dispatchEvent(new CustomEvent('heritage:map-ready', { detail: { map } }));
     const highlighter = new MarkerHighlight(map);
     const initialFeature  = jsonData.features[0];
     const languages = Object.keys(initialFeature.properties)
