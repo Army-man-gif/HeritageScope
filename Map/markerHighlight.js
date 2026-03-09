@@ -71,6 +71,12 @@ export class MarkerHighlight {
 }
 
 /* Yi's job */
+
+/* statusCode:
+SUCCESS = 0
+ERROR = -1
+ALREADY_EXISTS = 1
+NOT_FOUND = -1 */
 export class AreaHighlight {
     constructor(map, defaultStyle = {}) {
         this.map = map;
