@@ -27,20 +27,20 @@
             height: 100vh;
         }
     </style>
-    <script src="accessibility.js"></script>
     <script type="module" defer src="importSites.js"></script>
     <script type="module" defer src="init/highlight-init.js"></script>
-    <link rel="stylesheet" href="accessibility.css">
+    <script type="module" defer src="init/accessibility-init.js"></script>
+    <link rel="stylesheet" href="../Accessibility/accessibility.css">
 
 </head>
 
 <body>
     <div class="toolbarContainer">
         <div id="accessibility_toolbar" class="toolbar">
-            <button class="font-btn" data-size="normal" onclick="applyFontSize('normal')">A</button>
-            <button class="font-btn" data-size="large" onclick="applyFontSize('large')">A+</button>
-            <button class="font-btn" data-size="xlarge" onclick="applyFontSize('xlarge')">A++</button>
-            <button id="contrast-btn" onclick="toggleHighContrast()">High Contrast</button>
+            <button class="font-btn" data-size="normal" type="button">A</button>
+            <button class="font-btn" data-size="large" type="button">A+</button>
+            <button class="font-btn" data-size="xlarge" type="button">A++</button>
+            <button id="contrast-btn" type="button">High Contrast</button>
         </div>
         <div id="areaHighlightToolbar" class="toolbar">
             <input type="number" id="lidInput" placeholder="Enter a locationID (for demo)" style="width: 200px;">
@@ -53,5 +53,3 @@
 </body>
 
 </html>
-<!-- All this code is slowly copy pasted from the tutorial. I'm learning the library this is not my project implementation-->
-<!DOCTYPE html>

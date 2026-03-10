@@ -18,3 +18,4 @@ helped in writing the comments part by AI.
             }
 
 4. I use codex for building a test website (the testWeb should be removed already)
+5. I use codex for Solve the problem of rewriting the path after the reconstruction of the file structure. These annoying problems are solved.
