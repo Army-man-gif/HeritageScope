@@ -1,1 +1,0 @@
-1.Help me generate a simple pure HTML website in testSite. The content is variable. My purpose is to test my function "resacle text", that is, I want to test whether I can simply use the built-in buttons to adjust the font size of the web page.
