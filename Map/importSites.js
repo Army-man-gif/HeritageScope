@@ -33,7 +33,10 @@ try{
     // Now I have all the lanauges and their display versions as well
 
     function dynamicallyBuildLanguageSelection(){
-        const optionBox = L.DomUtil.create('div','container');
+        const languageControlArea = L.DomUtil.create('div','toolbar');
+        const optionBox = L.DomUtil.create('div','language-control',languageControlArea);
+        const title = L.DomUtil.create('div', 'language-control__title', optionBox);
+        title.textContent = 'Language';
         L.DomEvent.disableClickPropagation(optionBox);
         codeValuePairs.forEach(pair => {
             const label = L.DomUtil.create('label','Langlabel',optionBox);
@@ -51,7 +54,7 @@ try{
             });
             
         })
-        return optionBox;
+        return languageControlArea;
 
     }
 

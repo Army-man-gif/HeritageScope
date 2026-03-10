@@ -1,14 +1,36 @@
+.leaflet-control .language-control {
+    background: linear-gradient(180deg, #f9fbff 0%, #eef4ff 100%);
+    border: 1px solid #c8d7f2;
+    border-radius: 12px;
+    padding: 10px 12px;
+    min-width: 180px;
+    box-shadow: 0 6px 18px rgba(21, 46, 94, 0.16);
+}
+
+.leaflet-control .language-control__title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #304d80;
+    margin-bottom: 8px;
+}
+
 .leaflet-control .Langlabel {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 6px;
     cursor: pointer;
-    gap: 20 px;
+    gap: 12px;
+    padding: 4px 0;
+    color: #0f2a55;
+    font-size: 0.9rem;
 }
 
 .leaflet-control .Langlabel input {
     margin: 0;
+    accent-color: #1f5bb8;
 }
 
 .toolbarContainer {
