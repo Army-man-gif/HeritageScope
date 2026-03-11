@@ -27,6 +27,14 @@
             height: 100vh;
         }
     </style>
+    <script type="module">
+        import { toggleStatusOverlay } from './siteStatusOverlay.js';
+        window.handleStatusToggle = function() {
+            const map = window.hsMap;
+            if (map) toggleStatusOverlay(map);
+        };
+    </script>
+    <script src="accessibility.js"></script>
     <script type="module" defer src="importSites.js"></script>
     <script type="module" defer src="init/highlight-init.js"></script>
     <script type="module" defer src="init/accessibility-init.js"></script>
@@ -37,10 +45,13 @@
 <body class="map-page">
     <div class="toolbarContainer">
         <div id="accessibility_toolbar" class="toolbar">
-            <button class="font-btn" data-size="normal" type="button">A</button>
-            <button class="font-btn" data-size="large" type="button">A+</button>
-            <button class="font-btn" data-size="xlarge" type="button">A++</button>
-            <button id="contrast-btn" type="button">High Contrast</button>
+            <button class="font-btn" data-size="normal" onclick="applyFontSize('normal')">A</button>
+            <button class="font-btn" data-size="large" onclick="applyFontSize('large')">A+</button>
+            <button class="font-btn" data-size="xlarge" onclick="applyFontSize('xlarge')">A++</button>
+            <button id="contrast-btn" onclick="toggleHighContrast()">High Contrast</button>
+        </div>
+        <div id="statusToolbar" class="toolbar">
+            <button id="status-btn" onclick="handleStatusToggle()">Show At-Risk Sites</button>
         </div>
         <div id="areaHighlightToolbar" class="toolbar">
             <input id="lidInput" placeholder="Enter a locationID (for demo)" style="width: 200px;">
