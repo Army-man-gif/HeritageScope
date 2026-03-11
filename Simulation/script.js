@@ -12,6 +12,7 @@ function updateTourists() {
   peopleDiv.innerHTML = "";
   litterText.innerHTML = "";
   trafficText.innerHTML = "";
+  peopleText.innerHTML = "";
 
   for (let i = 0; i < touristSlider.value / 20; i++) {
 
@@ -31,6 +32,8 @@ function updateTourists() {
   }
 
   if(touristSlider.value > 80){
+
+    peopleText.innerHTML = "With more tourits, facilities need to be built for them to use. This will be built on top of green sites and may destroy animal habitats. <br><br>";
     let building = document.createElement("img");
     building.src = "images/building.png";
     building.style.bottom = "180px";
@@ -61,7 +64,6 @@ function updateTourists() {
 }
 
 // with more litter animals can die, plants can die too
-// make brown if litter too great
 function updateLitter() {
 
   // update slider text value
@@ -69,6 +71,8 @@ function updateLitter() {
   
   // add cars depending on input
   litterDiv.innerHTML = ""; // remove old trash
+
+  litterText.innerHTML = "";
 
   // add trash near tourists
   for (let i = 0; i < litterSlider.value / 20; i++) {
@@ -91,6 +95,10 @@ function updateLitter() {
   // reduce trees- animals can die with lots of litter
   if(litterSlider.value > 80){
 
+    treesDiv.innerHTML = "";
+
+    litterText.innerHTML = "With lots of litter, the area becomes dirty. Animals may eat it and die. Without these animals some plants may die.<br><br>";
+
     for(let i=0; i<3; i++){
       let x = Math.trunc(placedLitter[i*2]);
       let y = Math.trunc(placedLitter[i*2 + 1]);
@@ -104,6 +112,26 @@ function updateLitter() {
       litter.style.height = "20px";
 
       litterDiv.appendChild(litter);
+    }
+  
+    treesDiv.innerHTML = "";
+
+    // decrease trees as rubbish is too high
+    for(let i = 0; i < (100 - litterSlider.value)/5 +1; i++){
+      // decrease trees
+
+      x = Math.trunc(placedTrees[i*2]);
+      y = Math.trunc(placedTrees[i*2 + 1]);
+
+      let tree = document.createElement("img");
+      tree.src = "images/tree.png";
+      tree.style.position = "absolute";
+      tree.style.bottom = y + "px";
+      tree.style.left = x + "px";
+      tree.style.width = "40px";
+      tree.style.height = "40px";
+
+      treesDiv.appendChild(tree);
     }
   }
 
@@ -129,6 +157,13 @@ function updateCars() {
     car.style.width = "80px";
 
     carsDiv.appendChild(car);
+  }
+
+  if(trafficSlider.value > 30){
+    
+    tempSlider.value = trafficSlider.value * 0.6;
+    updateTemp();
+    trafficText.innerHTML = "As traffic increases, it causes more heat in an area. It also adds air pollution which contributes to global warming.<br><br>";
   }
 }
 
@@ -317,11 +352,11 @@ const tempText = document.getElementById("tempText");
 // trees said above
 
 // initialise sliders
-trafficVal.innerHTML = trafficSlider.value;
-touristVal.innerHTML = touristSlider.value;
-litterVal.innerHTML = litterSlider.value;
-rainfallVal.innerHTML = rainfallSlider.value;
-tempVal.innerHTML = tempSlider.value;
+updateCars();
+updateLitter();
+updateTourists();
+updateRainfall();
+updateTemp();
 
 // to dynamically update
 trafficSlider.addEventListener("input", updateCars);

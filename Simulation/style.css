@@ -4,7 +4,7 @@
 /* whole container*/
 .container{
   display: flex;
-  gap: 80px;
+  gap: 50px;
 }
 
 .sliders{
@@ -140,7 +140,7 @@
 
 .simulation-area{
   display: flex;
-  gap: 30px;
+  gap: 20px;
 }
 
 .simulation{
