@@ -37,11 +37,12 @@
     <script src="accessibility.js"></script>
     <script type="module" defer src="importSites.js"></script>
     <script type="module" defer src="init/highlight-init.js"></script>
-    <link rel="stylesheet" href="accessibility.css">
+    <script type="module" defer src="init/accessibility-init.js"></script>
+    <link rel="stylesheet" href="../Accessibility/accessibility.css">
 
 </head>
 
-<body>
+<body class="map-page">
     <div class="toolbarContainer">
         <div id="accessibility_toolbar" class="toolbar">
             <button class="font-btn" data-size="normal" onclick="applyFontSize('normal')">A</button>
@@ -53,7 +54,7 @@
             <button id="status-btn" onclick="handleStatusToggle()">Show At-Risk Sites</button>
         </div>
         <div id="areaHighlightToolbar" class="toolbar">
-            <input type="number" id="lidInput" placeholder="Enter a locationID (for demo)" style="width: 200px;">
+            <input id="lidInput" placeholder="Enter a locationID (for demo)" style="width: 200px;">
             <button id="areaMarkRun">Run</button>
         </div>
     </div>
@@ -63,5 +64,3 @@
 </body>
 
 </html>
-<!-- All this code is slowly copy pasted from the tutorial. I'm learning the library this is not my project implementation-->
-<!DOCTYPE html>

@@ -1,3 +1,17 @@
+.map-page {
+    --panel-bg: rgba(255, 255, 255, 0.96);
+    --panel-border: #c7d4ea;
+    --panel-shadow: 0 10px 30px rgba(15, 42, 85, 0.18);
+    --text-primary: #0f2a55;
+    --text-muted: #4f6487;
+    --button-bg: linear-gradient(180deg, #ffffff 0%, #e9f1ff 100%);
+    --button-border: #9db7e5;
+    --button-hover: #dbe9ff;
+    --button-active: #1a73e8;
+    --input-bg: #f8fbff;
+    --focus-ring: 0 0 0 3px rgba(26, 115, 232, 0.2);
+}
+
 .leaflet-control .language-control {
     background: linear-gradient(180deg, #f9fbff 0%, #eef4ff 100%);
     border: 1px solid #c8d7f2;
@@ -31,6 +45,8 @@
 .leaflet-control .Langlabel input {
     margin: 0;
     accent-color: #1f5bb8;
+    width: 25px;
+    height: 25px;
 }
 
 .toolbarContainer {
@@ -46,27 +62,97 @@
 .toolbar {
     right: auto;
     z-index: 1000;
-    background: white;
-    padding: 6px 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    background: var(--panel-bg);
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid var(--panel-border);
+    box-shadow: var(--panel-shadow);
+    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
 }
 
-/* Font size buttons */
-.font-btn {
+button,
+input {
+    font: inherit;
+}
+
+.toolbar button,
+.toolbar input {
+    min-height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--button-border);
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.toolbar button {
     cursor: pointer;
-    padding: 4px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: white;
+    padding: 0 14px;
+    background: var(--button-bg);
+    color: var(--text-primary);
     font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.toolbar button:hover {
+    background: var(--button-hover);
+    border-color: #7fa4df;
+    transform: translateY(-1px);
+}
+
+.toolbar button:focus-visible,
+.toolbar input:focus {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-color: var(--button-active);
+}
+
+.toolbar input {
+    width: 220px;
+    padding: 0 12px;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.toolbar input::placeholder {
+    color: var(--text-muted);
+}
+
+.font-btn,
+#contrast-btn,
+#areaMarkRun {
+    min-width: 56px;
 }
 
 .font-btn.active {
-    background: #1a73e8;
+    background: var(--button-active);
     color: white;
-    border-color: #1a73e8;
+    border-color: var(--button-active);
+}
+
+#contrast-btn {
+    min-width: 130px;
+}
+
+#areaMarkRun {
+    min-width: 84px;
+}
+
+@media (max-width: 768px) {
+    .toolbarContainer {
+        top: 12px;
+        left: 12px;
+        right: 12px;
+    }
+
+    .toolbar {
+        flex-wrap: wrap;
+    }
+
+    .toolbar input {
+        width: 100%;
+    }
 }
