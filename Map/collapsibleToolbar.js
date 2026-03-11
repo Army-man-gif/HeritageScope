@@ -1,10 +1,4 @@
-import { toggleStatusOverlay } from './siteStatusOverlay.js';
-window.handleStatusToggle = function() {
-    const map = window.hsMap;
-    if (map) toggleStatusOverlay(map);
-};
-
-window.addEventListener('DOMContentLoaded', () => {
+globalThis.addEventListener('DOMContentLoaded', () => {
     const toolbarContainer = document.querySelector('.toolbarContainer');
     const toolbarToggle = document.getElementById('toolbarToggle');
 

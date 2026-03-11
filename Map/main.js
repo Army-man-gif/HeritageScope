@@ -22,9 +22,9 @@ try {
     console.log("Successfully imported dataset");
 
     const map = createMap();
-    window.hsMap = map;
+    globalThis.hsMap = map;
 
-    window.dispatchEvent(
+    globalThis.dispatchEvent(
         new CustomEvent('heritage:map-ready', { detail: { map } })
     );
 
