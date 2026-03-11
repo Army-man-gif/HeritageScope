@@ -22,17 +22,30 @@
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        #map {
-            height: 100vh;
-        }
-    </style>
     <script type="module">
         import { toggleStatusOverlay } from './siteStatusOverlay.js';
         window.handleStatusToggle = function() {
             const map = window.hsMap;
             if (map) toggleStatusOverlay(map);
         };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const toolbarContainer = document.querySelector('.toolbarContainer');
+            const toolbarToggle = document.getElementById('toolbarToggle');
+
+            if (!toolbarContainer || !toolbarToggle) {
+                return;
+            }
+
+            toolbarToggle.addEventListener('click', () => {
+                const isCollapsed = toolbarContainer.classList.toggle('is-collapsed');
+                toolbarToggle.textContent = isCollapsed ? '\u{1F528}' : '\u274E';
+                toolbarToggle.setAttribute(
+                    'aria-label',
+                    isCollapsed ? 'Open toolbar' : 'Close toolbar'
+                );
+            });
+        });
     </script>
     <script src="accessibility.js"></script>
     <script type="module" defer src="importSites.js"></script>
@@ -44,22 +57,27 @@
 
 <body class="map-page">
     <div class="toolbarContainer">
-        <div id="accessibility_toolbar" class="toolbar">
-            <button class="font-btn" data-size="normal" onclick="applyFontSize('normal')">A</button>
-            <button class="font-btn" data-size="large" onclick="applyFontSize('large')">A+</button>
-            <button class="font-btn" data-size="xlarge" onclick="applyFontSize('xlarge')">A++</button>
-            <button id="contrast-btn" onclick="toggleHighContrast()">High Contrast</button>
+        <div class="toolbarStack">
+            <div id="accessibility_toolbar" class="toolbar">
+                <button class="font-btn" data-size="normal" onclick="applyFontSize('normal')">A</button>
+                <button class="font-btn" data-size="large" onclick="applyFontSize('large')">A+</button>
+                <button class="font-btn" data-size="xlarge" onclick="applyFontSize('xlarge')">A++</button>
+                <button id="contrast-btn" onclick="toggleHighContrast()">High Contrast</button>
+            </div>
+            <div id="statusToolbar" class="toolbar">
+                <button id="status-btn" onclick="handleStatusToggle()">Show At-Risk Sites</button>
+            </div>
+            <div id="areaHighlightToolbar" class="toolbar">
+                <input id="lidInput" placeholder="Enter a locationID (for demo)" style="width: 200px;">
+                <button id="areaMarkRun">Run</button>
+            </div>
         </div>
-        <div id="statusToolbar" class="toolbar">
-            <button id="status-btn" onclick="handleStatusToggle()">Show At-Risk Sites</button>
-        </div>
-        <div id="areaHighlightToolbar" class="toolbar">
-            <input id="lidInput" placeholder="Enter a locationID (for demo)" style="width: 200px;">
-            <button id="areaMarkRun">Run</button>
-        </div>
+        <button id="toolbarToggle" class="floatingToggle" type="button" aria-label="Close toolbar">&#x274E;</button>
     </div>
 
-    <div id="map"></div>
+    <div class="mapShell">
+        <div id="map"></div>
+    </div>
 
 </body>
 
