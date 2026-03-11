@@ -1,6 +1,14 @@
 /* Use CSS based on classes e.g .class{} 
    #id{} for different elements in a class */
 
+/* make images stand out*/
+.tree {
+  filter: drop-shadow(1px 0 0 black)
+    drop-shadow(-1px 0 0 black)
+    drop-shadow(0 1px 0 black)
+    drop-shadow(0 -1px 0 black);
+}
+
 /* whole container*/
 .container{
   display: flex;

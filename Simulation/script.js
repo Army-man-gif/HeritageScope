@@ -22,11 +22,11 @@ function updateTourists() {
     let person = document.createElement("img");
     person.src = "images/person.png";
     person.style.position = "absolute";
-    person.src = "images/person.png";
+    person.src = "images/person-copy.png";
     person.style.bottom = y + "px";
     person.style.left = x + "px";
-    person.style.width = "40px";
-    person.style.height = "40px";
+    person.style.width = "25px";
+    person.style.height = "45px";
 
     peopleDiv.appendChild(person);
   }
@@ -124,6 +124,7 @@ function updateLitter() {
       y = Math.trunc(placedTrees[i*2 + 1]);
 
       let tree = document.createElement("img");
+      tree.classList.add("tree");
       tree.src = "images/tree.png";
       tree.style.position = "absolute";
       tree.style.bottom = y + "px";
@@ -216,6 +217,7 @@ function updateRainfall() {
       y = Math.trunc(placedTrees[i*2 + 1]);
 
       let tree = document.createElement("img");
+      tree.classList.add("tree");
       tree.src = "images/tree.png";
       tree.style.position = "absolute";
       tree.style.bottom = y + "px";
@@ -238,6 +240,7 @@ function updateRainfall() {
       let y = Math.trunc(placedTrees[i*2 + 1]);
 
       let tree = document.createElement("img");
+      tree.classList.add("tree");
       tree.src = "images/tree.png";
       tree.style.position = "absolute";
       tree.style.bottom = y + "px";
@@ -293,6 +296,7 @@ function updateTemp() {
       y = Math.trunc(placedTrees[i*2 + 1]);
 
       let tree = document.createElement("img");
+      tree.classList.add("tree");
       tree.src = "images/tree.png";
       tree.style.position = "absolute";
       tree.style.bottom = y + "px";
