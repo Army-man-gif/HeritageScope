@@ -23,6 +23,7 @@ body.high-contrast .leaflet-control .Langlabel {
 
 body.high-contrast .toolbar button,
 body.high-contrast .toolbar input,
+body.high-contrast .floatingToggle,
 body.high-contrast .leaflet-control-zoom a,
 body.high-contrast .leaflet-control-layers-toggle {
     background: #000000 !important;
@@ -33,12 +34,18 @@ body.high-contrast .leaflet-control-layers-toggle {
 
 body.high-contrast .toolbar button:hover,
 body.high-contrast .toolbar button:focus-visible,
+body.high-contrast .floatingToggle:hover,
+body.high-contrast .floatingToggle:focus-visible,
 body.high-contrast .toolbar input:focus,
 body.high-contrast .leaflet-control-zoom a:hover,
 body.high-contrast .leaflet-control-zoom a:focus-visible {
     outline: none;
     border-color: #ff4df0 !important;
     box-shadow: 0 0 0 3px rgba(255, 77, 240, 0.35) !important;
+}
+
+body.high-contrast .floatingToggle {
+    border-radius: 999px !important;
 }
 
 body.high-contrast .font-btn.active,
