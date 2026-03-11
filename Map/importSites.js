@@ -1,7 +1,7 @@
 // Armaan
 
 import {createMap} from './createMap.js';
-import { MarkerHighlight, createDefaultIcon } from './markerHighlight.js';
+import { MarkerHighlight, createDefaultIcon } from './highlight.js';
 let currentLanguage = "en";
 
 

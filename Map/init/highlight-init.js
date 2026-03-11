@@ -1,5 +1,5 @@
 /* Yi's job */
-import { AreaHighlight } from '../markerHighlight.js';
+import { AreaHighlight } from '../highlight.js';
 
 let areaHighlighter = null;
 let activeMap = null;
