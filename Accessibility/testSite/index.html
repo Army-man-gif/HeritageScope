@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rescale Text Test Site</title>
+  <script src="../rescale.js" defer></script>
+  <script src="./app.js" defer></script>
+
+  <style>
+    :root {
+      --base-size: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f6f7f9;
+      color: #1a1a1a;
+      line-height: 1.6;
+      font-size: var(--base-size);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      padding: 12px;
+      background: #ffffff;
+      border: 1px solid #d8dde3;
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+
+    button {
+      border: 1px solid #b7c2cd;
+      background: #f0f4f8;
+      color: #15202b;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font: inherit;
+      line-height: 1.2;
+    }
+
+    button:hover {
+      background: #e6edf3;
+    }
+
+    .size-value {
+      margin-left: 6px;
+      font-weight: bold;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #dde3ea;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #cfd7e0;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .editable {
+      min-height: 110px;
+      border: 1px dashed #9aa8b6;
+      border-radius: 8px;
+      padding: 10px;
+      background: #fcfdff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="toolbar">
+      <button id="smaller" type="button" aria-label="Decrease font size" >A-</button>
+      <button id="larger" type="button" aria-label="Increase font size">A+</button>
+      <button id="reset" type="button" aria-label="Reset font size">Reset</button>
+      <span class="size-value" id="sizeLabel">??px</span>
+    </div>
+
+    <section class="card">
+      <h1>Rescale Text Test Page</h1>
+      <p>
+        This page is designed to test text scaling behavior. Click the buttons above to increase or decrease font
+        size and verify whether all content updates consistently.
+      </p>
+      <p>
+        Include your own text in the editable block below to test variable content length, punctuation, numbers
+        (12345), and mixed casing.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Editable Content (Variable)</h2>
+      <div class="editable" contenteditable="true">
+        You can edit this text. Paste short or long content here to test how rescaling behaves with dynamic input.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Mixed Elements</h2>
+      <div class="grid">
+        <article>
+          <h3>Paragraph</h3>
+          <p>
+            The quick brown fox jumps over the lazy dog. This sentence contains every letter and is useful for font
+            checks.
+          </p>
+        </article>
+        <article>
+          <h3>List</h3>
+          <ul>
+            <li>Short item</li>
+            <li>Medium item with more words</li>
+            <li>Long item with enough text to wrap onto another line for layout testing</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Table</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Sample Text</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Small Label</td>
+            <td>Caption-like content for readability checks.</td>
+          </tr>
+          <tr>
+            <td>Body Text</td>
+            <td>Main text size should scale smoothly with the controls.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</body>
+</html>

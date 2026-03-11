@@ -1,12 +1,25 @@
+// Armaan
+
 import {createMap} from './createMap.js';
+import { MarkerHighlight, createDefaultIcon } from './highlight.js';
 let currentLanguage = "en";
+
+
+// Accessiblity metrics: air quality, business
+// certain areas highlighted
+// Layers toggle on and off
+// Write some test scripts
 // Load GeoJSON file
+// Location text size
 // Now I can import whole file stuff. Instead I will try to add specific live sites
 try{
     const fetchData = await fetch("dataset.geojson");
     const jsonData = await fetchData.json();
     console.log("Successfully imported file data and json parsed it");
     const map = createMap();
+    window.hsMap = map;
+    window.dispatchEvent(new CustomEvent('heritage:map-ready', { detail: { map } }));
+    const highlighter = new MarkerHighlight(map);
     const initialFeature  = jsonData.features[0];
     const languages = Object.keys(initialFeature.properties)
         .filter(key => key.startsWith("name_"))
@@ -20,7 +33,10 @@ try{
     // Now I have all the lanauges and their display versions as well
 
     function dynamicallyBuildLanguageSelection(){
-        const optionBox = L.DomUtil.create('div','container');
+        const languageControlArea = L.DomUtil.create('div','toolbar');
+        const optionBox = L.DomUtil.create('div','language-control',languageControlArea);
+        const title = L.DomUtil.create('div', 'language-control__title', optionBox);
+        title.textContent = 'Language';
         L.DomEvent.disableClickPropagation(optionBox);
         codeValuePairs.forEach(pair => {
             const label = L.DomUtil.create('label','Langlabel',optionBox);
@@ -38,15 +54,19 @@ try{
             });
             
         })
-        return optionBox;
+        return languageControlArea;
 
     }
 
     // There's a lot of points so I will use marker cluster to speed things up
 
     // Initialize marker cluster object
-    function convPointToLayer(feature,latlng){
-        return L.marker(latlng);
+    function convPointToLayer(feature, latlng) {
+        const marker = L.marker(latlng, { icon: createDefaultIcon() });
+        marker.on('click', function() {
+            highlighter.highlight(marker, latlng);
+        });
+        return marker;
     }
     function updateLanguage(lang){
         currentLanguage = lang;
@@ -93,6 +113,12 @@ try{
 
     map.addLayer(markers);
     map.fitBounds(markers.getBounds());
+    map.setZoom(2);
+
+    map.setMaxBounds([
+    [-90, -200],
+    [90, 200]
+]);
     // Extend layer control
     const LanguageControl  = L.Control.extend({
         onAdd: function() {
