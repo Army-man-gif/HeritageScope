@@ -20,7 +20,7 @@ function updateTourists() {
     let y = Math.trunc(placedTourists[i*2 + 1]);
 
     let person = document.createElement("img");
-    person.src = "images/person.png";
+    //person.src = "images/person.png";
     person.style.position = "absolute";
     person.src = "images/person-copy.png";
     person.style.bottom = y + "px";
@@ -33,7 +33,7 @@ function updateTourists() {
 
   if(touristSlider.value > 80){
 
-    peopleText.innerHTML = "With more tourits, facilities need to be built for them to use. This will be built on top of green sites and may destroy animal habitats. <br><br>";
+    peopleText.innerHTML = "With more tourists, facilities need to be built for them to use. This will be built on top of green sites and may destroy animal habitats. <br><br>";
     let building = document.createElement("img");
     building.src = "images/building.png";
     building.style.bottom = "180px";
@@ -46,19 +46,14 @@ function updateTourists() {
 
   // update litter based on tourists
   // need litter slider to exist before running
-  if(touristSlider.value < 80){
-    litterSlider.value = touristSlider.value * 0.8;
-    updateLitter();
-    litterText.innerHTML += "As more tourists visit, more litter is found.<br><br>";
-
-    trafficSlider.value = touristSlider.value * 0.6;
-    updateCars();
-    trafficText.innerHTML += "As more tourists visit, this causes more traffic.<br><br>";
-  }
-  else{
+  if(touristSlider.value > 20){
     litterSlider.value = touristSlider.value * 0.82;
     updateLitter();
     litterText.innerHTML += "As more tourists visit, more litter is found.<br><br>";
+
+    trafficSlider.value = touristSlider.value * 0.65;
+    updateCars();
+    trafficText.innerHTML += "As more tourists visit, this causes more traffic.<br><br>";
   }
 
 }
@@ -146,6 +141,8 @@ function updateCars() {
   
   // add cars depending on input
   carsDiv.innerHTML = ""; // remove old cars
+
+  trafficText.innerHTML = "";
 
   // max 5 cars
   for (let i = 0; i < trafficSlider.value / 20; i++) {
@@ -268,19 +265,19 @@ function updateTemp() {
   // update rainfall with temp
   // low temp shouldn't affect rainfall
 
-  if(tempSlider.value > 30){
+  if(tempSlider.value > 80){
+    simBackground.src = "images/brown-background.png";
+
+    tempText.innerHTML += "When the temperature is high the ground dries out and plants die. Climate change can cause long unusual heatwaves.<br><br>";
+  }
+  else if(tempSlider.value > 30){
     rainfallSlider.value = 100 - tempSlider.value + 15;
     updateRainfall();
 
     tempText.innerHTML += "As temperature increases, rainfall usually decreases.<br><br>";
   }
 
-  if(tempSlider.value > 80){
-    simBackground.src = "images/brown-background.png";
-
-    tempText.innerHTML += "When the temperature is high the ground dries out and plants die. Climate change can cause long unusual heatwaves.<br><br>";
-  }
-  else{
+  if(tempSlider.value < 80){
     simBackground.src = "images/green-background.png";
   }
 

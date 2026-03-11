@@ -12,7 +12,7 @@
 /* whole container*/
 .container{
   display: flex;
-  gap: 50px;
+  gap: 30px;
 }
 
 .sliders{
@@ -149,17 +149,21 @@
 .simulation-area{
   display: flex;
   gap: 20px;
+  align-items: flex-start; /* prevents stretching */
 }
 
 .simulation{
   width: 550px;
   /* so objects relate to this */
+  /* changed from relative */
   position: relative;
+  overflow: hidden; 
 }
 
 #simBackground{
   width:100%;
-  height:auto;
+  height: 420px;
+  display:block;
 }
 
 .simulationText{
@@ -168,6 +172,7 @@
 }
 
 /* simulation objects */
+/* absolute gives reference to simulation area */
 #cars img,
 #trees img,
 #flood img,
