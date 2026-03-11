@@ -113,6 +113,12 @@ try{
 
     map.addLayer(markers);
     map.fitBounds(markers.getBounds());
+    map.setZoom(2);
+
+    map.setMaxBounds([
+    [-90, -200],
+    [90, 200]
+]);
     // Extend layer control
     const LanguageControl  = L.Control.extend({
         onAdd: function() {
