@@ -1,10 +1,8 @@
 1. I use chatgpt help me mocking data. (mocking_HighLightArea.json)
-===
 
 2.I used chatgpt to help me generate the genral idea structure
 for the "highlight.js" I coded the actual syntax but the I was
 helped in writing the comments part by AI.
-===
 
 3.I use codex to help me check if I have missed any boundary conditions in highlight-init
     eg: if (result.data && activeMap) {
@@ -18,4 +16,7 @@ helped in writing the comments part by AI.
             }
 
 4. I use codex for building a test website (the testWeb should be removed already)
+
 5. I use codex for Solve the problem of rewriting the path after the reconstruction of the file structure. These annoying problems are solved.
+
+6. I use codex Improved the situation not written in css.
