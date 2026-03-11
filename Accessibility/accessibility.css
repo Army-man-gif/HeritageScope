@@ -67,10 +67,33 @@ body.high-contrast .leaflet-popup-tip {
     border: 2px solid #39ff14 !important;
 }
 
+body.high-contrast #map,
+body.high-contrast .leaflet-container,
+body.high-contrast .mapShell {
+    background: #030303 !important;
+}
+
+body.high-contrast .leaflet-pane,
+body.high-contrast .leaflet-top,
+body.high-contrast .leaflet-bottom {
+    text-shadow: 0 0 3px rgba(220, 235, 255, 0.95), 0 0 1px #000000;
+}
+
+body.high-contrast .leaflet-marker-icon,
+body.high-contrast .leaflet-interactive {
+    filter: contrast(155%) brightness(1.12) drop-shadow(0 0 2px #000000);
+}
+
 body.high-contrast .leaflet-control .Langlabel input {
     accent-color: #39ff14;
 }
 
 body.high-contrast .leaflet-tile {
-    filter: grayscale(100%) contrast(120%) brightness(0.7) invert(1) hue-rotate(180deg);
+    filter:
+        contrast(100%)
+        saturate(200%)
+        hue-rotate(10deg)
+        drop-shadow(0 0 1px #ffffff)
+        invert(1);
+       
 }
