@@ -32,11 +32,6 @@ write intro to project here
 ### Additions:
 
 
-
-
-development) | |
-| F-16 | Interactive snapshot of visualisation map / simulation dynamic to user's filter and selected choices | Part-develop (Enhanced functionality) | |
-
 ## Unit & Integration Testing:
 Our testing outline is found in this document: 
 https://docs.google.com/document/d/1wKu51U5LSkbITz1umVbN2rmAPybO5xwgnA4Y-RrfAWs/edit?usp=sharing
