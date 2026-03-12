@@ -2,7 +2,20 @@
 write intro to project here
 
 ## Instructions on how to download and run the project:
+1. Database Setup
+- Open your PostgreSQL terminal (psql) or pgAdmin
+- Create a new database named : heritagescope
+- Import the provided data dump : heritagescope_dump.sql
 
+2. Backend Configuration (Spring Boot)
+- Navigate to 'Backend/heritagescope/src/main/resources/'
+- Open 'application.properties' and update with your local credentials:
+  properties:
+  spring.datasource.url=jdbc:postgresql://localhost:5432/heritagescope
+  spring.datasource.username=**YOUR_POSTGRES_USERNAME**
+  spring.datasource.password=**YOUR_POSTGRES_PASSWORD**
+
+3. Run the backend
 
 ## Libraries or requirements required to run it:
 
