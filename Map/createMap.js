@@ -5,6 +5,7 @@ export function createMap(){
     map.locate({setView: true, maxZoom: 16});
     const streetView = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap',
+        minZoom: 2,
         maxZoom: 19,
     });
 
