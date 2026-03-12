@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heritage Navigator — Path Routing Demo</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+  <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+
+  <script src="./pathrouting.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #1a1a2e;
+      color: #eee;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 12px 16px;
+      background: #16213e;
+      border-bottom: 2px solid #e94560;
+    }
+
+    header h1 {
+      font-size: 1.1rem;
+      color: #e94560;
+      margin-bottom: 10px;
+    }
+
+    /* Mode toggle buttons */
+    .mode-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .mode-btn {
+      flex: 1;
+      padding: 7px 0;
+      border-radius: 4px;
+      border: 2px solid transparent;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: 'Georgia', serif;
+      background: #0f3460;
+      color: #aaa;
+      transition: all 0.2s;
+    }
+
+    .mode-btn.active-walk  { border-color: #4fc3f7; color: #4fc3f7; background: #0a2540; }
+    .mode-btn.active-wheel { border-color: #94C000; color: #94C000; background: #1a2a00; }
+
+    /* Search bar */
+    .search-bar {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    .search-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .search-group label {
+      font-size: 0.7rem;
+      color: #aaa;
+      font-family: monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .search-group input {
+      padding: 8px 10px;
+      background: #0f3460;
+      border: 1px solid #e94560;
+      color: #eee;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      outline: none;
+      width: 100%;
+    }
+
+    .search-group input:focus { border-color: #fff; }
+    .search-group input::placeholder { color: #555; }
+
+    .btn-row { display: flex; gap: 6px; }
+
+    button#gps-btn {
+      padding: 8px 12px;
+      background: #0f3460;
+      color: #4fc3f7;
+      border: 1px solid #4fc3f7;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    button#gps-btn.active { background: #4fc3f7; color: #1a1a2e; }
+
+    button#go-btn {
+      padding: 8px 16px;
+      background: #e94560;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    button#go-btn:hover    { background: #c73652; }
+    button#go-btn:disabled { background: #555; cursor: not-allowed; }
+
+    /* Status bar */
+    #status {
+      font-size: 0.78rem;
+      color: #f0a500;
+      font-family: monospace;
+      padding: 5px 16px;
+      background: #0f3460;
+      min-height: 26px;
+    }
+
+    /* Wheelchair mode banner */
+    #wheelchair-banner {
+      display: none;
+      background: #1b3a00;
+      border-left: 4px solid #94C000;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      color: #c8e66c;
+      font-family: monospace;
+    }
+
+    #map { flex: 1; }
+
+    /* Routing panel */
+    .leaflet-routing-container {
+      background: #16213e !important;
+      color: #eee !important;
+      border: 1px solid #e94560 !important;
+      font-family: monospace !important;
+      font-size: 12px !important;
+      max-height: 35vh !important;
+      overflow-y: auto !important;
+    }
+    .leaflet-routing-alt h2,
+    .leaflet-routing-alt h3 { color: #e94560 !important; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🗺 Heritage Sites Navigator — Demo</h1>
+
+    <!-- Mode toggle -->
+    <div class="mode-row">
+      <button class="mode-btn active-walk" id="btn-walk" onclick="handleSetMode('walk')">
+        🚶 Walking
+      </button>
+      <button class="mode-btn" id="btn-wheel" onclick="handleSetMode('wheelchair')">
+        ♿ Wheelchair
+      </button>
+    </div>
+
+    <!-- Search bar -->
+    <div class="search-bar">
+      <div class="search-group">
+        <label>🏁 Destination</label>
+        <input type="text" id="end-input" placeholder="e.g. Birmingham Museum" />
+      </div>
+      <div class="btn-row">
+        <button id="gps-btn">📍 Locate</button>
+        <button id="go-btn">Go 🔍</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Wheelchair mode banner -->
+  <div id="wheelchair-banner">
+    ♿ Wheelchair Mode — Route avoids steps. Nearby accessible facilities shown on map.
+  </div>
+
+  <div id="status">💡 Select a mode, click Locate, enter a destination, then click Go</div>
+
+  <div id="map"></div>
+
+  <script>
+    // ================================================================
+    //  Demo UI
+    // ================================================================
+
+    // 1. 创建地图
+    const map = L.map('map').setView([52.4862, -1.8904], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    const statusEl = document.getElementById('status');
+    initRouting(map, (msg) => { statusEl.textContent = msg; });
+
+    
+    function handleSetMode(mode) {
+      setRoutingMode(mode);
+
+      document.getElementById('btn-walk').className  = 'mode-btn' + (mode === 'walk'       ? ' active-walk'  : '');
+      document.getElementById('btn-wheel').className = 'mode-btn' + (mode === 'wheelchair' ? ' active-wheel' : '');
+      document.getElementById('wheelchair-banner').style.display = mode === 'wheelchair' ? 'block' : 'none';
+    }
+
+    
+    const gpsBtn = document.getElementById('gps-btn');
+
+    gpsBtn.addEventListener('click', () => {
+      statusEl.textContent = '📡 Getting GPS location, please allow location permission...';
+      gpsBtn.classList.add('active');
+
+      startGPS(
+        // 成功回调
+        (latlng, accuracy) => {
+          gpsBtn.textContent = '✅ Located';
+          statusEl.textContent = `📍 Located! Accuracy ~${accuracy}m — Enter destination and click Go`;
+        },
+        // 失败回调
+        (errorMsg) => {
+          gpsBtn.classList.remove('active');
+          gpsBtn.textContent = '📍 Locate';
+          statusEl.textContent = `❌ ${errorMsg}`;
+        }
+      );
+    });
+
+    
+    const goBtn = document.getElementById('go-btn');
+
+    goBtn.addEventListener('click', async () => {
+      const endText = document.getElementById('end-input').value.trim();
+
+      if (!endText) {
+        statusEl.textContent = '⚠️ Please enter a destination!';
+        return;
+      }
+
+      if (!getUserLatLng()) {
+        statusEl.textContent = '⚠️ Please click Locate first!';
+        return;
+      }
+
+      goBtn.disabled = true;
+      statusEl.textContent = '🔍 Searching for destination...';
+
+      const endResult = await geocode(endText);
+
+      if (!endResult) {
+        statusEl.textContent = `❌ Could not find "${endText}", please try a different description`;
+        blindUserHooks.onSearchError(endText);
+        goBtn.disabled = false;
+        return;
+      }
+
+      createRoute(getUserLatLng(), L.latLng(endResult.lat, endResult.lng));
+      goBtn.disabled = false;
+    });
+
+    // Enter 
+    document.getElementById('end-input').addEventListener('keypress', e => {
+      if (e.key === 'Enter') goBtn.click();
+    });
+  </script>
+
+</body>
+</html>
