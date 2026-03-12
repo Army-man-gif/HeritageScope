@@ -1,0 +1,4 @@
+I used AI to create the build script and watch and unwatch scripts
+so that I could keep using "modules" concept for my differnt javascript
+files for the organisational and debugging and integrating advantages 
+but also support double clicking on the main.js and everything working fine
