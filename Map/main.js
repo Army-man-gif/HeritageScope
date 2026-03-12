@@ -7,7 +7,11 @@ import { dynamicallyBuildLanguageSelection } from './languageChangeController.js
 
 
 
-
+// Ad more metrics - poluttion, ddensity etc..
+// Legend
+// Change styling a lil
+// Snapshot of map
+// Build it so it works on double click
 let currentLanguage = "en";
 let markers = L.markerClusterGroup();
 let highlighter;
