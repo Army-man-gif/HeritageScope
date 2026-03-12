@@ -8,12 +8,13 @@ function updateTourists() {
   touristVal.innerHTML = touristSlider.value;
   
   // add cars depending on input
-  buildingsDiv.innerHTML = ""; // remove old buildings and people
+  buildingsDiv.innerHTML = ""; // remove entries
   peopleDiv.innerHTML = "";
   litterText.innerHTML = "";
   trafficText.innerHTML = "";
   peopleText.innerHTML = "";
 
+  // increase tourists as slider increases
   for (let i = 0; i < touristSlider.value / 20; i++) {
 
     let x = Math.trunc(placedTourists[i*2]);
@@ -31,6 +32,7 @@ function updateTourists() {
     peopleDiv.appendChild(person);
   }
 
+  // add building if over 80
   if(touristSlider.value > 80){
 
     peopleText.innerHTML = "With more tourists, facilities need to be built for them to use. This will be built on top of green sites and may destroy animal habitats. <br><br>";
@@ -64,12 +66,11 @@ function updateLitter() {
   // update slider text value
   litterVal.innerHTML = litterSlider.value;
   
-  // add cars depending on input
-  litterDiv.innerHTML = ""; // remove old trash
+  litterDiv.innerHTML = ""; // remove old entires
 
   litterText.innerHTML = "";
 
-  // add trash near tourists
+  // add trash near tourists as litter increases
   for (let i = 0; i < litterSlider.value / 20; i++) {
 
     let x = Math.trunc(placedTourists[i*2]) + 50;
@@ -140,11 +141,12 @@ function updateCars() {
   trafficVal.innerHTML = trafficSlider.value;
   
   // add cars depending on input
-  carsDiv.innerHTML = ""; // remove old cars
+  carsDiv.innerHTML = ""; // remove old entries
 
   trafficText.innerHTML = "";
 
   // max 5 cars
+  // add cars depending on traffic slider
   for (let i = 0; i < trafficSlider.value / 20; i++) {
 
     let car = document.createElement("img");
@@ -157,6 +159,7 @@ function updateCars() {
     carsDiv.appendChild(car);
   }
 
+  // increases temp when traffic greater than 30
   if(trafficSlider.value > 30){
     
     tempSlider.value = trafficSlider.value * 0.6;
@@ -172,11 +175,12 @@ function updateRainfall() {
   // update slider text value
   rainfallVal.innerHTML = rainfallSlider.value;
   
-  // add cars depending on input
+  // reset entries
   treesDiv.innerHTML = "";
   floodsDiv.innerHTML = "";
   rainfallText.innerHTML = "";
 
+  // if too little rain, background goes brown
   if(rainfallSlider.value < 20){
     simBackground.src = "images/brown-background.png";
     rainfallText.innerHTML += "With low rainfall, plants die and the ground dries up. <br><br>";
@@ -185,6 +189,7 @@ function updateRainfall() {
     simBackground.src = "images/green-background.png";
   }
 
+  // too high rainfall plants die, floods appear
   if(rainfallSlider.value > 80){
 
     treesDiv.innerHTML = "";
@@ -225,6 +230,7 @@ function updateRainfall() {
       treesDiv.appendChild(tree);
     }
   }
+  // more trees as rainfall increases above critical level
   else if(rainfallSlider.value > 20){
 
     rainfallText.innerHTML += "With more rainfall, plants grow more. <br><br>";
@@ -249,8 +255,6 @@ function updateRainfall() {
     }
 
   }
-
-  
 } 
 
 // higher temp- some trees die, less rainfall
@@ -260,16 +264,19 @@ function updateTemp() {
   // update slider text value
   tempVal.innerHTML = tempSlider.value;
 
+  // reset entries
   tempText.innerHTML = "";
 
   // update rainfall with temp
   // low temp shouldn't affect rainfall
 
+  // if temp to high ground dries out
   if(tempSlider.value > 80){
     simBackground.src = "images/brown-background.png";
 
     tempText.innerHTML += "When the temperature is high the ground dries out and plants die. Climate change can cause long unusual heatwaves.<br><br>";
   }
+  // rainfall decreases with increased temperature above a reasonable amount
   else if(tempSlider.value > 30){
     rainfallSlider.value = 100 - tempSlider.value + 15;
     updateRainfall();
@@ -320,28 +327,28 @@ var simBackground = document.getElementById("simBackground");
 
 // using sliders and their values
 var trafficSlider = document.getElementById("trafficSlider");
-// gete element where val will be displayed e.g <span id="trafficVal"></span>
+// get element where val will be displayed e.g <span id="trafficVal"></span>
 var trafficVal = document.getElementById("trafficVal");
 trafficVal.innerHTML = trafficSlider.value; // Display the default slider value
-const carsDiv = document.getElementById("cars");
-const trafficText = document.getElementById("trafficText");
+const carsDiv = document.getElementById("cars"); // div for related images
+const trafficText = document.getElementById("trafficText"); // text for slider actions
 
 var touristSlider = document.getElementById("touristSlider");
 var touristVal = document.getElementById("touristVal");
-touristVal.innerHTML = touristSlider.value; // Display the default slider value
+touristVal.innerHTML = touristSlider.value; 
 const buildingsDiv = document.getElementById("buildings");
 const peopleDiv = document.getElementById("people");
 const peopleText = document.getElementById("peopleText");
 
 var litterSlider = document.getElementById("litterSlider");
 var litterVal = document.getElementById("litterVal");
-litterVal.innerHTML = litterSlider.value; // Display the default slider value
+litterVal.innerHTML = litterSlider.value; 
 const litterDiv = document.getElementById("litter");
 const litterText = document.getElementById("litterText");
 
 var rainfallSlider = document.getElementById("rainfallSlider");
 var rainfallVal = document.getElementById("rainfallVal");
-rainfallVal.innerHTML = rainfallSlider.value; // Display the default slider value
+rainfallVal.innerHTML = rainfallSlider.value; 
 const floodsDiv = document.getElementById("floods");
 const treesDiv = document.getElementById("trees");
 const rainfallText = document.getElementById("rainfallText");
