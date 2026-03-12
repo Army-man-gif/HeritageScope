@@ -55,7 +55,7 @@ function updateTourists() {
 
     trafficSlider.value = touristSlider.value * 0.65;
     updateCars();
-    trafficText.innerHTML += "As more tourists visit, this causes more traffic.<br><br>";
+    trafficText.innerHTML += "More traffic is caused as more tourists visit.<br><br>";
   }
 
 }
@@ -317,6 +317,13 @@ function updateTemp() {
 
 }
 
+// for text to speech
+function speak(text) {
+  speechSynthesis.cancel(); // stop previous speech
+  const speech = new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(speech);
+}
+
 // x,y of tourists
 placedTourists = [30, 360, 50, 100, 200, 200, 200, 30, 300, 300];
 placedLitter = [310,140, 290, 150, 330, 150];
@@ -372,5 +379,86 @@ touristSlider.addEventListener("input", updateTourists);
 litterSlider.addEventListener("input", updateLitter);
 rainfallSlider.addEventListener("input", updateRainfall);
 tempSlider.addEventListener("input", updateTemp);
+
+// text to speech
+// reads general when you load in
+// on click reads text
+
+// for title and intro
+const title = document.getElementById("title");
+title.addEventListener("click", function () {
+  speak(title.innerText);
+});
+
+const intro = document.getElementById("intro");
+intro.addEventListener("click", function () {
+  speak(intro.innerText);
+});
+
+// reads general when you load in
+window.onload = function(){
+  speak(intro.innerText);
+};
+
+// for slider text vals
+// intro
+const slidersIntro = document.getElementById("slidersIntro");
+slidersIntro.addEventListener("click", function () {
+  speak(slidersIntro.innerText);
+});
+
+// slider info
+// could say slider info when slider is changed too?
+const trafficPara = document.getElementById("trafficPara");
+trafficPara.addEventListener("click", function () {
+  speak(trafficPara.innerText);
+});
+
+const touristPara = document.getElementById("touristPara");
+touristPara.addEventListener("click", function () {
+  speak(touristPara.innerText);
+});
+
+const litterPara = document.getElementById("litterPara");
+litterPara.addEventListener("click", function () {
+  speak(litterPara.innerText);
+});
+
+const rainfallPara = document.getElementById("rainfallPara");
+rainfallPara.addEventListener("click", function () {
+  speak(rainfallPara.innerText);
+});
+
+const tempPara = document.getElementById("tempPara");
+tempPara.addEventListener("click", function () {
+  speak(tempPara.innerText);
+});
+
+// for simulation text
+const simIntro = document.getElementById("simIntro");
+simIntro.addEventListener("click", function () {
+  speak(simIntro.innerText);
+});
+
+trafficText.addEventListener("click", function () {
+  speak(trafficText.innerText);
+});
+
+peopleText.addEventListener("click", function () {
+  speak(peopleText.innerText);
+});
+
+litterText.addEventListener("click", function () {
+  speak(litterText.innerText);
+});
+
+rainfallText.addEventListener("click", function () {
+  speak(rainfallText.innerText);
+});
+
+tempText.addEventListener("click", function () {
+  speak(tempText.innerText);
+});
+
 
 

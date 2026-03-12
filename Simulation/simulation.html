@@ -9,39 +9,39 @@
 
 <body>
 
-<h1>Environmental Simulation</h1>
-<p>This is an environment simulation. Use the sliders to see the effects of different actions on the environment.</p>
+<h1 id = "title"> Environmental Simulation</h1>
+<p id = "intro"> This is an environment simulation. Use the sliders to see the effects of different actions on the environment.</p>
 
 <div class = "container">
     <!-- slider containers -->
     <div class = "sliders">
-        <h2>Sliders:</h2>
+        <h2 id = "slidersIntro">Sliders:</h2>
 
         <div class="slidecontainer">
-            <p>Traffic: <span id="trafficVal"></span>/100</p>
+            <p id = "trafficPara">Traffic: <span id="trafficVal"></span>/100</p>
             <!-- start traffic at 20 -->
             <input type="range" min="0" max="100" value="20" class="slider" id="trafficSlider">
         </div>
 
         <div class="slidecontainer">
-            <p>Tourists: <span id="touristVal"></span>/100</p>
+            <p id = "touristPara">Tourists: <span id="touristVal"></span>/100</p>
             <!-- start tourists at 50 -->
             <input type="range" min="0" max="100" value="30" class="slider" id="touristSlider">
         </div>
 
         <div class="slidecontainer">
-            <p>Litter: <span id="litterVal"></span>/100</p>
+            <p id = "litterPara">Litter: <span id="litterVal"></span>/100</p>
             <input type="range" min="0" max="100" value="20" class="slider" id="litterSlider">
         </div>
 
         <div class="slidecontainer">
-            <p>Rainfall: <span id="rainfallVal"></span>/100</p>
+            <p id = "rainfallPara">Rainfall: <span id="rainfallVal"></span>/100</p>
             <!-- start rainfall at 50 -->
             <input type="range" min="0" max="100" value="50" class="slider" id="rainfallSlider">
         </div>
 
         <div class="slidecontainer">
-            <p>Temperature: <span id="tempVal"></span>/100</p>
+            <p id = "tempPara">Temperature: <span id="tempVal"></span>/100</p>
             <!-- start temp at 50 -->
             <input type="range" min="0" max="100" value="50" class="slider" id="tempSlider">
         </div>
@@ -67,12 +67,12 @@
         </div>
 
         <div class = "simulationText">
-            <h3>Text description of the Simulation:</h3>
-            <p id = "tempText"></p>
+            <h3 id = "simIntro">Text description of the Simulation:</h3>
+            <p id = "trafficText"></p>
             <p id = "peopleText"></p>
             <p id = "litterText"></p>
-            <p id = "trafficText"></p>
             <p id = "rainfallText"></p>
+            <p id = "tempText"></p>
         </div>
 
     </div>

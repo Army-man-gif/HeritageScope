@@ -23,24 +23,27 @@ write intro to project here
 ##  Prototype achievements and what is left for future development:
 ### Feature List
 
-| ID | Description | Develop | Progress |
-|----|-------------|--------|----------|
-| F-1 | Highlighting heritage and cultural sites on a map | Develop (Core functionality) | |
-| F-2 | Readable text in a large easy to see font | Develop (Core functionality) | |
-| F-3 | Colour blind modes | Part-develop (Enhanced functionality) | |
-| F-4 | Interactive map-based visualisation | Develop (Core functionality) | |
-| F-5 | Visual environmental simulation tool with additional text description | Develop (Core functionality) | |
-| F-6 | High contrast UI | Develop (Core functionality) | |
-| F-7 | Magnification capability | Develop (Core functionality) | |
-| F-8 | Keyboard accessibility | Develop (Core functionality) | |
-| F-9 | Area filtering tool | Part-develop (Enhanced functionality) | |
-| F-10 | Offline functionalities | Part-develop (Enhanced functionality) | |
-| F-11 | Text to speech tool | Develop (Core functionality) | |
-| F-12 | Path routing | Part-develop (Enhanced functionality) | |
-| F-13 | User input on accessibility of areas | Part-develop (Enhanced functionality) | |
-| F-14 | Reward system for user input | Part-develop (Enhanced functionality) | |
-| F-15 | Additional resources for areas | Excluded from first prototype (Future development) | |
-| F-16 | Interactive snapshot of visualisation map / simulation dynamic to user's filter and selected choices | Part-develop (Enhanced functionality) | |
+| ID | Description | Develop | Progress | Owners |
+|-----|-------------|--------|----------|--------|
+| F1 | Highlighting Heritage and cultural sites on a map. | Develop (Core functionality) | | Yi & Karlie
+| F2 | Readable text in a large easy to see font | Develop (Core functionality) | | Yi |
+| F3 | Colour blind modes | Part-develop (Enhanced functionality) | | Arsam |
+| F4 | Interactive map-based visualisation | Develop (Core functionality) | | Armaan |
+| F5 | Visual environmental simulation tool with additional text description | Develop (Core functionality) | | Jocelyn |
+| F6 | High contrast UI. | Develop (Core functionality) | | Karlie |
+| F7 | Magnification capability. | Develop (Core functionality) | | Karlie |
+| F8 | Keyboard accessibility. | Develop (Core functionality) | | Armaan |
+| F9 | Area filtering tool. | Part-develop (Enhanced functionality) | | Issac |
+| F10 | Offline functionalities. | Part-develop (Enhanced functionality) | | Issac |
+| F11 | Text to Speech tool. | Develop (Core functionality) | | Jocelyn |
+| F12 | Path routing. | Part-develop (Enhanced functionality) | | Esther |
+| F13 | User input on accessibility of areas. | Part-develop (Enhanced functionality) | | Arsam |
+| F14 | Reward system for user input | Part-develop (Enhanced functionality) | | Arsam |
+| F15 | Additional resources for areas. | Excluded from first prototype (Future development) | |May not be done, left to last. |
+| F16 | Interactive snapshot of visualisation map / simulation dynamic to user’s filter and selected choices. | Part-develop (Enhanced functionality) | | May not be done, left to last. |
+
+### Additions:
+
 
 ## Unit & Integration Testing:
 Our testing outline is found in this document: 
