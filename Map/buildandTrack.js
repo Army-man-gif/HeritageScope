@@ -21,6 +21,11 @@ async function runWatcher() {
         outfile: "bundle.js",
         minify: false,
         sourcemap: true,
+        loader: {
+            ".geojson": "json",
+            ".json": "json"
+
+        },
         platform: "browser",
         target: ["esnext"],
         format: "iife"

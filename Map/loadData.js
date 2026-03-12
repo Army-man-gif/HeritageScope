@@ -1,7 +1,7 @@
-export async function loadDataset() {
+import dataset from "./dataset.geojson";
 
-    const fetchData = await fetch("dataset.geojson");
+export function loadDataset() {
 
-    return await fetchData.json();
-
+    return dataset;
+    
 }
