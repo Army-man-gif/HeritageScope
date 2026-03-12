@@ -1,4 +1,10 @@
 import { createMap } from './createMap.js';
+import './riskLevelOverlay.js';
+import './collapsibleToolbar.js';
+import '../Accessibility/accessibility.js';
+import './init/highlight-init.js';
+import './init/accessibility-init.js';
+
 import { MarkerHighlight } from './highlight.js';
 
 import { loadDataset } from './loadData.js';
@@ -11,29 +17,36 @@ import { dynamicallyBuildLanguageSelection } from './languageChangeController.js
 // Legend
 // Change styling a lil
 // Snapshot of map
-// Build it so it works on double click
+// Build it so it works on double click - Compelte
+// Integrate the init folder into main.js
 let currentLanguage = "en";
 let markers = L.markerClusterGroup();
 let highlighter;
 let codeValuePairs = [];
 
-try {
 
 
-    function setLanguage(lang){
-        currentLanguage = lang;
+function setLanguage(lang){
+    currentLanguage = lang;
+}
+
+async function startMain(){
+    let jsonData;
+    try {
+        jsonData = await loadDataset(); // wait for it to finish
+        console.log("Dataset loaded successfully");
+    } catch (err) {
+        console.error("Error loading dataset", err);
+        return;
     }
-    console.log("Successfully imported dataset");
-
     const map = createMap();
     globalThis.hsMap = map;
-
     globalThis.dispatchEvent(
         new CustomEvent('heritage:map-ready', { detail: { map } })
     );
 
     highlighter = new MarkerHighlight(map);
-    const jsonData = await loadDataset();
+
     const initialFeature = jsonData.features[0];
 
     const languages = Object.keys(initialFeature.properties)
@@ -76,13 +89,12 @@ try {
     const languageController = new LanguageControl({ position: "topright" });
 
     map.addControl(languageController);
-
-
-} catch (error) {
-
-    console.error("Error loading dataset file", error);
-
 }
+
+startMain().catch(err => console.error("running main failed:", err));
+
+
+
 
 
 
