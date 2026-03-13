@@ -29,10 +29,10 @@ function setLanguage(lang){
     currentLanguage = lang;
 }
 
-function startMain(){
+async function startMain(){
     let jsonData;
     try {
-        jsonData = loadDataset(); // wait for it to finish
+        jsonData = await loadDataset(); // wait for it to finish
         console.log("Dataset loaded successfully");
     } catch (err) {
         console.error("Error loading dataset", err);
@@ -90,7 +90,7 @@ function startMain(){
     map.addControl(languageController);
 }
 
-startMain();
+startMain().catch((err) => "Failed to start main");
 
 
 
