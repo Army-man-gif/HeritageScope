@@ -1,4 +1,4 @@
-import { HighContrast, RescaleText } from "../../Accessibility/accessibility.js";
+import { HighContrast, RescaleText } from "./accessibility.js";
 
 const fontSizeToPreset = {
   16: "normal",
