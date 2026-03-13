@@ -34,7 +34,10 @@ export async function toggleStatusOverlay(map) {
             circle.addTo(map);
             statusCircles.push(circle);
         });
-
+        const bounds = statusCircles[0].getBounds();
+        if (bounds && bounds.isValid()) {
+            map.fitBounds(bounds, { padding: [30, 30], maxZoom: 15 });
+        }
         overlayVisible = true;
         document.getElementById('status-btn').textContent = 'Hide At-Risk Sites';
     } catch (error) {
