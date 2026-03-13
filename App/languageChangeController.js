@@ -8,7 +8,6 @@ export function dynamicallyBuildLanguageSelection(codeValuePairs, currentLanguag
     const title = L.DomUtil.create('div', 'language-control__title', optionBox);
     title.textContent = 'Language';
     L.DomEvent.disableClickPropagation(optionBox);
-    L.DomEvent.disableClickPropagation(biggerContainer);
     codeValuePairs.forEach(pair => {
         const label = L.DomUtil.create('label','Langlabel',optionBox);
         label.append(`${pair.label }`)
