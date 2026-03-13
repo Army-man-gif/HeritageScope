@@ -18,7 +18,7 @@ function ensureStatusNode() {
     }
     return status;
 }
-function run(status){
+function run(input,status){
     const raw = input.value.trim();
     const lid = Number.parseInt(raw, 10);
 
@@ -64,12 +64,12 @@ function bindToolbar() {
 
 
     runButton.addEventListener('click', () => {
-        const updatedStatus = run(status);
+        const updatedStatus = run(input,status);
         status = updatedStatus;
     });
     input.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
-            const updatedStatus = run(status);
+            const updatedStatus = run(input,status);
             status = updatedStatus;
         }
     });
@@ -88,12 +88,12 @@ async function initAreaHighlight(map) {
 }
 
 function bootstrap() {
-    if (window.hsMap) {
-        initAreaHighlight(window.hsMap);
+    if (globalThis.hsMap) {
+        initAreaHighlight(globalThis.hsMap);
         return;
     }
 
-    window.addEventListener(
+    globalThis.addEventListener(
         'heritage:map-ready',
         (event) => {
             initAreaHighlight(event.detail.map);
