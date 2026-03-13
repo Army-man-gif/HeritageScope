@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Heritage Scope</title>
+    <!-- Character encoding -->
+    <meta charset="UTF-8">
+    <!-- Makes it responsive on phones -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Optional: description for SEO -->
+    <meta name="description" content="Heritage and cultural site map and simulation">
+    <!-- Links to leaflet CSS file [following a tutorial rn]-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="">
+        </script>
+    <!-- Import leaflet cluster CSS and JS-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Import team's main javascript file that governs the ENTIRE functionality -->
+    <script defer src="bundle.js"></script>
+    
+    <!-- Import custom styles team have made -->
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/accessibility.css">
+
+</head>
+
+<body class="map-page">
+    <div class="toolbarContainer">
+        <div class="toolbarStack">
+            <div id="accessibility_toolbar" class="toolbar">
+                <button class="font-btn" id="smallText" data-size="normal" >A</button>
+                <button class="font-btn" id="mediumText" data-size="large" >A+</button>
+                <button class="font-btn" id="largeText" data-size="xlarge" >A++</button>
+                <button id="contrast-btn">High Contrast</button>
+            </div>
+            <div id="statusToolbar" class="toolbar">
+                <button id="status-btn" onclick="handleStatusToggle()">Show At-Risk Sites</button>
+                <a id="simulation" href="./Simulation/simulation.html" target="_blank">Simulation</a>
+            </div>
+            <div id="areaHighlightToolbar" class="toolbar">
+                <input id="lidInput" placeholder="Enter a locationID (for demo)" style="width: 200px;">
+                <button id="areaMarkRun">Run</button>
+            </div>
+        </div>
+        <button id="toolbarToggle" class="floatingToggle" type="button" aria-label="Close toolbar">&#x274E;</button>
+    </div>
+
+    <div class="mapShell">
+        <div id="map"></div>
+    </div>
+
+    <script src = "../Accessibility/TTS.js"></script>
+</body>
+
+</html>

@@ -16,6 +16,35 @@ write intro to project here
   spring.datasource.password=**YOUR_POSTGRES_PASSWORD**
 
 3. Run the backend
+4. Use this command "./mvnw clean spring-boot:run" for bash terminal/macos/linux runs
+5. Use this command "mvnw.cmd spring-boot:run" for windows/command prompt runs
+# Instructions before making any changes to the code
+1. If you don't have node.js installed
+- Go to this link: https://nodejs.org/en/download
+- Scroll down to where it says : "Or get a prebuilt Node.js® for Windows
+  running an x64 architecture
+- Pick the "Windows Installer (.msi) option
+- During installation it'll give the option "Add to PATH" select that. 
+- For rest select defaults
+- Open a terminal run:
+- node -v
+- You should see v20.5.1 or some later version
+- npm -v
+- You should see 9.8.0 or some later version
+2. If you have just installed node.js or already had it installed
+- cd into project
+- Run npm install
+- Wait for it to finish running
+- Run npm track
+- Expect this output:
+> map@1.0.0 track
+> node buildandTrack.js
+
+Starting esbuild watcher...
+Initial build complete! Watching for changes...
+- Now just minimise the terminal and continue. Should all work
+- To cancel the tracker run "npm run cancel"
+- Killing the terminal also cancels the tracker
 
 ## Libraries or requirements required to run it:
 
