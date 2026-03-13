@@ -10,11 +10,11 @@ import { dynamicallyBuildLanguageSelection } from './languageChangeController.js
 
 
 
-// Ad more metrics - poluttion, density etc..
+// Add more metrics - poluttion, density etc..
 // Legend
 // Change styling a lil
 // Snapshot of map // Offline
-// Add toggle close to language control
+// Add toggle close to language control - Complete
 // Integreate simulation into main app - Complete
 // Build it so it works on double click - Complete
 // Integrate the init folder into main.js - Complete
