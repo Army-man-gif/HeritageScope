@@ -1,4 +1,4 @@
-import { createDefaultIcon } from './highlight.js';
+import { createDefaultIcon } from './AreaHighlighter.js';
 import { buildLanguageSpecificPopup } from './createPopup.js';
 
 function convPointToLayer(highlighter) {

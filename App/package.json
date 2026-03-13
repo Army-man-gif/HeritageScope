@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "track": "node buildandTrack.js",
-    "cancel": "node stopTracker.js"
+    "track": "node ./changeTrackers/buildandTrack.js",
+    "cancel": "node ./changeTrackers/stopTracker.js"
   },
   "keywords": [],
   "author": "",

@@ -1,12 +1,10 @@
-import { createMap } from './createMap.js';
 import './riskLevelOverlay.js';
 import './collapsibleToolbar.js';
-import '../Accessibility/accessibility.js';
-import './init/highlight-init.js';
-import './init/accessibility-init.js';
+import './AreaHighlighter/AreaHighlighterUI.js';
+import { MarkerHighlight } from './AreaHighlighter/AreaHighlighter.js';
+import './Accessbility/accessbilityUIButtons.js';
 
-import { MarkerHighlight } from './highlight.js';
-
+import { createMap } from './createMap.js';
 import { loadDataset } from './loadData.js';
 import { convertDatasetToLayers } from './createMarkers.js';
 import { dynamicallyBuildLanguageSelection } from './languageChangeController.js';
@@ -16,7 +14,7 @@ import { dynamicallyBuildLanguageSelection } from './languageChangeController.js
 // Ad more metrics - poluttion, ddensity etc..
 // Legend
 // Change styling a lil
-// Snapshot of map
+// Snapshot of map // Offline
 // Build it so it works on double click - Compelte
 // Integrate the init folder into main.js
 let currentLanguage = "en";

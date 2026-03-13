@@ -16,7 +16,7 @@ write intro to project here
   spring.datasource.password=**YOUR_POSTGRES_PASSWORD**
 
 3. Run the backend
-4. Use this command "./mvnw spring-boot:run" for bash terminal/macos/linux runs
+4. Use this command "./mvnw clean spring-boot:run" for bash terminal/macos/linux runs
 5. Use this command "mvnw.cmd spring-boot:run" for windows/command prompt runs
 # Instructions before making any changes to the code
 1. If you don't have node.js installed

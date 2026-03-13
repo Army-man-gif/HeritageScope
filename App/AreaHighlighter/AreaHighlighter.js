@@ -1,5 +1,5 @@
 /* kelly's job */
-import mockData from "./init/mocking_HighLightArea.json";
+import mockData from "./mocking_HighLightArea.json";
 // Custom highlighted marker icon (yellow)
 export function createHighlightIcon() {
     return L.divIcon({
@@ -137,7 +137,7 @@ export class AreaHighlight {
     }
 
     /* locationID -> polygon coords */
-    async fetchMockingData(path) {
+    async fetchMockingData() {
         try {
             this.m_data = mockData;
             return { code: 0, message: "Mocking data loaded successfully" };
@@ -146,26 +146,6 @@ export class AreaHighlight {
             this.m_data = null;
             return { code: -1, message: error.message };
         }
-
-        /*
-
-       try{
-            const response = await fetch(path);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-            if (!data || typeof data !== 'object') {
-                throw new Error('Mocking data must be a JSON object');
-            }
-            this.m_data = data;
-            return { code: 0, message: 'Mocking data loaded successfully' };
-        } catch (error) {
-            console.error('Error fetching mocking data:', error);
-            this.m_data = null;
-            return { code: -1, message: error.message };
-        }
-        */
     }
 
     /* this only reads mocking data for demonstration */
