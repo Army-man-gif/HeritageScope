@@ -62,28 +62,28 @@
 /* Individual styling for sliders*/
 
 #trafficSlider::-webkit-slider-thumb {
-  background: url('images/car.png');
+  background: url('../Simulation/images/car.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 #trafficSlider::-moz-range-thumb {
-  background: url('images/car.png');
+  background: url('../Simulation/images/car.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 #touristSlider::-webkit-slider-thumb {
-  background: url('images/plane.png');
+  background: url('../Simulation/images/plane.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 #touristSlider::-moz-range-thumb {
-  background: url('images/plane.png');
+  background: url('../Simulation/images/plane.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -92,7 +92,7 @@
 #litterSlider::-webkit-slider-thumb {
   width: 30px;
   height: 30px;
-  background: url('images/paperball.png');
+  background: url('../Simulation/images/paperball.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -101,7 +101,7 @@
 #litterSlider::-moz-range-thumb {
   width: 30px;
   height: 30px;
-  background: url('images/paperball.png');
+  background: url('../Simulation/images/paperball.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -110,7 +110,7 @@
 #rainfallSlider::-webkit-slider-thumb {
   width: 20px;
   height: 60px;
-  background: url('images/raindrop.png');
+  background: url('../Simulation/images/raindrop.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -119,7 +119,7 @@
 #rainfallSlider::-moz-range-thumb {
   width: 20px;
   height: 60px;
-  background: url('images/raindrop.png');
+  background: url('../Simulation/images/raindrop.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -128,7 +128,7 @@
 #tempSlider::-webkit-slider-thumb {
   width: 20px;
   height: 60px;
-  background: url('images/thermometer.png');
+  background: url('../Simulation/images/thermometer.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -137,7 +137,7 @@
 #tempSlider::-moz-range-thumb {
   width: 20px;
   height: 60px;
-  background: url('images/thermometer.png');
+  background: url('../Simulation/images/thermometer.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

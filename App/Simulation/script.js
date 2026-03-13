@@ -142,7 +142,7 @@ function updateCars() {
   
   // add cars depending on input
   carsDiv.innerHTML = ""; // remove old entries
-
+  
   trafficText.innerHTML = "";
 
   // max 5 cars
@@ -150,7 +150,7 @@ function updateCars() {
   for (let i = 0; i < trafficSlider.value / 20; i++) {
 
     let car = document.createElement("img");
-    car.src = "images/car.png";
+    car.src = "./images/car.png";
     car.style.position = "absolute";
     car.style.bottom = (30 + i * 80) + "px";
     car.style.left = "460px";

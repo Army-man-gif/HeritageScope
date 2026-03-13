@@ -3,7 +3,6 @@ import './collapsibleToolbar.js';
 import './AreaHighlighter/AreaHighlighterUI.js';
 import { MarkerHighlight } from './AreaHighlighter/AreaHighlighter.js';
 import './Accessbility/accessbilityUIButtons.js';
-
 import { createMap } from './createMap.js';
 import { loadDataset } from './loadData.js';
 import { convertDatasetToLayers } from './createMarkers.js';
@@ -11,12 +10,14 @@ import { dynamicallyBuildLanguageSelection } from './languageChangeController.js
 
 
 
-// Ad more metrics - poluttion, ddensity etc..
+// Ad more metrics - poluttion, density etc..
 // Legend
 // Change styling a lil
 // Snapshot of map // Offline
-// Build it so it works on double click - Compelte
-// Integrate the init folder into main.js
+// Add toggle close to language control
+// Integreate simulation into main app - Complete
+// Build it so it works on double click - Complete
+// Integrate the init folder into main.js - Complete
 let currentLanguage = "en";
 let markers = L.markerClusterGroup();
 let highlighter;
