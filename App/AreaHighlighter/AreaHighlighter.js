@@ -1,5 +1,4 @@
 /* kelly's job */
-import mockData from "./mocking_HighLightArea.json";
 // Custom highlighted marker icon (yellow)
 export function createHighlightIcon() {
     return L.divIcon({
@@ -139,7 +138,8 @@ export class AreaHighlight {
     /* locationID -> polygon coords */
     async fetchMockingData() {
         try {
-            this.m_data = mockData;
+            const response = await fetch("./AreaHighlighter/mocking_HighLightArea.json");
+            this.m_data = await response.json();
             return { code: 0, message: "Mocking data loaded successfully" };
         } catch (error) {
             console.error("Error loading mocking data:", error);
