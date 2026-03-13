@@ -29,12 +29,12 @@ export function dynamicallyBuildLanguageSelection(codeValuePairs, currentLanguag
     toggleCloseOpen.id = "languageToggle";
     toggleCloseOpen.type = "button";
     toggleCloseOpen.setAttribute("aria-label", "Close language control");
-    toggleCloseOpen.textContent = "❎";
+    toggleCloseOpen.innerHTML = '\u274E';
 
     toggleCloseOpen.addEventListener("click", () => {
         const isCollapsed = biggerContainer.classList.toggle("is-collapsed");
 
-        toggleCloseOpen.textContent = isCollapsed ? "🔨" : "❎";
+        toggleCloseOpen.innerHTML = isCollapsed ? '\u{1F528}' : '\u274E';
 
         toggleCloseOpen.setAttribute(
             "aria-label",

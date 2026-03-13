@@ -74,7 +74,7 @@
 .toolbarContainer {
     position: absolute;
     top: 34px;
-    left: 50%;
+    left: 40%;
     transform: translateX(-50%);
     z-index: 1000;
     display: flex;

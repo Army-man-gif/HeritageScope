@@ -14,8 +14,9 @@ import { dynamicallyBuildLanguageSelection } from './languageChangeController.js
 // Legend
 // Change styling a lil
 // Snapshot of map // Offline
+// Focus in on the "Show at risk sites"
 // Add toggle close to language control - Complete
-// Integreate simulation into main app - Complete
+// Integrate simulation into main app - Complete
 // Build it so it works on double click - Complete
 // Integrate the init folder into main.js - Complete
 let currentLanguage = "en";
