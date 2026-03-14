@@ -32,16 +32,22 @@
 
 <body class="map-page">
     <div class="mapLayout">
-        <section class="mapTopSection">
-            <div class="toolbarContainer">
-                <div class="toolbarStack">
-                    <div id="simluationToast" class="utilityInfoRow">
-                        <span class="utilityLabel">Info</span>
-                        <div id="info">When zooming out in the map the number is the number shown is the number of
-                            cultural sites in that area chunk</div>
-                    </div>
-                </div>
+        <section class="pageUtilityBar">
+            <div id="multi_toolbar" class="toolbar topAccessibilityBar">
+                <span class="utilityLabel">Text Size</span>
+                <button class="font-btn" id="smallText" data-size="normal">A</button>
+                <button class="font-btn" id="mediumText" data-size="large">A+</button>
+                <button class="font-btn" id="largeText" data-size="xlarge">A++</button>
+                <button id="contrast-btn">High Contrast</button>
+            </div>
+        </section>
 
+        <section class="mapTopSection">
+            <div id="infoToast" class="utilityToast">
+                <span class="utilityLabel">Info</span>
+                <div id="info">When zooming out in the map the number is the number shown is the number of
+                    cultural sites in that area chunk</div>
+                <button id="infoToastClose" class="utilityToastClose" type="button" aria-label="Close info notice">&#x274E;</button>
             </div>
 
             <div class="mapShell">
@@ -73,16 +79,8 @@
             <div class="splitPanel utilityPanel">
                 <div class="splitPanelHeader">Utility</div>
                 <div class="utilityPanelBody">
-                    <div id="multi_toolbar" class="toolbar utilitySection">
-                        <span class="utilityLabel">Text Size</span>
-                        <button class="font-btn" id="smallText" data-size="normal">A</button>
-                        <button class="font-btn" id="mediumText" data-size="large">A+</button>
-                        <button class="font-btn" id="largeText" data-size="xlarge">A++</button>
-                        <button id="contrast-btn">High Contrast</button>
-                    </div>
-
                     <div id="simulationToolbar" class="toolbar utilitySection">
-                        <span class="utilityLabel">Simulation</span>
+                        <span class="utilityLabel">Tools</span>
                         <button id="status-btn" onclick="handleStatusToggle()">Show At-Risk Sites</button>
                         <button id="simulationTrigger" type="button">Open Simulation</button>
                     </div>

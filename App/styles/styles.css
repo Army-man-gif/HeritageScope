@@ -23,6 +23,11 @@
     gap: 18px;
 }
 
+.pageUtilityBar {
+    display: flex;
+    justify-content: center;
+}
+
 .mapTopSection {
     position: relative;
     min-height: 68vh;
@@ -191,10 +196,10 @@
     grid-template-columns: 1fr;
     height: auto;
     gap: 18px;
+    align-items: start;
 }
 
 .splitPanel {
-    min-height: 420px;
     display: flex;
     flex-direction: column;
 }
@@ -227,15 +232,37 @@
     white-space: nowrap;
 }
 
-.utilityInfoRow {
+.topAccessibilityBar {
+    width: min(100%, 920px);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.utilityToast {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
+    margin-bottom: 14px;
     padding: 14px 16px;
     border: 1px solid #d6e1f3;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.86);
+    background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 10px 24px rgba(19, 44, 88, 0.08);
+}
+
+.utilityToastClose {
+    width: 38px;
+    min-width: 38px;
+    height: 38px;
+    min-height: 38px;
+    margin-left: auto;
+    border: 1px solid var(--button-border);
+    border-radius: 10px;
+    background: var(--button-bg);
+    color: var(--text-primary);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .splitPanelHeader {
@@ -257,6 +284,7 @@
 }
 
 .splitPanelPlaceholder {
+    min-height: 420px;
     align-items: center;
     justify-content: center;
 }
@@ -327,79 +355,6 @@
     font-size: 2rem;
     font-weight: 700;
     letter-spacing: 0.12em;
-}
-
-.toolbarContainer {
-    position: absolute;
-    top: 34px;
-    left: 40%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    transition: transform 0.32s ease;
-}
-
-.toolbarStack {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: transform 0.32s ease, opacity 0.24s ease, max-height 0.32s ease;
-    transform-origin: bottom center;
-    max-height: 260px;
-}
-
-.floatingToggle {
-    width: 48px;
-    height: 48px;
-    min-height: 48px;
-    padding: 0;
-    border: 1px solid var(--button-border);
-    border-radius: 999px;
-    background: linear-gradient(180deg, #ffffff 0%, #dfeaff 100%);
-    color: var(--text-primary);
-    font-size: 1.15rem;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 10px 24px rgba(15, 42, 85, 0.18);
-    transition: transform 0.32s ease, background 0.2s ease, box-shadow 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-}
-
-.floatingToggle:hover {
-    background: var(--button-hover);
-    box-shadow: 0 14px 28px rgba(15, 42, 85, 0.2);
-}
-
-.floatingToggle:focus-visible {
-    outline: none;
-    box-shadow: var(--focus-ring);
-}
-
-.toolbarContainer.is-collapsed .toolbarStack {
-    opacity: 0;
-    transform: translateY(-22px);
-    pointer-events: none;
-    max-height: 0;
-}
-
-.biggerContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
-
-.biggerContainer.is-collapsed .lang {
-    opacity: 0;
-    transform: translateY(-22px);
-    pointer-events: none;
-    max-height: 0;
 }
 
 .leaflet-bottom.leaflet-right {
@@ -575,26 +530,16 @@ input {
         flex-wrap: wrap;
     }
 
-    .toolbarContainer {
-        top: 22px;
-        left: auto;
-        right: 12px;
-        transform: none;
-    }
-
-    .toolbarContainer.is-collapsed .toolbarStack {
-        transform: translateY(-18px);
-    }
-
     .toolbar input {
         width: 100%;
     }
 
-    .utilityInfoRow {
-        flex-direction: column;
+    .utilityToast {
+        align-items: flex-start;
+        flex-wrap: wrap;
     }
 
-    .splitPanel {
+    .splitPanelPlaceholder {
         min-height: 320px;
     }
 
