@@ -1,5 +1,6 @@
 import './riskLevelOverlay.js';
 import './collapsibleToolbar.js';
+import './utilityDialog.js';
 import './AreaHighlighter/AreaHighlighterUI.js';
 import { MarkerHighlight } from './AreaHighlighter/AreaHighlighter.js';
 import './Accessbility/accessbilityUIButtons.js';
@@ -47,6 +48,14 @@ async function startMain(){
 
     highlighter = new MarkerHighlight(map);
 
+    /* Yi modified with codex: clicking empty map space clears the yellow marker state and any active area polygon. */
+    map.on('click', () => {
+        highlighter.clear();
+        if (typeof globalThis.hsClearAreaHighlight === 'function') {
+            globalThis.hsClearAreaHighlight();
+        }
+    });
+
     const initialFeature = jsonData.features[0];
 
     const languages = Object.keys(initialFeature.properties)
@@ -89,6 +98,9 @@ async function startMain(){
     const languageController = new LanguageControl({ position: "topright" });
 
     map.addControl(languageController);
+
+    requestAnimationFrame(() => map.invalidateSize());
+    globalThis.addEventListener('resize', () => map.invalidateSize());
 }
 
 startMain().catch((err) => "Failed to start main");

@@ -20,3 +20,7 @@ helped in writing the comments part by AI.
 5. I use codex for Solve the problem of rewriting the path after the reconstruction of the file structure. These annoying problems are solved.
 
 6. I use codex Improved the situation not written in css.
+
+7. I used Codex to wire marker clicks to area highlights, add fallback mocked polygons when no explicit mock area exists, clear marker/highlight state on blank map clicks, and improve the map UI with toast and control button animations.
+
+8. I used Codex to add a database-backed area polygon flow: marker clicks now query area data by marker coordinates, the LID input queries area data by id, and the UI falls back to a generated mocked area with an animated info toast when no database polygon exists.

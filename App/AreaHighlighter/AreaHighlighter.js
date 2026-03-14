@@ -120,12 +120,15 @@ SUCCESS = 0
 ERROR = -1
 ALREADY_EXISTS = 1
 NOT_FOUND = -1 */
+const AREA_API_BASE = 'http://localhost:8080/api/areas';
+
 export class AreaHighlight {
     constructor(map, defaultStyle = {}) {
         this.map = map;
         this.highlightLayer = L.layerGroup().addTo(map);
         this.layerTable = {};
         this.m_data = null;
+        this.fallbackLayers = {};
         this.defaultStyle = {
             color: '#FFD700',
             fillColor: '#FFD700',
@@ -135,29 +138,86 @@ export class AreaHighlight {
         };
     }
 
-    /* locationID -> polygon coords */
-    async fetchMockingData() {
+    /* Yi modified with codex: parse polygon payloads returned from the backend database. */
+    parsePolygonData(polyData) {
+        if (Array.isArray(polyData)) {
+            return polyData;
+        }
+
+        if (typeof polyData === 'string') {
+            try {
+                return JSON.parse(polyData);
+            } catch (error) {
+                console.error('Error parsing polygon data:', error);
+            }
+        }
+
+        return null;
+    }
+
+    /* Yi modified with codex: query database-backed area data by id for the toolbar input. */
+    async fetchAreaById(lid) {
         try {
-            const response = await fetch("./AreaHighlighter/mocking_HighLightArea.json");
-            this.m_data = await response.json();
-            return { code: 0, message: "Mocking data loaded successfully" };
+            const response = await fetch(`${AREA_API_BASE}/${encodeURIComponent(lid)}`);
+            if (response.status === 404) {
+                return { code: 404, message: `No database polygon found for lid: ${lid}` };
+            }
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            return { code: 0, message: 'Database polygon loaded successfully', data };
         } catch (error) {
-            console.error("Error loading mocking data:", error);
-            this.m_data = null;
+            console.error('Error loading database polygon by id:', error);
             return { code: -1, message: error.message };
         }
     }
 
-    /* this only reads mocking data for demonstration */
-    lid2poly(lid, styleOverride = {}) {
-        if (!this.m_data) {
-            return { code: -1, message: 'Data not loaded. Call fetchMockingData() first.' };
-        }
+    /* Yi modified with codex: query database-backed area data by marker coordinates before falling back to a generated mock area. */
+    async fetchAreaByMarker(latlng) {
+        const params = new URLSearchParams({
+            latitude: String(latlng.lat),
+            longitude: String(latlng.lng)
+        });
 
-        const key = String(lid);
-        const polyData = this.m_data[key];
+        try {
+            const response = await fetch(`${AREA_API_BASE}/by-marker?${params.toString()}`);
+            if (response.status === 404) {
+                return { code: 404, message: 'No database polygon found for marker position.' };
+            }
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            return { code: 0, message: 'Database polygon loaded successfully', data };
+        } catch (error) {
+            console.error('Error loading database polygon by marker position:', error);
+            return { code: -1, message: error.message };
+        }
+    }
+
+    /* Yi modified with codex: generate a temporary polygon around any marker without explicit mock data. */
+    createFallbackPolygon(latlng, styleOverride = {}) {
+        const latitude = latlng.lat;
+        const longitude = latlng.lng;
+        const latOffset = 0.22;
+        const lngScale = Math.max(0.35, Math.abs(Math.cos(latitude * Math.PI / 180)));
+        const lngOffset = 0.28 / lngScale;
+
+        const polygon = L.polygon([
+            [latitude + latOffset, longitude - lngOffset * 0.9],
+            [latitude + latOffset * 0.45, longitude + lngOffset],
+            [latitude - latOffset, longitude + lngOffset * 0.75],
+            [latitude - latOffset * 0.85, longitude - lngOffset * 0.8]
+        ], { ...this.defaultStyle, ...styleOverride });
+
+        return { code: 0, message: 'Fallback polygon created successfully', data: polygon };
+    }
+
+    /* Yi modified with codex: create a Leaflet polygon from either backend-stored or fallback coordinates. */
+    coordsToPolygon(polyData, styleOverride = {}) {
         if (!Array.isArray(polyData) || polyData.length < 3) {
-            return { code: -1, message: `No valid polygon data for lid: ${lid}` };
+            return { code: -1, message: 'No valid polygon data available.' };
         }
 
         const isValid = polyData.every(
@@ -167,20 +227,21 @@ export class AreaHighlight {
                 Number.isFinite(coord[1])
         );
         if (!isValid) {
-            return { code: -1, message: `Invalid coordinate format for lid: ${lid}` };
+            return { code: -1, message: 'Invalid coordinate format for polygon.' };
         }
 
         const polygon = L.polygon(polyData, { ...this.defaultStyle, ...styleOverride });
         return { code: 0, message: 'Polygon created successfully', data: polygon };
     }
 
-    add(lid, styleOverride = {}) {
+    /* Yi modified with codex: use database polygon payloads directly when they exist. */
+    addFromPolygon(lid, polyData, styleOverride = {}) {
         const key = String(lid);
         if (this.layerTable[key]) {
             return { code: 1, message: `Polygon for lid ${lid} already exists`, data: this.layerTable[key] };
         }
 
-        const result = this.lid2poly(key, styleOverride);
+        const result = this.coordsToPolygon(polyData, styleOverride);
         if (result.code !== 0) {
             console.warn(`Failed to create polygon for lid ${lid}. Reason: ${result.message}`);
             return result;
@@ -189,6 +250,42 @@ export class AreaHighlight {
         this.highlightLayer.addLayer(result.data);
         this.layerTable[key] = result.data;
         return { code: 0, message: `Polygon added for lid ${lid}`, data: result.data };
+    }
+
+    /* Yi modified with codex: toolbar lookups now read only from the backend database. */
+    async addFromDatabaseId(lid, styleOverride = {}) {
+        const fetched = await this.fetchAreaById(lid);
+        if (fetched.code !== 0) {
+            return fetched;
+        }
+
+        const polyData = this.parsePolygonData(fetched.data?.polyData);
+        return this.addFromPolygon(lid, polyData, styleOverride);
+    }
+
+    /* Yi modified with codex: marker clicks first try database coordinates, then the caller can decide whether to fall back. */
+    async addFromMarkerLookup(lid, latlng, styleOverride = {}) {
+        const fetched = await this.fetchAreaByMarker(latlng);
+        if (fetched.code !== 0) {
+            return fetched;
+        }
+
+        const polyData = this.parsePolygonData(fetched.data?.polyData);
+        return this.addFromPolygon(lid, polyData, styleOverride);
+    }
+
+    /* Yi modified with codex: marker clicks can still show a single highlight even when no explicit mock polygon exists. */
+    addFallback(lid, latlng, styleOverride = {}) {
+        const key = String(lid);
+        const result = this.createFallbackPolygon(latlng, styleOverride);
+        if (result.code !== 0) {
+            return result;
+        }
+
+        this.highlightLayer.addLayer(result.data);
+        this.layerTable[key] = result.data;
+        this.fallbackLayers[key] = true;
+        return { code: 0, message: `Fallback polygon added for lid ${lid}`, data: result.data };
     }
 
     remove(lid) {
@@ -220,6 +317,7 @@ export class AreaHighlight {
     clearHighlight() {
         this.highlightLayer.clearLayers();
         this.layerTable = {};
+        this.fallbackLayers = {};
         return { code: 0, message: 'All area highlights cleared' };
     }
 }
