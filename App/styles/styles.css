@@ -425,6 +425,11 @@
     border-width: 0;
 }
 
+.utilityToast.is-entering {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
 .splitPlaceholderText {
     color: #5a7095;
     font-size: 2rem;

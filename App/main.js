@@ -48,6 +48,14 @@ async function startMain(){
 
     highlighter = new MarkerHighlight(map);
 
+    /* Yi modified with codex: clicking empty map space clears the yellow marker state and any active area polygon. */
+    map.on('click', () => {
+        highlighter.clear();
+        if (typeof globalThis.hsClearAreaHighlight === 'function') {
+            globalThis.hsClearAreaHighlight();
+        }
+    });
+
     const initialFeature = jsonData.features[0];
 
     const languages = Object.keys(initialFeature.properties)

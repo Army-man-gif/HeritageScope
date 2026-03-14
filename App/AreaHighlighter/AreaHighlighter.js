@@ -126,6 +126,7 @@ export class AreaHighlight {
         this.highlightLayer = L.layerGroup().addTo(map);
         this.layerTable = {};
         this.m_data = null;
+        this.fallbackLayers = {};
         this.defaultStyle = {
             color: '#FFD700',
             fillColor: '#FFD700',
@@ -146,6 +147,32 @@ export class AreaHighlight {
             this.m_data = null;
             return { code: -1, message: error.message };
         }
+    }
+
+    /* Yi modified with codex: keep a simple lookup so only a limited set of explicit mock polygons is stored on disk. */
+    hasMockingData(lid) {
+        if (!this.m_data) {
+            return false;
+        }
+        return Array.isArray(this.m_data[String(lid)]);
+    }
+
+    /* Yi modified with codex: generate a temporary polygon around any marker without explicit mock data. */
+    createFallbackPolygon(latlng, styleOverride = {}) {
+        const latitude = latlng.lat;
+        const longitude = latlng.lng;
+        const latOffset = 0.22;
+        const lngScale = Math.max(0.35, Math.abs(Math.cos(latitude * Math.PI / 180)));
+        const lngOffset = 0.28 / lngScale;
+
+        const polygon = L.polygon([
+            [latitude + latOffset, longitude - lngOffset * 0.9],
+            [latitude + latOffset * 0.45, longitude + lngOffset],
+            [latitude - latOffset, longitude + lngOffset * 0.75],
+            [latitude - latOffset * 0.85, longitude - lngOffset * 0.8]
+        ], { ...this.defaultStyle, ...styleOverride });
+
+        return { code: 0, message: 'Fallback polygon created successfully', data: polygon };
     }
 
     /* this only reads mocking data for demonstration */
@@ -191,6 +218,20 @@ export class AreaHighlight {
         return { code: 0, message: `Polygon added for lid ${lid}`, data: result.data };
     }
 
+    /* Yi modified with codex: marker clicks can still show a single highlight even when no explicit mock polygon exists. */
+    addFallback(lid, latlng, styleOverride = {}) {
+        const key = String(lid);
+        const result = this.createFallbackPolygon(latlng, styleOverride);
+        if (result.code !== 0) {
+            return result;
+        }
+
+        this.highlightLayer.addLayer(result.data);
+        this.layerTable[key] = result.data;
+        this.fallbackLayers[key] = true;
+        return { code: 0, message: `Fallback polygon added for lid ${lid}`, data: result.data };
+    }
+
     remove(lid) {
         const key = String(lid);
         const poly = this.layerTable[key];
@@ -220,6 +261,7 @@ export class AreaHighlight {
     clearHighlight() {
         this.highlightLayer.clearLayers();
         this.layerTable = {};
+        this.fallbackLayers = {};
         return { code: 0, message: 'All area highlights cleared' };
     }
 }
