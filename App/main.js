@@ -11,10 +11,10 @@ import { dynamicallyBuildLanguageSelection } from './languageChangeController.js
 
 
 // Add more metrics - poluttion, density etc..
-// Legend
-// Change styling a lil
+// Legend describing number thing - Complete
+// Change styling a lil - Complete
 // Snapshot of map // Offline
-// Focus in on the "Show at risk sites"
+// Focus in on the "Show at risk sites" - Complete
 // Add toggle close to language control - Complete
 // Integrate simulation into main app - Complete
 // Build it so it works on double click - Complete
