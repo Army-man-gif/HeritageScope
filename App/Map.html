@@ -57,15 +57,15 @@
 
         <section class="routePreviewCard">
             <div class="routePreviewHeader">
-                <h2>Heritage Sites Navigator Demo</h2>
+                <h2 id="navigatorTitle">Heritage Sites Navigator Demo</h2>
                 <div class="routeModeRow">
-                    <button class="routeModeBtn routeModeBtnWalk" type="button">Walking</button>
-                    <button class="routeModeBtn" type="button">Wheelchair</button>
+                    <button id="walking" class="routeModeBtn routeModeBtnWalk" type="button">Walking</button>
+                    <button id="wheelchair" class="routeModeBtn" type="button">Wheelchair</button>
                 </div>
                 <div class="routeSearchRow">
                     <div class="routeSearchGroup">
-                        <label>Destination</label>
-                        <input type="text" placeholder="e.g. Birmingham Museum" />
+                        <label id="destination">Destination</label>
+                        <input id="destinationInput" type="text" placeholder="e.g. Birmingham Museum" />
                     </div>
                     <div class="routeActionRow">
                         <button class="routeGhostBtn" type="button">Locate</button>
@@ -77,7 +77,7 @@
 
         <section class="mapBottomSplit">
             <div class="splitPanel utilityPanel">
-                <div class="splitPanelHeader">Utility</div>
+                <div id = "utilityTitle" class="splitPanelHeader">Utility</div>
                 <div class="utilityPanelBody">
                     <div id="simulationToolbar" class="toolbar utilitySection">
                         <span class="utilityLabel">Tools</span>
@@ -102,7 +102,7 @@
     <dialog id="simulationDialog" class="simulationDialog">
         <div class="simulationDialogShell">
             <div class="simulationDialogHeader">
-                <h3>Environmental Simulation</h3>
+                <h3 id="simTitle">Environmental Simulation</h3>
                 <button id="closeSimulationDialog" class="simulationDialogClose" type="button"
                     aria-label="Close simulation">Close</button>
             </div>

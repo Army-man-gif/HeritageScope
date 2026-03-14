@@ -324,6 +324,18 @@ function speak(text) {
   speechSynthesis.speak(speech);
 }
 
+// to allow one to play after another
+function speak2(text, callback) {
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+
+  utterance.onend = function () {
+    if (callback) callback();
+  };
+
+  speechSynthesis.speak(utterance);
+}
+
 // x,y of tourists
 placedTourists = [30, 360, 50, 100, 200, 200, 200, 30, 300, 300];
 placedLitter = [310,140, 290, 150, 330, 150];
@@ -397,14 +409,52 @@ intro.addEventListener("click", function () {
 
 // reads general when you load in
 window.onload = function(){
-  speak(intro.innerText);
+  speak2(intro.innerText, function () {
+    // say update out loud
+  speak2("Click on text, sliders or images to hear them aloud.");
+  });
 };
 
-// for slider text vals
 // intro
 const slidersIntro = document.getElementById("slidersIntro");
 slidersIntro.addEventListener("click", function () {
   speak(slidersIntro.innerText);
+});
+
+// clicking on sliders
+trafficSlider.addEventListener("click", function () {
+  speak2("This is the traffic slider.", function () {
+    // say update out loud
+  speak2(trafficPara.innerText);
+  });
+});
+
+touristSlider.addEventListener("click", function () {
+  speak2("This is the tourist slider.", function () {
+    // say update out loud
+  speak2(touristPara.innerText);
+  });
+});
+
+litterSlider.addEventListener("click", function () {
+  speak2("This is the litter slider.", function () {
+    // say update out loud
+  speak2(litterPara.innerText);
+  });
+});
+
+rainfallSlider.addEventListener("click", function () {
+  speak2("This is the rainfall slider.", function () {
+    // say update out loud
+  speak2(rainfallPara.innerText);
+  });
+});
+
+tempSlider.addEventListener("click", function () {
+  speak2("This is the temperature slider.", function () {
+    // say update out loud
+  speak2(tempPara.innerText);
+  });
 });
 
 // slider info
@@ -458,6 +508,36 @@ rainfallText.addEventListener("click", function () {
 
 tempText.addEventListener("click", function () {
   speak(tempText.innerText);
+});
+
+// telling you what images are when you click on them
+const simBack = document.getElementById("simBackground");
+simBack.addEventListener("click", function () {
+  speak("This is the simulation background.");
+});
+
+carsDiv.addEventListener("click", function () {
+  speak("This is a car.");
+});
+
+floodsDiv.addEventListener("click", function () {
+  speak("This is a flood.");
+});
+
+peopleDiv.addEventListener("click", function () {
+  speak("This is a person.");
+});
+
+litterDiv.addEventListener("click", function () {
+  speak("This is a piece of litter.");
+});
+
+buildingsDiv.addEventListener("click", function () {
+  speak("This is a building.");
+});
+
+treesDiv.addEventListener("click", function () {
+  speak("This is a tree.");
 });
 
 
