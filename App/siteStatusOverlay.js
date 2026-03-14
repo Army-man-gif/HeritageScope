@@ -6,13 +6,14 @@ const RISK_COLOURS = {
 
 let statusCircles = [];
 let overlayVisible = false;
-
+let statusButton;
 export async function toggleStatusOverlay(map) {
     if (overlayVisible) {
         statusCircles.forEach(c => map.removeLayer(c));
         statusCircles = [];
         overlayVisible = false;
-        document.getElementById('status-btn').textContent = 'Show At-Risk Sites';
+        statusButton = document.getElementById('status-btn')
+        statusButton.textContent = 'Show At-Risk Sites';
         return;
     }
 
@@ -39,7 +40,8 @@ export async function toggleStatusOverlay(map) {
             map.fitBounds(bounds, { padding: [30, 30], maxZoom: 15 });
         }
         overlayVisible = true;
-        document.getElementById('status-btn').textContent = 'Hide At-Risk Sites';
+        statusButton = document.getElementById('status-btn')
+        statusButton.textContent = 'Hide At-Risk Sites';
     } catch (error) {
         console.error('Failed to fetch site status:', error);
         alert('Cant connect to backend..');

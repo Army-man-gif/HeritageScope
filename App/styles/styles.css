@@ -70,7 +70,9 @@
     width: 25px;
     height: 25px;
 }
-
+#info{
+    color: red;
+}
 .toolbarContainer {
     position: absolute;
     top: 34px;
