@@ -5,11 +5,11 @@ import { buildLanguageSpecificPopup } from './createPopup.js';
 function convPointToLayer(highlighter) {
     return function(feature,latlng){
         const marker = L.marker(latlng, { icon: createDefaultIcon() });
-        marker.on('click', function() {
+        marker.on('click', async function() {
             highlighter.highlight(marker, latlng);
             const lid = feature?.properties?.id_no ?? feature?.properties?.id ?? feature?.properties?.locationID;
             if (lid && typeof globalThis.hsFocusAreaHighlight === 'function') {
-                globalThis.hsFocusAreaHighlight(lid, {
+                await globalThis.hsFocusAreaHighlight(lid, {
                     latlng,
                     notifyFallback: true
                 });

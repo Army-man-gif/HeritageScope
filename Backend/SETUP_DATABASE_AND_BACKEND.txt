@@ -1,0 +1,81 @@
+Backend Setup Notes
+
+Project paths
+- Backend app: `Backend/heritagescope`
+- Database dump: `Database/heritagescope_dump.sql`
+
+Current backend database config
+File: `Backend/heritagescope/src/main/resources/application.properties`
+
+Configured values:
+- JDBC URL: `jdbc:postgresql://localhost:5432/heritagescope`
+- Username: `postgres`
+- Password: `password`
+- Port: `8080`
+
+If the local PostgreSQL username/password is different, update `application.properties` first.
+
+1. Create the database
+
+Option A: using psql
+
+```powershell
+psql -U postgres -c "CREATE DATABASE heritagescope;"
+```
+
+Option B: using pgAdmin
+- Create a new database named `heritagescope`
+
+2. Import the SQL dump
+
+Using psql from the repo root:
+
+```powershell
+psql -U postgres -d heritagescope -f "c:\Users\GY\Documents\GitHub\HeritageScope\digital-dream-team\Database\heritagescope_dump.sql"
+```
+
+This imports:
+- `site_status`
+- `area_polygon`
+
+The `area_polygon` table contains:
+- `id`
+- `marker_latitude`
+- `marker_longitude`
+- `poly_data`
+
+3. Start the Spring Boot backend
+
+```powershell
+cd "c:\Users\GY\Documents\GitHub\HeritageScope\digital-dream-team\Backend\heritagescope"
+.\mvnw spring-boot:run
+```
+
+If Maven wrapper is blocked, try:
+
+```powershell
+mvn spring-boot:run
+```
+
+4. Verify the backend
+
+Open these URLs in a browser after startup:
+
+- `http://localhost:8080/api/status`
+- `http://localhost:8080/api/areas/1`
+- `http://localhost:8080/api/areas/by-marker?latitude=51.575&longitude=-0.252`
+
+Expected result
+- `/api/status` returns site status JSON
+- `/api/areas/1` returns one database-backed polygon row
+- `/api/areas/by-marker?...` returns one polygon row when the marker position exists in `area_polygon`
+
+Frontend behavior after backend is running
+- Clicking a marker first queries `/api/areas/by-marker`
+- If found, the area polygon comes from the database
+- If not found, the frontend generates a fallback mocked area and shows an info toast
+- Typing an id in the LID input only queries `/api/areas/{id}`
+
+Notes
+- The current SQL dump includes 30 UK-nearby entries in `area_polygon`
+- If the backend cannot connect, first check PostgreSQL is running and the credentials in `application.properties` are correct

@@ -19,8 +19,8 @@ function ensureStatusNode() {
     return status;
 }
 
-/* Yi modified with codex: centralize polygon focus so toolbar input and marker clicks share the same highlight behavior. */
-function focusAreaHighlight(lid, options = {}) {
+/* Yi modified with codex: centralize polygon focus so database lookups and fallback mock areas share the same map behavior. */
+async function focusAreaHighlight(lid, options = {}) {
     if (!areaHighlighter || !activeMap) {
         return { code: -1, message: 'Area highlighter is not ready.' };
     }
@@ -28,7 +28,8 @@ function focusAreaHighlight(lid, options = {}) {
     const {
         latlng = null,
         status = null,
-        notifyFallback = false
+        notifyFallback = false,
+        databaseOnly = false
     } = options;
 
     areaHighlighter.clearHighlight();
@@ -40,12 +41,14 @@ function focusAreaHighlight(lid, options = {}) {
         weight: 3
     };
 
-    const hasExplicitMock = areaHighlighter.hasMockingData(lid);
-    const result = hasExplicitMock
-        ? areaHighlighter.add(lid, styleOverride)
-        : latlng
-            ? areaHighlighter.addFallback(lid, latlng, styleOverride)
-            : { code: -1, message: `No valid polygon data for lid: ${lid}` };
+    const databaseResult = latlng
+        ? await areaHighlighter.addFromMarkerLookup(lid, latlng, styleOverride)
+        : await areaHighlighter.addFromDatabaseId(lid, styleOverride);
+
+    const shouldUseFallback = databaseResult.code !== 0 && latlng && !databaseOnly;
+    const result = shouldUseFallback
+        ? areaHighlighter.addFallback(lid, latlng, styleOverride)
+        : databaseResult;
 
     if (result.code !== 0 && result.code !== 1) {
         if (status) {
@@ -66,14 +69,14 @@ function focusAreaHighlight(lid, options = {}) {
         result.data.bringToFront();
     }
 
-    if (!hasExplicitMock && notifyFallback && typeof globalThis.showInfoToast === 'function') {
+    if (shouldUseFallback && notifyFallback && typeof globalThis.showInfoToast === 'function') {
         globalThis.showInfoToast('This area highlight is mocked for this site.');
     }
 
     return result;
 }
 
-function run(input,status){
+async function run(input,status){
     const raw = input.value.trim();
     const lid = Number.parseInt(raw, 10);
 
@@ -82,7 +85,7 @@ function run(input,status){
         return;
     }
 
-    focusAreaHighlight(lid, { status });
+    await focusAreaHighlight(lid, { status, databaseOnly: true });
     return status;
 }
 
@@ -98,13 +101,13 @@ function bindToolbar() {
     
 
 
-    runButton.addEventListener('click', () => {
-        const updatedStatus = run(input,status);
+    runButton.addEventListener('click', async () => {
+        const updatedStatus = await run(input,status);
         status = updatedStatus;
     });
-    input.addEventListener('keydown', (event) => {
+    input.addEventListener('keydown', async (event) => {
         if (event.key === 'Enter') {
-            const updatedStatus = run(input,status);
+            const updatedStatus = await run(input,status);
             status = updatedStatus;
         }
     });
@@ -116,12 +119,6 @@ async function initAreaHighlight(map) {
     globalThis.hsAreaHighlighter = areaHighlighter;
     globalThis.hsFocusAreaHighlight = focusAreaHighlight;
     globalThis.hsClearAreaHighlight = () => areaHighlighter.clearHighlight();
-    const loadResult = await areaHighlighter.fetchMockingData();
-    if (loadResult.code !== 0) {
-        console.error('Failed to initialize AreaHighlight:', loadResult.message);
-        return;
-    }
-
     bindToolbar();
 }
 
