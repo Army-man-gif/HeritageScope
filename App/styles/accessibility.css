@@ -4,6 +4,12 @@ body.high-contrast {
 }
 
 body.high-contrast .toolbar,
+body.high-contrast .splitPanel,
+body.high-contrast .splitPanelHeader,
+body.high-contrast .routePreviewCard,
+body.high-contrast .routePreviewHeader,
+body.high-contrast .utilityPanelBody,
+body.high-contrast .utilityToast,
 body.high-contrast .leaflet-control .language-control,
 body.high-contrast .leaflet-popup-content-wrapper,
 body.high-contrast .leaflet-bar,
@@ -15,6 +21,11 @@ body.high-contrast .leaflet-control-layers {
 }
 
 body.high-contrast .toolbar *,
+body.high-contrast .splitPanel *,
+body.high-contrast .splitPanelHeader,
+body.high-contrast .routePreviewCard *,
+body.high-contrast .utilityToast *,
+body.high-contrast .utilityLabel,
 body.high-contrast .leaflet-popup-content,
 body.high-contrast .leaflet-control .language-control__title,
 body.high-contrast .leaflet-control .Langlabel {
@@ -23,6 +34,12 @@ body.high-contrast .leaflet-control .Langlabel {
 
 body.high-contrast .toolbar button,
 body.high-contrast .toolbar input,
+body.high-contrast .utilityLabel,
+body.high-contrast .utilityToastClose,
+body.high-contrast .routeModeBtn,
+body.high-contrast .routeGhostBtn,
+body.high-contrast .routePrimaryBtn,
+body.high-contrast .routeSearchGroup input,
 body.high-contrast .floatingToggle,
 body.high-contrast .leaflet-control-zoom a,
 body.high-contrast .leaflet-control-layers-toggle {
@@ -34,6 +51,15 @@ body.high-contrast .leaflet-control-layers-toggle {
 
 body.high-contrast .toolbar button:hover,
 body.high-contrast .toolbar button:focus-visible,
+body.high-contrast .utilityToastClose:hover,
+body.high-contrast .utilityToastClose:focus-visible,
+body.high-contrast .routeModeBtn:hover,
+body.high-contrast .routeModeBtn:focus-visible,
+body.high-contrast .routeGhostBtn:hover,
+body.high-contrast .routeGhostBtn:focus-visible,
+body.high-contrast .routePrimaryBtn:hover,
+body.high-contrast .routePrimaryBtn:focus-visible,
+body.high-contrast .routeSearchGroup input:focus,
 body.high-contrast .floatingToggle:hover,
 body.high-contrast .floatingToggle:focus-visible,
 body.high-contrast .toolbar input:focus,
@@ -50,11 +76,17 @@ body.high-contrast .floatingToggle {
 
 body.high-contrast .font-btn.active,
 body.high-contrast #contrast-btn,
+body.high-contrast .routePrimaryBtn,
 body.high-contrast #areaMarkRun:hover,
 body.high-contrast #areaMarkRun:focus-visible {
     background: #f5f56a !important;
     color: #000000 !important;
     border-color: #39ff14 !important;
+}
+
+body.high-contrast .splitPlaceholderText,
+body.high-contrast #info {
+    color: #f5f56a !important;
 }
 
 body.high-contrast #lidInput::placeholder {
