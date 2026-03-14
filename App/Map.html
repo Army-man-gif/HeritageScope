@@ -20,10 +20,10 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- Import team's main javascript file that governs the ENTIRE functionality -->
     <script defer type="module" src="main.js"></script>
-    
+
     <!-- Import custom styles team have made -->
     <link rel="stylesheet" href="./styles/styles.css">
     <link rel="stylesheet" href="./styles/accessibility.css">
@@ -31,32 +31,89 @@
 </head>
 
 <body class="map-page">
-    <div class="toolbarContainer">
-        <div class="toolbarStack">
-            <div id="accessibility_toolbar" class="toolbar">
-                <button class="font-btn" id="smallText" data-size="normal" >A</button>
-                <button class="font-btn" id="mediumText" data-size="large" >A+</button>
-                <button class="font-btn" id="largeText" data-size="xlarge" >A++</button>
-                <button id="contrast-btn">High Contrast</button>
+    <div class="mapLayout">
+        <section class="mapTopSection">
+            <div class="toolbarContainer">
+                <div class="toolbarStack">
+                    <div id="simluationToast" class="utilityInfoRow">
+                        <span class="utilityLabel">Info</span>
+                        <div id="info">When zooming out in the map the number is the number shown is the number of
+                            cultural sites in that area chunk</div>
+                    </div>
+                </div>
+
             </div>
-            <div id="statusToolbar" class="toolbar">
-                <button id="status-btn" onclick="handleStatusToggle()">Show At-Risk Sites</button>
-                <a id="simulation" href="./Simulation/simulation.html" target="_blank">Simulation</a>
-                <div id="info">When zooming out in the map the number is the number shown is the number of cultural sites in that area chunk</div>
+
+            <div class="mapShell">
+                <div id="map"></div>
             </div>
-            <div id="areaHighlightToolbar" class="toolbar">
-                <input id="lidInput" placeholder="Enter a locationID (for demo)" style="width: 200px;">
-                <button id="areaMarkRun">Run</button>
+        </section>
+
+        <section class="routePreviewCard">
+            <div class="routePreviewHeader">
+                <h2>Heritage Sites Navigator Demo</h2>
+                <div class="routeModeRow">
+                    <button class="routeModeBtn routeModeBtnWalk" type="button">Walking</button>
+                    <button class="routeModeBtn" type="button">Wheelchair</button>
+                </div>
+                <div class="routeSearchRow">
+                    <div class="routeSearchGroup">
+                        <label>Destination</label>
+                        <input type="text" placeholder="e.g. Birmingham Museum" />
+                    </div>
+                    <div class="routeActionRow">
+                        <button class="routeGhostBtn" type="button">Locate</button>
+                        <button class="routePrimaryBtn" type="button">Go</button>
+                    </div>
+                </div>
             </div>
+        </section>
+
+        <section class="mapBottomSplit">
+            <div class="splitPanel utilityPanel">
+                <div class="splitPanelHeader">Utility</div>
+                <div class="utilityPanelBody">
+                    <div id="multi_toolbar" class="toolbar utilitySection">
+                        <span class="utilityLabel">Text Size</span>
+                        <button class="font-btn" id="smallText" data-size="normal">A</button>
+                        <button class="font-btn" id="mediumText" data-size="large">A+</button>
+                        <button class="font-btn" id="largeText" data-size="xlarge">A++</button>
+                        <button id="contrast-btn">High Contrast</button>
+                    </div>
+
+                    <div id="simulationToolbar" class="toolbar utilitySection">
+                        <span class="utilityLabel">Simulation</span>
+                        <button id="status-btn" onclick="handleStatusToggle()">Show At-Risk Sites</button>
+                        <button id="simulationTrigger" type="button">Open Simulation</button>
+                    </div>
+
+                    <div id="areaHighlightToolbar" class="toolbar utilitySection">
+                        <span class="utilityLabel">Area Highlight</span>
+                        <input id="lidInput" placeholder="LID" style="width: 100px;">
+                        <button id="areaMarkRun">Run</button>
+                    </div>
+                </div>
+            </div>
+            <div class="splitPanel splitPanelPlaceholder">
+                <div class="splitPanelHeader">Panel</div>
+                <div class="splitPlaceholderText">WIP</div>
+            </div>
+        </section>
+    </div>
+
+    <dialog id="simulationDialog" class="simulationDialog">
+        <div class="simulationDialogShell">
+            <div class="simulationDialogHeader">
+                <h3>Environmental Simulation</h3>
+                <button id="closeSimulationDialog" class="simulationDialogClose" type="button"
+                    aria-label="Close simulation">Close</button>
+            </div>
+            <iframe class="simulationDialogFrame" src="./Simulation/simulation.html" title="Environmental Simulation"
+                loading="lazy"></iframe>
         </div>
-        <button id="toolbarToggle" class="floatingToggle" type="button" aria-label="Close toolbar">&#x274E;</button>
-    </div>
+    </dialog>
 
-    <div class="mapShell">
-        <div id="map"></div>
-    </div>
-
-    <script src = "../Accessibility/TTS.js"></script>
+    <script src="../Accessibility/TTS.js"></script>
 </body>
 
 </html>

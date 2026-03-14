@@ -63,6 +63,7 @@ export class RescaleText {
       return;
     }
     document.documentElement.style.fontSize = sizes[size];
+    document.body.style.fontSize = sizes[size];
 
     // Update active state on buttons
     document.querySelectorAll('.font-btn').forEach(btn => {

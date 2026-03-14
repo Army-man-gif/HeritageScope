@@ -15,12 +15,21 @@
     padding: 18px;
     box-sizing: border-box;
     background: linear-gradient(180deg, #edf4ff 0%, #dfeaf9 100%);
-    overflow: hidden;
+    overflow-x: hidden;
+}
+
+.mapLayout {
+    display: grid;
+    gap: 18px;
+}
+
+.mapTopSection {
     position: relative;
+    min-height: 68vh;
 }
 
 .mapShell {
-    height: calc(100vh - 36px);
+    height: 68vh;
     border: 1px solid #b8cae8;
     border-radius: 20px;
     overflow: hidden;
@@ -73,6 +82,253 @@
 #info{
     color: red;
 }
+
+.routePreviewCard,
+.splitPanel {
+    background: rgba(248, 251, 255, 0.94);
+    border: 1px solid #c7d4ea;
+    border-radius: 20px;
+    box-shadow: 0 18px 40px rgba(19, 44, 88, 0.12);
+    overflow: hidden;
+}
+
+.routePreviewHeader {
+    padding: 18px 20px;
+    background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+    color: #eef4ff;
+    border-bottom: 3px solid #e94560;
+}
+
+.routePreviewHeader h2 {
+    margin: 0 0 14px;
+    color: #ff6f87;
+    font-size: 1.15rem;
+}
+
+.routeModeRow,
+.routeSearchRow,
+.routeActionRow {
+    display: flex;
+    gap: 10px;
+}
+
+.routeModeRow {
+    margin-bottom: 12px;
+}
+
+.routeModeBtn,
+.routeGhostBtn,
+.routePrimaryBtn,
+.routeSearchGroup input {
+    min-height: 42px;
+    border-radius: 10px;
+    font: inherit;
+}
+
+.routeModeBtn,
+.routeGhostBtn,
+.routePrimaryBtn {
+    border: 1px solid transparent;
+    padding: 0 14px;
+    cursor: pointer;
+}
+
+.routeModeBtn {
+    flex: 1;
+    background: #0b2447;
+    color: #b9c7de;
+}
+
+.routeModeBtnWalk {
+    border-color: #4fc3f7;
+    color: #4fc3f7;
+    background: #091b33;
+}
+
+.routeSearchGroup {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.routeSearchRow {
+    flex-wrap: wrap;
+}
+
+.routeSearchGroup label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #b8c3d7;
+}
+
+.routeSearchGroup input {
+    width: 100%;
+    padding: 0 12px;
+    border: 1px solid #e94560;
+    background: #0b2447;
+    color: #eef4ff;
+}
+
+.routeGhostBtn {
+    background: #0b2447;
+    color: #4fc3f7;
+    border-color: #4fc3f7;
+}
+
+.routePrimaryBtn {
+    background: #e94560;
+    color: #fff;
+}
+
+.routeActionRow {
+    flex-basis: 100%;
+}
+
+.mapBottomSplit {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: auto;
+    gap: 18px;
+}
+
+.splitPanel {
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+}
+
+.utilityPanelBody {
+    display: grid;
+    gap: 14px;
+    padding: 16px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(239, 246, 255, 0.92) 100%);
+}
+
+.utilitySection {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.utilityLabel {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 10px;
+    border: 1px solid #9db7e5;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #ffffff 0%, #e9f1ff 100%);
+    color: #30507f;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+}
+
+.utilityInfoRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 16px;
+    border: 1px solid #d6e1f3;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 10px 24px rgba(19, 44, 88, 0.08);
+}
+
+.splitPanelHeader {
+    padding: 12px 16px;
+    border-bottom: 1px solid #d2def1;
+    background: linear-gradient(180deg, #ffffff 0%, #edf4ff 100%);
+    color: #0f2a55;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.simulationFrame {
+    width: 100%;
+    flex: 1;
+    min-height: 360px;
+    border: 0;
+    background: #fff;
+}
+
+.splitPanelPlaceholder {
+    align-items: center;
+    justify-content: center;
+}
+
+.simulationDialog {
+    width: min(1100px, 92vw);
+    max-width: 92vw;
+    height: min(84vh, 840px);
+    padding: 0;
+    border: 0;
+    border-radius: 22px;
+    background: transparent;
+    box-shadow: 0 26px 80px rgba(10, 25, 55, 0.42);
+}
+
+.simulationDialog::backdrop {
+    background: rgba(8, 18, 38, 0.62);
+    backdrop-filter: blur(4px);
+}
+
+.simulationDialogShell {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 22px;
+    background: #f8fbff;
+}
+
+.simulationDialogHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid #d6e1f3;
+    background: linear-gradient(180deg, #ffffff 0%, #edf4ff 100%);
+}
+
+.simulationDialogHeader h3 {
+    margin: 0;
+    color: #0f2a55;
+    font-size: 1rem;
+}
+
+.simulationDialogClose {
+    min-height: 38px;
+    padding: 0 14px;
+    border: 1px solid var(--button-border);
+    border-radius: 10px;
+    background: var(--button-bg);
+    color: var(--text-primary);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.simulationDialogFrame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #fff;
+}
+
+.splitPlaceholderText {
+    color: #5a7095;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
 .toolbarContainer {
     position: absolute;
     top: 34px;
@@ -263,15 +519,6 @@ input {
     color: var(--text-muted);
 }
 
-/* Make the simulation link look like a toolbar button */
-#simulation {
-    display: inline-block;
-    text-decoration: none;
-    line-height: 40px;
-    text-align: center;
-}
-
-
 .font-btn,
 #contrast-btn,
 #areaMarkRun {
@@ -298,10 +545,31 @@ input {
     }
 
     .mapShell {
-        height: calc(100vh - 20px);
+        height: 58vh;
         border-radius: 14px;
     }
 
+    .mapTopSection {
+        min-height: 58vh;
+    }
+
+    .mapLayout,
+    .mapBottomSplit,
+    .routeSearchRow,
+    .routeActionRow {
+        gap: 12px;
+    }
+
+    .mapBottomSplit,
+    .routeSearchRow {
+        grid-template-columns: 1fr;
+        display: grid;
+    }
+
+    .routeModeRow,
+    .routeActionRow {
+        flex-wrap: wrap;
+    }
 
     .toolbar {
         flex-wrap: wrap;
@@ -320,6 +588,20 @@ input {
 
     .toolbar input {
         width: 100%;
+    }
+
+    .utilityInfoRow {
+        flex-direction: column;
+    }
+
+    .splitPanel {
+        min-height: 320px;
+    }
+
+    .simulationDialog {
+        width: 96vw;
+        max-width: 96vw;
+        height: 90vh;
     }
 
     .leaflet-control-attribution {

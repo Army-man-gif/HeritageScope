@@ -1,5 +1,6 @@
 import './riskLevelOverlay.js';
 import './collapsibleToolbar.js';
+import './utilityDialog.js';
 import './AreaHighlighter/AreaHighlighterUI.js';
 import { MarkerHighlight } from './AreaHighlighter/AreaHighlighter.js';
 import './Accessbility/accessbilityUIButtons.js';
@@ -89,6 +90,9 @@ async function startMain(){
     const languageController = new LanguageControl({ position: "topright" });
 
     map.addControl(languageController);
+
+    requestAnimationFrame(() => map.invalidateSize());
+    globalThis.addEventListener('resize', () => map.invalidateSize());
 }
 
 startMain().catch((err) => "Failed to start main");
