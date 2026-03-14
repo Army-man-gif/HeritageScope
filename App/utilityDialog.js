@@ -33,6 +33,7 @@ globalThis.addEventListener('DOMContentLoaded', () => {
     if (infoToast && infoToastClose) {
         infoToastClose.addEventListener('click', () => {
             infoToast.hidden = true;
+            infoToast.style.display = 'none';
         });
     }
 });
