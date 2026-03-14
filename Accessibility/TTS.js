@@ -1,7 +1,17 @@
 // Browsers like Chrome, Edge, and Safari support speech synthesis
-function speak(text) {
+
+// make accessible to any .js
+window.speak = function(text) {
   speechSynthesis.cancel(); // stop previous speech
   const speech = new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(speech);
+}
+
+// for different languages
+window.speakLang = function(text, lang) {
+  speechSynthesis.cancel(); // stop previous speech
+  const speech = new SpeechSynthesisUtterance(text);
+  speech.lang = lang;
   speechSynthesis.speak(speech);
 }
 

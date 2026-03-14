@@ -19,9 +19,16 @@ export function dynamicallyBuildLanguageSelection(codeValuePairs, currentLanguag
         if(pair.code === currentLanguage){
             select.checked = true;
         }
+        // read aloud when language has changed
         select.addEventListener('change',function(){
             setLanguage(select.value);
             updateLanguage(select.value,markers);
+            speak("You have clicked to change the language to " + pair.label);
+        });
+
+        // so title reads aloud when clicked
+        title.addEventListener("click", function () {
+            speak(title.textContent);
         });
         
     })

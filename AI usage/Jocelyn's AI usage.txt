@@ -1,0 +1,6 @@
+I have used AI to learn basic syntax for js, css and html as they were relatively new to me.
+But they were relatively easy to pick up and so I wrote all code myself, having been given
+some example functions. These included how to add event listeners, how to add speech, how to
+make global functions, general for loops, accessing HTML. As I had no part in creating the map
+, I used AI to help me understand built in leaflet.js functionality like magnification/zoom so
+that I could access this change to add speech for it.

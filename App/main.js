@@ -83,7 +83,6 @@ async function startMain(){
         [90, 200]
     ]);
 
-
     const LanguageControl = L.Control.extend({
         onAdd: function() {
             return dynamicallyBuildLanguageSelection(
@@ -101,6 +100,35 @@ async function startMain(){
 
     requestAnimationFrame(() => map.invalidateSize());
     globalThis.addEventListener('resize', () => map.invalidateSize());
+
+    // to read out popups (areas clicked on)
+    map.on("popupopen", function(e){
+        // so things like <br> not included
+        const html = e.popup.getContent();
+
+        const temp = document.createElement("div");
+        temp.innerHTML = html;
+
+        const text = temp.innerText;
+
+        speakLang(text, currentLanguage);
+    });
+
+    // reading out when zooming happens
+    let previousZoom = map.getZoom();
+
+    map.on("zoomend", function () {
+        const currentZoom = map.getZoom();
+
+        if (currentZoom > previousZoom) {
+            speak("This zooms in on the map.");
+        } 
+        else if (currentZoom < previousZoom) {
+            speak("This zooms out on the map.");
+        }
+
+        previousZoom = currentZoom;
+    });
 }
 
 startMain().catch((err) => "Failed to start main");
