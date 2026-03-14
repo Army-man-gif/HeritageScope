@@ -32,8 +32,11 @@ globalThis.addEventListener('DOMContentLoaded', () => {
 
     if (infoToast && infoToastClose) {
         infoToastClose.addEventListener('click', () => {
-            infoToast.hidden = true;
-            infoToast.style.display = 'none';
+            infoToast.classList.add('is-hiding');
+            globalThis.setTimeout(() => {
+                infoToast.hidden = true;
+                infoToast.style.display = 'none';
+            }, 240);
         });
     }
 });

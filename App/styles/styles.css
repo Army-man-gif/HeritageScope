@@ -84,6 +84,12 @@
     width: 25px;
     height: 25px;
 }
+
+.leaflet-control .lang {
+    transition: opacity 0.24s ease, transform 0.24s ease, max-height 0.24s ease;
+    transform-origin: top right;
+    max-height: 320px;
+}
 #info{
     color: red;
 }
@@ -248,6 +254,9 @@
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 10px 24px rgba(19, 44, 88, 0.08);
+    overflow: hidden;
+    transition: opacity 0.24s ease, transform 0.24s ease, max-height 0.24s ease, margin 0.24s ease, padding 0.24s ease;
+    max-height: 180px;
 }
 
 .utilityToastClose {
@@ -353,7 +362,7 @@
 .biggerContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     gap: 8px;
 }
 
@@ -396,6 +405,24 @@
     pointer-events: none;
     max-height: 0;
     overflow: hidden;
+}
+
+.biggerContainer.is-collapsed {
+    align-items: flex-end;
+}
+
+.biggerContainer.is-collapsed .floatingToggle {
+    margin-right: 0;
+}
+
+.utilityToast.is-hiding {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: 0;
 }
 
 .splitPlaceholderText {
