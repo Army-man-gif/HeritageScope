@@ -5,8 +5,11 @@ write intro to project here
 1. Database Setup
 - Open your PostgreSQL terminal (psql) or pgAdmin
 - Create a new database named : heritagescope:
+
   "psql -U **YOUR_POSTGRES_USERNAME** -c "CREATE DATABASE heritagescope;"
+
 - Import the provided data dump : heritagescope_dump.sql:
+
   "psql -U **YOUR_POSTGRES_USERNAME** -d heritagescope -f Database/heritagescope_dump.sql"
 
 2. Backend Configuration (Spring Boot)
@@ -14,6 +17,7 @@ write intro to project here
 - Open 'application.properties' and update with your local credentials:
 
   properties:
+
   spring.datasource.url=jdbc:postgresql://localhost:5432/heritagescope
   spring.datasource.username=**YOUR_POSTGRES_USERNAME**
   spring.datasource.password=**YOUR_POSTGRES_PASSWORD**
@@ -28,6 +32,8 @@ write intro to project here
   "cd Backend/heritagescope
   mvnw.cmd spring-boot:run"
   for windows/command prompt runs
+
+* **Note:** On Windows, if the path seperator causes issues, replace **'/'** with **'\'** in the file path
 
 # Instructions before making any changes to the code
 1. If you don't have node.js installed
