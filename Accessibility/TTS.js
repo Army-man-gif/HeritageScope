@@ -72,7 +72,7 @@ addSpeech("contrast-btn", "This button changes the map contrast.");
 
 // number info
 addSpeech("infoToastClose", "This is a button which closes information on numbering on the map.")
-addSpeech("info", "When zooming out in the map the number is the number shown is the number of cultural sites in that area chunk.")
+addSpeech("info", "The numbers represent the number of cultural sites in that region")
 
 // zooming function
 

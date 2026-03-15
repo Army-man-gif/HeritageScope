@@ -2,6 +2,7 @@ import './riskLevelOverlay.js';
 import './collapsibleToolbar.js';
 import './utilityDialog.js';
 import './AreaHighlighter/AreaHighlighterUI.js';
+import {initRegionFilter} from './regionFilter.js';
 import { MarkerHighlight } from './AreaHighlighter/AreaHighlighter.js';
 import './Accessbility/accessbilityUIButtons.js';
 import { createMap } from './createMap.js';
@@ -25,7 +26,7 @@ let markers = L.markerClusterGroup();
 let highlighter;
 let codeValuePairs = [];
 let firstZoom =true;
-
+let originalMarkers;
 function setLanguage(lang){
     currentLanguage = lang;
 }
@@ -70,8 +71,10 @@ async function startMain(){
 
 
     convertDatasetToLayers(jsonData, markers, highlighter,currentLanguage);
-
+    originalMarkers = markers.getLayers().slice();
     map.addLayer(markers);
+
+    initRegionFilter(markers,originalMarkers, map);
 
     map.fitBounds(markers.getBounds());
 
@@ -139,7 +142,7 @@ async function startMain(){
 try{
     startMain()
 }catch (err) {
-    console.error("Failed to start main");
+    console.error("Failed to start main",err);
 };
 
 

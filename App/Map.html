@@ -45,8 +45,7 @@
         <section class="mapTopSection">
             <div id="infoToast" class="utilityToast">
                 <span class="utilityLabel">Info</span>
-                <div id="info">When zooming out in the map the number is the number shown is the number of
-                    cultural sites in that area chunk</div>
+                <div id="info">The numbers represent the number of cultural sites in that region</div>
                 <button id="infoToastClose" class="utilityToastClose" type="button" aria-label="Close info notice">&#x274E;</button>
             </div>
 
@@ -64,7 +63,7 @@
                 </div>
                 <div class="routeSearchRow">
                     <div class="routeSearchGroup">
-                        <label id="destination">Destination</label>
+                        <label for="destinationInput">Destination</label>
                         <input id="destinationInput" type="text" placeholder="e.g. Birmingham Museum" />
                     </div>
                     <div class="routeActionRow">
@@ -84,7 +83,28 @@
                         <button id="status-btn" onclick="handleStatusToggle()">Show At-Risk Sites</button>
                         <button id="simulationTrigger" type="button">Open Simulation</button>
                     </div>
-
+                    <div id="filtersTooldbar" class="toolbar utilitySection">
+                        <span class="utilityLabel">Filters</span>
+                        <button id="regionFilterToggle" type="button">Filter By Region</button>
+                        <div id="regionFilterPanel" style="display: none; gap: 8px; align-items: center;">
+                            <label for="regionSelect" style="position:absolute; left:-9999px;">Region</label>
+                            <select id="regionSelect" style="padding: 6px 10px; border-radius: 10px; border: 1px solid #9db7e5; background: #f8fbff; color: #0f2a55; font-size: 0.95rem;">
+                                <option value="ALL">All regions</option>
+                                <option value="Africa">Africa</option>
+                                <option value="Arab States">Arab States</option>
+                                <option value="Asia and the Pacific">Asia and the Pacific</option>
+                                <option value="Europe and North America">Europe and North America</option>
+                                <option value="Latin America and the Caribbean">Latin America and the Caribbean</option>
+                            </select>
+                            <label for="countrySelect" style="position:absolute; left:-9999px;">Country</label>
+                            <select id="countrySelect" style="padding: 6px 10px; border-radius: 10px; border: 1px solid #9db7e5; background: #f8fbff; color: #0f2a55; font-size: 0.95rem;">
+                                <option value="ALL">All countries</option>
+                            </select>
+                            <button id="regionApply" type="button">Apply</button>
+                            <button id="regionClear" type="button">Clear</button>
+                        </div>
+                        <span id="regionCount" style="margin-left: 10px; font-weight: 600; color: #0f2a55;"></span>
+                    </div>
                     <div id="areaHighlightToolbar" class="toolbar utilitySection">
                         <span class="utilityLabel">Area Highlight</span>
                         <input id="lidInput" placeholder="LID" style="width: 100px;">
