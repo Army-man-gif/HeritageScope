@@ -2,6 +2,8 @@
 write intro to project here
 
 ## Instructions on how to download and run the project:
+* **Note:** On Windows, if the path seperator causes issues, replace **`/`** with **`\`** in the file path
+
 1. Database Setup
 - Open your PostgreSQL terminal (psql) or pgAdmin
 - Create a new database named : heritagescope:
@@ -32,8 +34,6 @@ write intro to project here
   "cd Backend/heritagescope
   mvnw.cmd spring-boot:run"
   for windows/command prompt runs
-
-* **Note:** On Windows, if the path seperator causes issues, replace **'/'** with **'\'** in the file path
 
 # Instructions before making any changes to the code
 1. If you don't have node.js installed
