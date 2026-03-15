@@ -1,14 +1,14 @@
 // Browsers like Chrome, Edge, and Safari support speech synthesis
 
 // make accessible to any .js
-window.speak = function(text) {
+globalThis.speak = function(text) {
   speechSynthesis.cancel(); // stop previous speech
   const speech = new SpeechSynthesisUtterance(text);
   speechSynthesis.speak(speech);
 }
 
 // for different languages
-window.speakLang = function(text, lang) {
+globalThis.speakLang = function(text, lang) {
   speechSynthesis.cancel(); // stop previous speech
   const speech = new SpeechSynthesisUtterance(text);
   speech.lang = lang;
@@ -26,8 +26,8 @@ function addSpeech(id, text) {
 // class version
 function classSpeech(className, text) {
   const elements = document.getElementsByClassName(className);
-  for (let i = 0; i < elements.length; i++) {
-    elements[i].addEventListener("click", function () {
+  for (const element of elements) {
+    element.addEventListener("click", function () {
       speak(text);
     });
   }
@@ -35,9 +35,9 @@ function classSpeech(className, text) {
 
 function classElementSpeech(className, text) {
   const elements = document.getElementsByClassName(className);
-  for (let i = 0; i < elements.length; i++) {
-    elements[i].addEventListener("click", function () {
-      speak(elements[i].innerHTML);
+  for (const element of elements) {
+    element.addEventListener("click", function () {
+      speak(element.innerHTML);
     });
   }
 }
@@ -51,10 +51,17 @@ function elementSpeech(id) {
 }
 
 // introduce web page
-window.onload = function(){
+/* 
+Issue with this is the voices haven't loaded yet when sites load because no user has interacted
+with anything yet. Instead create a manual intro speech fucntion and call it when the user clicks ANYWHERE
+*/
+function introText(){
   speak("This is an interactive map. Click on buttons to hear what they do or click on text to hear it aloud.");
+  document.removeEventListener("click",introText);
+  document.removeEventListener("keydown",introText);
 };
-
+document.addEventListener("click", introText);
+document.addEventListener("keydown", introText);
 // hard code as need to describe what they are and button descs are unclear
 
 // text size and contrast

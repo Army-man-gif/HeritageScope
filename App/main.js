@@ -24,8 +24,7 @@ let currentLanguage = "en";
 let markers = L.markerClusterGroup();
 let highlighter;
 let codeValuePairs = [];
-
-
+let firstZoom =true;
 
 function setLanguage(lang){
     currentLanguage = lang;
@@ -101,6 +100,7 @@ async function startMain(){
     requestAnimationFrame(() => map.invalidateSize());
     globalThis.addEventListener('resize', () => map.invalidateSize());
 
+
     // to read out popups (areas clicked on)
     map.on("popupopen", function(e){
         // so things like <br> not included
@@ -118,6 +118,11 @@ async function startMain(){
     let previousZoom = map.getZoom();
 
     map.on("zoomend", function () {
+        if(firstZoom){
+            firstZoom = false;
+            previousZoom = map.getZoom();
+            return;
+        }
         const currentZoom = map.getZoom();
 
         if (currentZoom > previousZoom) {
@@ -131,7 +136,11 @@ async function startMain(){
     });
 }
 
-startMain().catch((err) => "Failed to start main");
+try{
+    startMain()
+}catch (err) {
+    console.error("Failed to start main");
+};
 
 
 
