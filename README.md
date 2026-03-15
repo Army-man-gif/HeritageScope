@@ -47,8 +47,15 @@ Initial build complete! Watching for changes...
 - Killing the terminal also cancels the tracker
 
 ## Libraries or requirements required to run it:
-
-
+- Java 17 or above
+- PostgreSQL 16
+- Python 3 (for serving frontend locally)
+- Node.js (only needed if modifying JS files, for esbuild bundling)
+- Leaflet.js 1.9.4 (loaded via CDN)
+- Leaflet.markercluster 1.4.1 (loaded via CDN)
+- Spring Boot 3.5.11
+- Spring Data JPA ＋ Hibernate
+ 
 ##  Prototype achievements and what is left for future development:
 ### Feature List
 
