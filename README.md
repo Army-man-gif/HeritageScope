@@ -4,7 +4,7 @@ write intro to project here
 ## Instructions on how to download and run the project:
 * **Note:** On Windows, if the path seperator causes issues, replace **`/`** with **`\`** in the file path
 
-1. Database Setup
+### 1. Database Setup
 - Open your PostgreSQL terminal (psql) or pgAdmin
 - Create a new database named : heritagescope:
 
@@ -14,7 +14,7 @@ write intro to project here
 
   "psql -U **YOUR_POSTGRES_USERNAME** -d heritagescope -f Database/heritagescope_dump.sql"
 
-2. Backend Configuration (Spring Boot)
+### 2. Backend Configuration (Spring Boot)
 - Navigate to 'Backend/heritagescope/src/main/resources/'
 - Open 'application.properties' and update with your local credentials:
 
@@ -24,7 +24,7 @@ write intro to project here
   spring.datasource.username=**YOUR_POSTGRES_USERNAME**
   spring.datasource.password=**YOUR_POSTGRES_PASSWORD**
 
-3. Run the backend
+### 3. Run the backend
 - Use this command 
   "cd Backend/heritagescope
   ./mvnw clean spring-boot:run" 
@@ -35,8 +35,8 @@ write intro to project here
   mvnw.cmd spring-boot:run"
   for windows/command prompt runs
 
-# Instructions before making any changes to the code
-1. If you don't have node.js installed
+## Instructions before making any changes to the code:
+### 1. If you don't have node.js installed
 - Go to this link: https://nodejs.org/en/download
 - Scroll down to where it says : "Or get a prebuilt Node.js® for Windows
   running an x64 architecture
@@ -48,7 +48,7 @@ write intro to project here
 - You should see v20.5.1 or some later version
 - npm -v
 - You should see 9.8.0 or some later version
-2. If you have just installed node.js or already had it installed
+### 2. If you have just installed node.js or already had it installed
 - cd into project
 - Run npm install
 - Wait for it to finish running
@@ -95,11 +95,16 @@ Initial build complete! Watching for changes...
 | F15 | Additional resources for areas. | Excluded from first prototype (Future development) | |May not be done, left to last. |
 | F16 | Interactive snapshot of visualisation map / simulation dynamic to user’s filter and selected choices. | Part-develop (Enhanced functionality) | | May not be done, left to last. |
 
-### Additions:
+### Additions to our original feature list:
 
 
-## Unit & Integration Testing:
-Our testing outline is found in this document: 
+## Unit Testing:
+Our unit testing is found in this document: 
 https://docs.google.com/document/d/1wKu51U5LSkbITz1umVbN2rmAPybO5xwgnA4Y-RrfAWs/edit?usp=sharing
 
-Testing scripts are found in the tests folder. EDIT LATER!
+## Integration Testing
+Our integration testing is found in this document: 
+https://docs.google.com/document/d/1BPE3THLFpzZSz0-TtWhf6JdT3l1JGLzTHSeeqK8qH88/edit?usp=sharing
+
+## Testing scripts:
+Testing scripts are found in the tests folder.
