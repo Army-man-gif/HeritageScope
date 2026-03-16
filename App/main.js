@@ -2,13 +2,14 @@ import './riskLevelOverlay.js';
 import './collapsibleToolbar.js';
 import './utilityDialog.js';
 import './AreaHighlighter/AreaHighlighterUI.js';
+import {initRegionFilter} from './regionFilter.js';
 import { MarkerHighlight } from './AreaHighlighter/AreaHighlighter.js';
 import './Accessbility/accessbilityUIButtons.js';
 import { createMap } from './createMap.js';
 import { loadDataset } from './loadData.js';
 import { convertDatasetToLayers } from './createMarkers.js';
 import { dynamicallyBuildLanguageSelection } from './languageChangeController.js';
-
+import { downloadMap } from './offline/Download.js';
 
 
 // Add more metrics - poluttion, density etc..
@@ -24,9 +25,8 @@ let currentLanguage = "en";
 let markers = L.markerClusterGroup();
 let highlighter;
 let codeValuePairs = [];
-
-
-
+let firstZoom =true;
+let originalMarkers;
 function setLanguage(lang){
     currentLanguage = lang;
 }
@@ -71,8 +71,10 @@ async function startMain(){
 
 
     convertDatasetToLayers(jsonData, markers, highlighter,currentLanguage);
-
+    originalMarkers = markers.getLayers().slice();
     map.addLayer(markers);
+
+    initRegionFilter(markers,originalMarkers, map);
 
     map.fitBounds(markers.getBounds());
 
@@ -83,6 +85,9 @@ async function startMain(){
         [90, 200]
     ]);
 
+    document.getElementById('downloadTrigger').addEventListener('click',() => {
+        downloadMap(map)
+    })
     const LanguageControl = L.Control.extend({
         onAdd: function() {
             return dynamicallyBuildLanguageSelection(
@@ -101,6 +106,7 @@ async function startMain(){
     requestAnimationFrame(() => map.invalidateSize());
     globalThis.addEventListener('resize', () => map.invalidateSize());
 
+
     // to read out popups (areas clicked on)
     map.on("popupopen", function(e){
         // so things like <br> not included
@@ -118,6 +124,11 @@ async function startMain(){
     let previousZoom = map.getZoom();
 
     map.on("zoomend", function () {
+        if(firstZoom){
+            firstZoom = false;
+            previousZoom = map.getZoom();
+            return;
+        }
         const currentZoom = map.getZoom();
 
         if (currentZoom > previousZoom) {
@@ -131,7 +142,11 @@ async function startMain(){
     });
 }
 
-startMain().catch((err) => "Failed to start main");
+try{
+    startMain()
+}catch (err) {
+    console.error("Failed to start main",err);
+};
 
 
 

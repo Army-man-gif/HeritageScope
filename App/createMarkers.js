@@ -4,8 +4,15 @@ import { buildLanguageSpecificPopup } from './createPopup.js';
 /* Yi modified with codex: marker clicks now zoom to a single area highlight and fall back to a generated mock polygon when needed. */
 function convPointToLayer(highlighter) {
     return function(feature,latlng){
-        const marker = L.marker(latlng, { icon: createDefaultIcon() });
-        marker.on('click', async function() {
+        const marker = L.marker(latlng, {
+            icon: createDefaultIcon(),
+            bubblingMouseEvents: false
+        });
+        marker.on('click', async function(event) {
+            if (event?.originalEvent) {
+                L.DomEvent.preventDefault(event.originalEvent);
+                L.DomEvent.stopPropagation(event.originalEvent);
+            }
             highlighter.highlight(marker, latlng);
             const lid = feature?.properties?.id_no ?? feature?.properties?.id ?? feature?.properties?.locationID;
             if (lid && typeof globalThis.hsFocusAreaHighlight === 'function') {

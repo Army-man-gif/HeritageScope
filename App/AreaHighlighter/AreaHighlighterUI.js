@@ -52,7 +52,7 @@ async function focusAreaHighlight(lid, options = {}) {
 
     if (result.code !== 0 && result.code !== 1) {
         if (status) {
-            status.textContent = `Current LID: not found (${lid})`;
+            status.textContent = 'Current LID: none';
         }
         return result;
     }
@@ -86,7 +86,6 @@ async function run(input,status){
     }
 
     await focusAreaHighlight(lid, { status, databaseOnly: true });
-    return status;
 }
 
 function bindToolbar() {
@@ -102,13 +101,11 @@ function bindToolbar() {
 
 
     runButton.addEventListener('click', async () => {
-        const updatedStatus = await run(input,status);
-        status = updatedStatus;
+        await run(input, status);
     });
     input.addEventListener('keydown', async (event) => {
         if (event.key === 'Enter') {
-            const updatedStatus = await run(input,status);
-            status = updatedStatus;
+            await run(input, status);
         }
     });
 }

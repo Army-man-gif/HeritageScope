@@ -33,4 +33,4 @@ function initAccessibility() {
   }
 }
 
-window.addEventListener("DOMContentLoaded", initAccessibility);
+globalThis.addEventListener("DOMContentLoaded", initAccessibility);
