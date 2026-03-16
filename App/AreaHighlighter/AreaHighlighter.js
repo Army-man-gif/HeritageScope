@@ -120,7 +120,29 @@ SUCCESS = 0
 ERROR = -1
 ALREADY_EXISTS = 1
 NOT_FOUND = -1 */
-const AREA_API_BASE = 'http://localhost:8080/api/areas';
+function trimTrailingSlash(value) {
+    return value.replace(/\/+$/, '');
+}
+
+function resolveAreaApiBase() {
+    const explicitAreaApiBase = typeof globalThis.HS_AREA_API_BASE === 'string'
+        ? globalThis.HS_AREA_API_BASE.trim()
+        : '';
+    if (explicitAreaApiBase) {
+        return trimTrailingSlash(explicitAreaApiBase);
+    }
+
+    const backendBase = typeof globalThis.HS_BACKEND_BASE_URL === 'string'
+        ? globalThis.HS_BACKEND_BASE_URL.trim()
+        : '';
+    if (backendBase) {
+        return `${trimTrailingSlash(backendBase)}/api/areas`;
+    }
+
+    return 'http://127.0.0.1:8080/api/areas';
+}
+
+const AREA_FETCH_TIMEOUT_MS = 3500;
 
 export class AreaHighlight {
     constructor(map, defaultStyle = {}) {
@@ -155,10 +177,22 @@ export class AreaHighlight {
         return null;
     }
 
+    async fetchJsonWithTimeout(url, timeoutMs = AREA_FETCH_TIMEOUT_MS) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+        try {
+            return await fetch(url, { signal: controller.signal });
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+
     /* Yi modified with codex: query database-backed area data by id for the toolbar input. */
     async fetchAreaById(lid) {
+        const areaApiBase = resolveAreaApiBase();
         try {
-            const response = await fetch(`${AREA_API_BASE}/${encodeURIComponent(lid)}`);
+            const response = await this.fetchJsonWithTimeout(`${areaApiBase}/${encodeURIComponent(lid)}`);
             if (response.status === 404) {
                 return { code: 404, message: `No database polygon found for lid: ${lid}` };
             }
@@ -169,19 +203,23 @@ export class AreaHighlight {
             return { code: 0, message: 'Database polygon loaded successfully', data };
         } catch (error) {
             console.error('Error loading database polygon by id:', error);
+            if (error?.name === 'AbortError') {
+                return { code: -1, message: `Request timed out after ${AREA_FETCH_TIMEOUT_MS}ms` };
+            }
             return { code: -1, message: error.message };
         }
     }
 
     /* Yi modified with codex: query database-backed area data by marker coordinates before falling back to a generated mock area. */
     async fetchAreaByMarker(latlng) {
+        const areaApiBase = resolveAreaApiBase();
         const params = new URLSearchParams({
             latitude: String(latlng.lat),
             longitude: String(latlng.lng)
         });
 
         try {
-            const response = await fetch(`${AREA_API_BASE}/by-marker?${params.toString()}`);
+            const response = await this.fetchJsonWithTimeout(`${areaApiBase}/by-marker?${params.toString()}`);
             if (response.status === 404) {
                 return { code: 404, message: 'No database polygon found for marker position.' };
             }
@@ -192,6 +230,9 @@ export class AreaHighlight {
             return { code: 0, message: 'Database polygon loaded successfully', data };
         } catch (error) {
             console.error('Error loading database polygon by marker position:', error);
+            if (error?.name === 'AbortError') {
+                return { code: -1, message: `Request timed out after ${AREA_FETCH_TIMEOUT_MS}ms` };
+            }
             return { code: -1, message: error.message };
         }
     }
