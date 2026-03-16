@@ -77,7 +77,3 @@ touristSlider.addEventListener("click", function () { touristTest();});
 litterSlider.addEventListener("click", function () { litterTest();});
 rainfallSlider.addEventListener("click", function () { rainfallTest();});
 tempSlider.addEventListener("click", function () { tempTest();});
-
-// check dependencies
-trafficSlider.value = 100;
-updateCars();
