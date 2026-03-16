@@ -20,7 +20,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <!-- Import leaflet-image. Plugin I'm using to download map-->
+    <script src="https://unpkg.com/leaflet-image/leaflet-image.js"></script>
     <!-- Import team's main javascript file that governs the ENTIRE functionality -->
     <script defer type="module" src="main.js"></script>
 
@@ -82,6 +83,7 @@
                         <span class="utilityLabel">Tools</span>
                         <button id="status-btn" onclick="handleStatusToggle()">Show At-Risk Sites</button>
                         <button id="simulationTrigger" type="button">Open Simulation</button>
+                        <button id="downloadTrigger" type="button">Download</button>
                     </div>
                     <div id="filtersTooldbar" class="toolbar utilitySection">
                         <span class="utilityLabel">Filters</span>

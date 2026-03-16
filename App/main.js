@@ -9,7 +9,7 @@ import { createMap } from './createMap.js';
 import { loadDataset } from './loadData.js';
 import { convertDatasetToLayers } from './createMarkers.js';
 import { dynamicallyBuildLanguageSelection } from './languageChangeController.js';
-
+import { downloadMap } from './offline/Download.js';
 
 
 // Add more metrics - poluttion, density etc..
@@ -85,6 +85,9 @@ async function startMain(){
         [90, 200]
     ]);
 
+    document.getElementById('downloadTrigger').addEventListener('click',() => {
+        downloadMap(map)
+    })
     const LanguageControl = L.Control.extend({
         onAdd: function() {
             return dynamicallyBuildLanguageSelection(

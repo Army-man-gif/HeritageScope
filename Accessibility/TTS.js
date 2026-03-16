@@ -45,6 +45,7 @@ function classElementSpeech(className, text) {
 // for getting element text
 function elementSpeech(id) {
   const element = document.getElementById(id);
+  if (!element) return;
   element.addEventListener("click", function () {
     speak(element.innerHTML);
   });
