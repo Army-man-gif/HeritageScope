@@ -50,7 +50,7 @@ function tempChange(){
         console.log("Expected: ", 100 - tempSlider.value + 15);
     }
     else{
-        console.log("Temp value <=30");
+        console.log("Temp value <=30 or >=80");
     }
 }
 
