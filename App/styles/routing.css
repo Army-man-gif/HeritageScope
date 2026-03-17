@@ -1,18 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Heritage Navigator — Path Routing Demo</title>
-
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
-  <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
-
-
-  <script type = "module" defer src = "./pathroutingInit.js"></script>
-  <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
@@ -159,44 +144,3 @@
     }
     .leaflet-routing-alt h2,
     .leaflet-routing-alt h3 { color: #e94560 !important; }
-  </style>
-</head>
-<body>
-
-  <header>
-    <h1>🗺 Heritage Sites Navigator — Demo</h1>
-
-    <!-- Mode toggle -->
-    <div class="mode-row">
-      <button class="mode-btn active-walk" id="btn-walk" onclick="handleSetMode('walk')">
-        🚶 Walking
-      </button>
-      <button class="mode-btn" id="btn-wheel" onclick="handleSetMode('wheelchair')">
-        ♿ Wheelchair
-      </button>
-    </div>
-
-    <!-- Search bar -->
-    <div class="search-bar">
-      <div class="search-group">
-        <label for = "end-input">🏁 Destination</label>
-        <input type="text" id="end-input" placeholder="e.g. Birmingham Museum" />
-      </div>
-      <div class="btn-row">
-        <button id="gps-btn">📍 Locate</button>
-        <button id="go-btn">Go 🔍</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Wheelchair mode banner -->
-  <div id="wheelchair-banner">
-    ♿ Wheelchair Mode — Route avoids steps. Nearby accessible facilities shown on map.
-  </div>
-
-  <div id="status">💡 Select a mode, click Locate, enter a destination, then click Go</div>
-
-  <div id="map"></div>
-  
-</body>
-</html>
