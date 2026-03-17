@@ -4,7 +4,7 @@ import './utilityDialog.js';
 import './AreaHighlighter/AreaHighlighterUI.js';
 import {initRegionFilter} from './regionFilter.js';
 import { MarkerHighlight } from './AreaHighlighter/AreaHighlighter.js';
-import './Accessbility/accessbilityUIButtons.js';
+import './Accessibility/accessbilityUIButtons.js';
 import { createMap } from './createMap.js';
 import { loadDataset } from './loadData.js';
 import { convertDatasetToLayers } from './createMarkers.js';

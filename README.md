@@ -82,13 +82,13 @@ Initial build complete! Watching for changes...
 | F2 | Readable text in a large easy to see font | Develop (Core functionality) | | Yi |
 | F3 | Colour blind modes | Part-develop (Enhanced functionality) | | Arsam |
 | F4 | Interactive map-based visualisation | Develop (Core functionality) | | Armaan |
-| F5 | Visual environmental simulation tool with additional text description | Develop (Core functionality) | | Jocelyn |
+| F5 | Visual environmental simulation tool with additional text description | Develop (Core functionality) | Completed | Jocelyn |
 | F6 | High contrast UI. | Develop (Core functionality) | | Karlie |
 | F7 | Magnification capability. | Develop (Core functionality) | | Karlie |
 | F8 | Keyboard accessibility. | Develop (Core functionality) | | Armaan |
 | F9 | Area filtering tool. | Part-develop (Enhanced functionality) | | Issac |
 | F10 | Offline functionalities. | Part-develop (Enhanced functionality) | | Issac |
-| F11 | Text to Speech tool. | Develop (Core functionality) | | Jocelyn |
+| F11 | Text to Speech tool. | Develop (Core functionality) | Completed | Jocelyn |
 | F12 | Path routing. | Part-develop (Enhanced functionality) | | Esther |
 | F13 | User input on accessibility of areas. | Part-develop (Enhanced functionality) | | Arsam |
 | F14 | Reward system for user input | Part-develop (Enhanced functionality) | | Arsam |
@@ -107,4 +107,4 @@ Our integration testing is found in this document:
 https://docs.google.com/document/d/1BPE3THLFpzZSz0-TtWhf6JdT3l1JGLzTHSeeqK8qH88/edit?usp=sharing
 
 ## Testing scripts:
-Testing scripts are found in the tests folder.
+Testing scripts are found in the Tests folder.
