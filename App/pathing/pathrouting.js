@@ -30,13 +30,13 @@ let _facilityMarkers   = [];     // Accessible Facilities Markers
 let _userLatLng        = null;   // User's Current GPS Coordinates
 let _userMarker        = null;   // Blue GPS Circle on the Map
 let _onStatusUpdate    = null;   // Status Update Callback (passed from outside)
-
+let _destinationMarker = null;
 //  Initialization function
 //
 //  @param {L.Map}   map            - Pre-created Leaflet map object
 //  @param {Function} onStatusUpdate - Optional, status text update callback
 //                                   
-function initRouting(map, onStatusUpdate) {
+export function initRouting(map, onStatusUpdate) {
   _map = map;
   _onStatusUpdate = onStatusUpdate || function() {};
 }
@@ -44,12 +44,14 @@ function initRouting(map, onStatusUpdate) {
 
 //  @param {'walk' | 'wheelchair'} mode
 
-function setRoutingMode(mode) {
+export function setRoutingMode(mode) {
   _currentMode = mode;
 
   if (mode === 'wheelchair') {
     setStatus('♿Accessibility Mode  — Loading nearby accessible facilities...');
-    loadAccessibleFacilities(_map.getCenter());
+    if(_userLatLng){
+      loadAccessibleFacilities(_userLatLng);
+    }
   } else {
     clearFacilityMarkers();
     setStatus('🚶Walking Mode');
@@ -62,11 +64,11 @@ function setRoutingMode(mode) {
 //  @param {L.LatLng} startLatLng
 //  @param {L.LatLng} endLatLng
 
-function createRoute(startLatLng, endLatLng) {
+export function createRoute(startLatLng, endLatLng) {
   // Clear the previous route
   if (_routingControl)     { _map.removeControl(_routingControl); _routingControl = null; }
   if (_wheelchairPolyline) { _map.removeLayer(_wheelchairPolyline); _wheelchairPolyline = null; }
-
+  if (_destinationMarker)  { _map.removeLayer(_destinationMarker); _destinationMarker = null; }
   if (_currentMode === 'wheelchair') {
     createWheelchairRoute(startLatLng, endLatLng);
   } else {
@@ -144,7 +146,6 @@ async function createWheelchairRoute(startLatLng, endLatLng) {
 
     // ORS returns [longitude, latitude], converted to Leaflet's [latitude, longitude]
     const latLngs = feature.geometry.coordinates.map(c => L.latLng(c[1], c[0]));
-
     // draw wheelchair route polyline
     _wheelchairPolyline = L.polyline(latLngs, {
       color: '#94C000',
@@ -153,7 +154,7 @@ async function createWheelchairRoute(startLatLng, endLatLng) {
     }).addTo(_map);
 
     // add destination marker
-    L.marker([endLatLng.lat, endLatLng.lng])
+    _destinationMarker = L.marker([endLatLng.lat, endLatLng.lng])
       .addTo(_map)
       .bindPopup('Destination')
       .openPopup();
@@ -174,14 +175,14 @@ async function createWheelchairRoute(startLatLng, endLatLng) {
 //  @param  {string} placeName
 //  @return {Promise<{lat, lng, displayName} | null>}
 
-async function geocode(placeName) {
+export async function geocode(placeName) {
   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(placeName)}&format=json&limit=5&countrycodes=gb&viewbox=-2.1,52.6,-1.7,52.3&bounded=1`;
   const res  = await fetch(url, { headers: { 'Accept-Language': 'en' } });
   const data = await res.json();
   if (!data.length) return null;
   return {
-    lat: parseFloat(data[0].lat),
-    lng: parseFloat(data[0].lon),
+    lat: Number.parseFloat(data[0].lat),
+    lng: Number.parseFloat(data[0].lon),
     displayName: data[0].display_name
   };
 }
@@ -193,9 +194,9 @@ async function geocode(placeName) {
 //  @param {Function} onSuccess - Location success callback, passes (latlng, accuracy)
 //  @param {Function} onError   - Location failure callback, passes error message string
 
-function startGPS(onSuccess, onError) {
+export function startGPS(onSuccess, onError) {
   if (!navigator.geolocation) {
-    onError && onError('Your browser does not support GPS positioning.');
+    onError?.('Your browser does not support GPS positioning.');
     return;
   }
 
@@ -225,7 +226,7 @@ function startGPS(onSuccess, onError) {
         }
       }
 
-      onSuccess && onSuccess(_userLatLng, acc);
+      onSuccess?.(_userLatLng, acc);
     },
     function(error) {
       const msgs = {
@@ -233,7 +234,7 @@ function startGPS(onSuccess, onError) {
         2: 'Unable to retrieve location, please check if GPS is enabled',
         3: 'Location timeout, please try again'
       };
-      onError && onError(msgs[error.code] || 'Failed to locate');
+      onError?.(msgs[error.code] || 'Failed to locate');
     },
     { enableHighAccuracy: true, maximumAge: 5000, timeout: 15000 }
   );
@@ -242,13 +243,12 @@ function startGPS(onSuccess, onError) {
 
 //  @return {L.LatLng | null}
 
-function getUserLatLng() {
+export function getUserLatLng() {
   return _userLatLng;
 }
 
 //  Accessibility Features Labeling（Overpass API）
 //  Mark nearby facilities such as elevators, ramps, and lowered curbs on the map.
-
 async function loadAccessibleFacilities(center) {
   const query = `
     [out:json][timeout:10];
@@ -262,11 +262,20 @@ async function loadAccessibleFacilities(center) {
   `;
 
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+
     const res  = await fetch('https://overpass-api.de/api/interpreter', {
       method: 'POST',
-      body: 'data=' + encodeURIComponent(query)
+      body: 'data=' + encodeURIComponent(query),
+      signal: controller.signal
     });
-    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(`Overpass HTTP error ${res.status}`);
+    }
+    clearTimeout(timeout);
+    const text = await res.text();
+    const data = JSON.parse(text);
     clearFacilityMarkers();
 
     data.elements.forEach(el => {
