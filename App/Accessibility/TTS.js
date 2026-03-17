@@ -18,6 +18,7 @@ globalThis.speakLang = function(text, lang) {
 // read out text for ids
 function addSpeech(id, text) {
   const element = document.getElementById(id);
+  if (!element) return;
   element.addEventListener("click", function () {
     speak(text);
   });
@@ -105,8 +106,23 @@ classElementSpeech("splitPlaceholderText");
 elementSpeech("simTitle");
 addSpeech("closeSimulationDialog", "This button closes the simulation when clicked.");
 
-// these have been removed
-//addSpeech("status-btn", "This button shows at risk sites.");
-//addSpeech("lidInput", "This is a text box to search for a location ID.");
-//addSpeech("areaMarkRun", "This button runs the location search.");
-//addSpeech("toolbarToggle", "This button opens and closes the toolbar.");
+// Look have they ACTUALLY been removed. 
+// Also add more for download button part and filter buttons and pathing feature
+
+
+
+addSpeech("status-btn", "This button shows at risk sites.");
+addSpeech("lidInput", "This is a text box to search for a location ID.");
+addSpeech("areaMarkRun", "This button runs the location search.");
+
+addSpeech("downloadTrigger","This is a button that downloads a snapshot of the current map view");
+
+
+addSpeech("navigatorTitle","This is the a route planning software");
+addSpeech("btn-walk","This is the walking mode for the pathing software");
+addSpeech("btn-wheel","This is the walking mode for the pathing software");
+addSpeech("end-input", "This is a label to search for the place to navigate to");
+addSpeech("gps-btn","This button locates where you are at the moment for the pathing software");
+addSpeech("go-btn","This button calculates the route to the destination for the pathing software");
+addSpeech("status","Shows the current status of the pathing software state");
+addSpeech("wheelchair-banner","Wheelchair mode speicfic information")

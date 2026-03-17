@@ -10,7 +10,7 @@ import { loadDataset } from './loadData.js';
 import { convertDatasetToLayers } from './createMarkers.js';
 import { dynamicallyBuildLanguageSelection } from './languageChangeController.js';
 import { downloadMap } from './offline/Download.js';
-
+import {init} from './pathing/pathroutingInit.js';
 
 // Add more metrics - poluttion, density etc..
 // Legend describing number thing - Complete
@@ -75,7 +75,7 @@ async function startMain(){
     map.addLayer(markers);
 
     initRegionFilter(markers,originalMarkers, map);
-
+    init(map);
     map.fitBounds(markers.getBounds());
 
     map.setZoom(2);
