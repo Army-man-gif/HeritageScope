@@ -4,13 +4,13 @@ import './utilityDialog.js';
 import './AreaHighlighter/AreaHighlighterUI.js';
 import {initRegionFilter} from './regionFilter.js';
 import { MarkerHighlight } from './AreaHighlighter/AreaHighlighter.js';
-import './Accessbility/accessbilityUIButtons.js';
+import './Accessibility/accessbilityUIButtons.js';
 import { createMap } from './createMap.js';
 import { loadDataset } from './loadData.js';
 import { convertDatasetToLayers } from './createMarkers.js';
 import { dynamicallyBuildLanguageSelection } from './languageChangeController.js';
-
-
+import { downloadMap } from './offline/Download.js';
+import {init} from './pathing/pathroutingInit.js';
 
 // Add more metrics - poluttion, density etc..
 // Legend describing number thing - Complete
@@ -75,7 +75,7 @@ async function startMain(){
     map.addLayer(markers);
 
     initRegionFilter(markers,originalMarkers, map);
-
+    init(map);
     map.fitBounds(markers.getBounds());
 
     map.setZoom(2);
@@ -85,6 +85,9 @@ async function startMain(){
         [90, 200]
     ]);
 
+    document.getElementById('downloadTrigger').addEventListener('click',() => {
+        downloadMap(map)
+    })
     const LanguageControl = L.Control.extend({
         onAdd: function() {
             return dynamicallyBuildLanguageSelection(

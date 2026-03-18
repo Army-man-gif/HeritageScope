@@ -258,7 +258,9 @@
     transition: opacity 0.24s ease, transform 0.24s ease, max-height 0.24s ease, margin 0.24s ease, padding 0.24s ease;
     max-height: 180px;
 }
-
+.leaflet-marker-icon .marker-cluster div {
+  font-size: 12px !important;
+}
 .utilityToastClose {
     width: 38px;
     min-width: 38px;

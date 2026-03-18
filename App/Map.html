@@ -20,12 +20,18 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <!-- Import leaflet-image. Plugin I'm using to download map-->
+    <script src="https://unpkg.com/leaflet-image/leaflet-image.js"></script>
     <!-- Import team's main javascript file that governs the ENTIRE functionality -->
     <script defer type="module" src="main.js"></script>
 
+    <!-- Import leaflet routing machine -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    
     <!-- Import custom styles team have made -->
     <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/routing.css">
     <link rel="stylesheet" href="./styles/accessibility.css">
 
 </head>
@@ -56,22 +62,32 @@
 
         <section id="routePreview" class="routePreviewCard">
             <div class="routePreviewHeader">
-                <h2 id="navigatorTitle">Heritage Sites Navigator Demo</h2>
+                <h2 id="navigatorTitle">🗺 Heritage Sites Navigator — Demo</h2>
                 <div class="routeModeRow">
-                    <button id="walking" class="routeModeBtn routeModeBtnWalk" type="button">Walking</button>
-                    <button id="wheelchair" class="routeModeBtn" type="button">Wheelchair</button>
+                    <button class="mode-btn active-walk" id="btn-walk" type="button" onclick="handleSetMode('walk')">
+                        🚶 Walking
+                    </button>
+                    <button class="mode-btn" id="btn-wheel" type="button" onclick="handleSetMode('wheelchair')">
+                        ♿ Wheelchair
+                    </button>
                 </div>
-                <div class="routeSearchRow">
-                    <div class="routeSearchGroup">
-                        <label for="destinationInput">Destination</label>
-                        <input id="destinationInput" type="text" placeholder="e.g. Birmingham Museum" />
+                <div class="search-bar">
+                    <div class="search-group">
+                        <label for = "end-input">🏁 Destination</label>
+                        <input type="text" id="end-input" placeholder="e.g. Birmingham Museum" />
                     </div>
-                    <div class="routeActionRow">
-                        <button class="routeGhostBtn" type="button">Locate</button>
-                        <button class="routePrimaryBtn" type="button">Go</button>
+                    <div class="btn-row">
+                        <button id="gps-btn">📍 Locate</button>
+                        <button id="go-btn">Go 🔍</button>
                     </div>
                 </div>
             </div>
+            <!-- Wheelchair mode banner -->
+            <div id="wheelchair-banner">
+                ♿ Wheelchair Mode — Route avoids steps. Nearby accessible facilities shown on map.
+            </div>
+
+            <div id="status">💡 Select a mode, click Locate, enter a destination, then click Go</div>
         </section>
 
         <section class="mapBottomSplit">
@@ -82,6 +98,7 @@
                         <span class="utilityLabel">Tools</span>
                         <button id="status-btn" onclick="handleStatusToggle()">Show At-Risk Sites</button>
                         <button id="simulationTrigger" type="button">Open Simulation</button>
+                        <button id="downloadTrigger" type="button">Download</button>
                     </div>
                     <div id="filtersTooldbar" class="toolbar utilitySection">
                         <span class="utilityLabel">Filters</span>
@@ -131,7 +148,7 @@
         </div>
     </dialog>
 
-    <script defer src="../Accessibility/TTS.js"></script>
+    <script defer src="./Accessibility/TTS.js"></script>
 </body>
 
 </html>

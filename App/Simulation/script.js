@@ -407,14 +407,6 @@ intro.addEventListener("click", function () {
   speak(intro.innerText);
 });
 
-// reads general when you load in
-window.onload = function(){
-  speak2(intro.innerText, function () {
-    // say update out loud
-  speak2("Click on text, sliders or images to hear them aloud.");
-  });
-};
-
 // intro
 const slidersIntro = document.getElementById("slidersIntro");
 slidersIntro.addEventListener("click", function () {
