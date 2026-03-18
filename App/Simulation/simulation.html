@@ -4,6 +4,7 @@
 <head>
 <!-- put the css and js files in the head section -->
 <link rel="stylesheet" href="../styles/SimStyles.css">
+<link rel="stylesheet" href="../styles/accessibility.css">
 <title>Environmental Simulation</title>
 </head>
 
@@ -81,6 +82,25 @@
 
 <!-- js goes at the end of body, loads quicker -->
 <script src="script.js"></script>
+<script>
+function applyA11yPrefs() {
+    const savedFontSize = Number.parseInt(localStorage.getItem('fontSize'), 10);
+    const fontSize = Number.isFinite(savedFontSize) ? savedFontSize : 16;
+    document.documentElement.style.fontSize = `${fontSize}px`;
+    document.body.style.fontSize = `${fontSize}px`;
+
+    const highContrast = localStorage.getItem('highContrast') === 'true';
+    document.body.classList.toggle('high-contrast', highContrast);
+}
+
+document.addEventListener('DOMContentLoaded', applyA11yPrefs);
+
+window.addEventListener('storage', (event) => {
+    if (event.key === 'fontSize' || event.key === 'highContrast') {
+        applyA11yPrefs();
+    }
+});
+</script>
 <!-- for testing -->
 <!--
 <script src="../../Tests/Simulation/imagesTest.js"></script> -->
