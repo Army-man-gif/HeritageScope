@@ -238,6 +238,19 @@
     white-space: nowrap;
 }
 
+.area-highlight-status {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 10px;
+    border: 1px solid #b8c9e8;
+    border-radius: 999px;
+    background: #f4f8ff;
+    color: #1a3668;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
 .topAccessibilityBar {
     width: min(100%, 920px);
     justify-content: center;
