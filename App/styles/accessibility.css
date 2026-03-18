@@ -104,6 +104,13 @@ body.high-contrast #lidInput::placeholder {
     opacity: 1;
 }
 
+body.high-contrast .area-highlight-status {
+    background: #000000 !important;
+    color: #f5f56a !important;
+    border: 2px solid #00e5ff !important;
+    box-shadow: none !important;
+}
+
 body.high-contrast .leaflet-popup-tip {
     background: #050505 !important;
     border: 2px solid #39ff14 !important;

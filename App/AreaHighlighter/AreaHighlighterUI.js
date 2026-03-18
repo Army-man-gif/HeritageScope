@@ -12,9 +12,12 @@ function ensureStatusNode() {
     if (!status) {
         status = document.createElement('span');
         status.id = 'lidCurrent';
+        status.className = 'area-highlight-status';
         status.style.marginLeft = '10px';
         status.textContent = 'Current LID: none';
         toolbar.appendChild(status);
+    } else {
+        status.classList.add('area-highlight-status');
     }
     return status;
 }
