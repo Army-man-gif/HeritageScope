@@ -20,4 +20,22 @@ public interface AreaPolygonRepository extends JpaRepository<AreaPolygon, Long> 
         @Param("latitude") Double latitude,
         @Param("longitude") Double longitude
     );
+
+    /* Yi modified with codex: fallback lookup returns the closest polygon when marker coordinates differ slightly in precision. */
+    @Query(
+        value = """
+            SELECT *
+            FROM area_polygon
+            WHERE ABS(marker_latitude - :latitude) <= :tolerance
+              AND ABS(marker_longitude - :longitude) <= :tolerance
+            ORDER BY ABS(marker_latitude - :latitude) + ABS(marker_longitude - :longitude)
+            LIMIT 1
+            """,
+        nativeQuery = true
+    )
+    Optional<AreaPolygon> findClosestByMarkerPosition(
+        @Param("latitude") Double latitude,
+        @Param("longitude") Double longitude,
+        @Param("tolerance") Double tolerance
+    );
 }

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 public class AreaPolygonController {
 
+    private static final double MARKER_LOOKUP_TOLERANCE = 0.001;
+
     @Autowired
     private AreaPolygonRepository repository;
 
@@ -31,6 +33,7 @@ public class AreaPolygonController {
         @RequestParam Double longitude
     ) {
         return repository.findByMarkerPosition(latitude, longitude)
+            .or(() -> repository.findClosestByMarkerPosition(latitude, longitude, MARKER_LOOKUP_TOLERANCE))
             .map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.notFound().build());
     }
