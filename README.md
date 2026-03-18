@@ -6,13 +6,13 @@ write intro to project here
 
 ### 1. Database Setup
 - Open your PostgreSQL terminal (psql) or pgAdmin
-- Create a new database named : heritagescope:
+- Create a new database named : heritagescope
 
-  "psql -U **YOUR_POSTGRES_USERNAME** -c "CREATE DATABASE heritagescope;"
+  using : psql -U **YOUR_POSTGRES_USERNAME** -c "CREATE DATABASE heritagescope;"
 
-- Import the provided data dump : heritagescope_dump.sql:
+- Import the provided data dump : heritagescope_dump.sql
 
-  "psql -U **YOUR_POSTGRES_USERNAME** -d heritagescope -f Database/heritagescope_dump.sql"
+  using : psql -U **YOUR_POSTGRES_USERNAME** -d heritagescope -f Database/heritagescope_dump.sql
 
 ### 2. Backend Configuration (Spring Boot)
 - Navigate to 'Backend/heritagescope/src/main/resources/'
@@ -83,8 +83,8 @@ Initial build complete! Watching for changes...
 | F3 | Colour blind modes | Part-develop (Enhanced functionality) | | Arsam |
 | F4 | Interactive map-based visualisation | Develop (Core functionality) | | Armaan |
 | F5 | Visual environmental simulation tool with additional text description | Develop (Core functionality) | Completed | Jocelyn |
-| F6 | High contrast UI. | Develop (Core functionality) | | Karlie |
-| F7 | Magnification capability. | Develop (Core functionality) | | Karlie |
+| F6 | High contrast UI. | Develop (Core functionality) | Completed | Karlie |
+| F7 | Magnification capability. | Develop (Core functionality) | Completed | Karlie |
 | F8 | Keyboard accessibility. | Develop (Core functionality) | | Armaan |
 | F9 | Area filtering tool. | Part-develop (Enhanced functionality) | | Issac |
 | F10 | Offline functionalities. | Part-develop (Enhanced functionality) | | Issac |
@@ -96,7 +96,7 @@ Initial build complete! Watching for changes...
 | F16 | Interactive snapshot of visualisation map / simulation dynamic to user’s filter and selected choices. | Part-develop (Enhanced functionality) | | May not be done, left to last. |
 
 ### Additions to our original feature list:
-
+- Site Status Overlay (Karlie) : A risk overlay that fetches heritage site status (visitor pressure, weather condition, risk level) from a Spring Boot REST API supported by PostgreSQL, displaying red/amber/green circles on the map to show at-risk sites. Built as an extension of F-1.
 
 ## Unit Testing:
 Our unit testing is found in this document: 
