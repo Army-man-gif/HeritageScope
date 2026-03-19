@@ -34,7 +34,7 @@ function setLanguage(lang){
 async function startMain(){
     let jsonData;
     try {
-        jsonData = await loadDataset(); // wait for it to finish
+        jsonData = await loadDataset();
         console.log("Dataset loaded successfully");
     } catch (err) {
         console.error("Error loading dataset", err);

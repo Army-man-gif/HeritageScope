@@ -9,9 +9,13 @@ export function buildLanguageSpecificPopup(feature,currentLanguage){
         const langDisplay = new Intl.DisplayNames(['en'],{type: "language"}).of(currentLanguage);
 
         const popupText = `
-        <b>${langDisplay} name: ${name}</b><br>
+        <b>${langDisplay} name: ${name}</b>
+        <br>
         <b>Short ${langDisplay} description: <br><br> ${description}
-        </b><br><br>
+        </b>
+        <br><br>
+        <div id="extraMetrics" hidden>
+        </div>
         `;
         return popupText;
     }
