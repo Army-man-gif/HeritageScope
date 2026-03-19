@@ -1,6 +1,6 @@
 import { createDefaultIcon } from './AreaHighlighter/AreaHighlighter.js';
 import { buildLanguageSpecificPopup } from './createPopup.js';
-
+import {results} from './metrics/metrics.js';
 /* Yi modified with codex: marker clicks now zoom to a single area highlight and fall back to a generated mock polygon when needed. */
 function convPointToLayer(highlighter) {
     return function(feature,latlng){
@@ -37,6 +37,41 @@ function onEachFeature(currentLanguage){
                 autoPan: true
             });
         }
+        layer.on('popupopen', () => {
+            const currentPopup = layer.getPopup().getElement();
+            const partToAddTo = currentPopup?.querySelector("#extraMetrics");
+            if(partToAddTo){
+                const latlng = layer.getLatLng();
+                results(latlng.lat,latlng.lng).then(updated =>{
+                    partToAddTo.hidden = false;
+                    partToAddTo.innerHTML = 
+                    `
+                    <br>
+                    <b> Population : ${updated.population.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ",")} people</b>
+                    <br>
+                    <b> Population density : ${updated.popDensity} m/s</b>
+                    <br>
+                    <b> Population as a % of the world's: ${updated.worldPopPrcnt} %</b> 
+                    <br>   
+                    <b> Average age : ${Math.floor(updated.medianAge)} yrs old</b>
+                    <br>
+                    <b> Percentage of people living in urban areas : ${updated.urbanPopPcnt} %</b>
+                    <br>
+                    <b> Fertility rate : ${Math.floor(updated.fertilityRate)}</b>
+                    <br>
+                    <b> Temperature : ${updated.temp} °C </b>
+                    <br>
+                    <b> Wind Speed : ${updated.windSpeed} m/s </b>
+                    <br>
+                    <b> Humidity : ${updated.humidity} </b>
+                    <br>                                    
+                    <b>Environmental sensitivity score: ${updated.environmentalSensitivity}</b> 
+                    <br>
+                    `;
+                })
+                .catch("Error")
+            }
+        })
     }
 }
 
