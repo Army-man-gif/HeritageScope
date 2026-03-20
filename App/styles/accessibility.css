@@ -3,6 +3,16 @@ body.high-contrast {
     color: #f5f56a !important;
 }
 
+.marker-cluster div {
+    color: #000;
+    font-weight: bold;
+    text-shadow: 0 0 2px rgba(255,255,255,0.8);
+}
+
+body.high-contrast .marker-cluster div {
+    color: #f5f56a !important;
+    text-shadow: 0 0 3px rgba(0,0,0,0.9) !important;
+}
 body.high-contrast .toolbar,
 body.high-contrast .splitPanel,
 body.high-contrast .splitPanelHeader,
@@ -92,6 +102,13 @@ body.high-contrast #info {
 body.high-contrast #lidInput::placeholder {
     color: #d7d76a !important;
     opacity: 1;
+}
+
+body.high-contrast .area-highlight-status {
+    background: #000000 !important;
+    color: #f5f56a !important;
+    border: 2px solid #00e5ff !important;
+    box-shadow: none !important;
 }
 
 body.high-contrast .leaflet-popup-tip {

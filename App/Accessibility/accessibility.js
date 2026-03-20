@@ -7,7 +7,7 @@ export class RescaleText {
     this.sizeLabelId = "sizeLabel";
 
     if (localStorage.getItem('fontSize')) {
-      const savedSize = parseInt(localStorage.getItem('fontSize'), 10);
+      const savedSize = Number.parseInt(localStorage.getItem('fontSize'), 10);
       this.fontSize = savedSize;
     }
     else {      
@@ -69,7 +69,7 @@ export class RescaleText {
     document.querySelectorAll('.font-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.size === size);
     });
-    this.fontSize = parseInt(sizes[size], 10);
+    this.fontSize = Number.parseInt(sizes[size], 10);
     this.updateLabel();
     this.storageFontSize(this.fontSize);
   }

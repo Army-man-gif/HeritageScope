@@ -1,29 +1,35 @@
-// Used the format given by the github readme : https://github.com/mapbox/leaflet-image/tree/gh-pages
 
-export function downloadMap(map,filename = "snapshot.png"){
-    leafletImage(map, function(err, canvas) {
-        if (err) {
-            console.error('Error generating map image:', err);
-            return;
-        }
+export function downloadMap(){
+    const mapDOMElement = document.getElementById('map');
+    if(!mapDOMElement){
+        console.error("Map not found");
+    }
+    const clonedMap = mapDOMElement.cloneNode(true);
+    // Render the clone as far as visibly possible of the screen so it doesn't affect the user UI
+    clonedMap.style.position = "absolute";
+    clonedMap.style.top = "-9999px";
+    clonedMap.style.left = "-9999px";
 
-        // now you have canvas
-        // example thing to do with that canvas:
-        let img = document.createElement('img');
-        let dimensions = map.getSize();
-        img.width = dimensions.x;
-        img.height = dimensions.y;
-        img.src = canvas.toDataURL('image/png');
+    document.body.appendChild(clonedMap);
+    
+    html2canvas(
+        clonedMap,{
+        useCORS : true,
+        allowTaint: true,
 
-        // Create temp a tag to setup donwload trigger
-        const downloadLink = document.createElement('a');
-        downloadLink.href = img.src;
-        downloadLink.download = filename;
+    }).then(clonedPart => {
+        // Make a link and force it to click automatically then remove everything
+        const link = document.createElement("a");
+        link.href = clonedPart.toDataURL("image/png");
+        link.download = "snapshot.png";
+        link.click();
 
-        // Auto trigger downlaod
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        downloadLink.remove();
-    });
+        // Remove clone from DOM
+        clonedMap.remove();
+        // Remove link element
+        link.remove();
+    }).catch(error => {
+        console.error("Error in download ",error);
+        clonedMap.remove();
+    })
 }
-

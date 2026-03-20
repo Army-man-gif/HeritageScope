@@ -139,7 +139,7 @@ function resolveAreaApiBase() {
         return `${trimTrailingSlash(backendBase)}/api/areas`;
     }
 
-    return 'http://127.0.0.1:8080/api/areas';
+    return 'http://217.154.38.248:8080/api/areas';
 }
 
 const AREA_FETCH_TIMEOUT_MS = 3500;
