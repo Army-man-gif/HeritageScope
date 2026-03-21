@@ -11,6 +11,7 @@ import { convertDatasetToLayers } from './createMarkers.js';
 import { dynamicallyBuildLanguageSelection } from './languageChangeController.js';
 import { downloadMap } from './offline/Download.js';
 import {init} from './pathing/pathroutingInit.js';
+import { keyboardAccessbility } from './keyboardAccessbility.js';
 
 // Add more metrics - poluttion, density etc..
 // Legend describing number thing - Complete
@@ -42,20 +43,14 @@ async function startMain(){
     }
     const map = createMap();
     globalThis.hsMap = map;
+    globalThis.mapMade = true;
     globalThis.dispatchEvent(
         new CustomEvent('heritage:map-ready', { detail: { map } })
     );
 
     highlighter = new MarkerHighlight(map);
 
-    /* Yi modified with codex: clicking empty map space clears the yellow marker state and any active area polygon. */
-    map.on('click', () => {
-        highlighter.clear();
-        if (typeof globalThis.hsClearAreaHighlight === 'function') {
-            globalThis.hsClearAreaHighlight();
-        }
-    });
-
+    keyboardAccessbility(map,highlighter);
     const initialFeature = jsonData.features[0];
 
     const languages = Object.keys(initialFeature.properties)
