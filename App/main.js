@@ -12,7 +12,7 @@ import { dynamicallyBuildLanguageSelection } from './languageChangeController.js
 import { downloadMap } from './offline/Download.js';
 import {init} from './pathing/pathroutingInit.js';
 import { keyboardAccessbility } from './keyboardAccessbility.js';
-
+import { checkAllTests } from '../Tests/Simulation/Armaan-Feature-Tests/Tests.js';
 // Add more metrics - poluttion, density etc..
 // Legend describing number thing - Complete
 // Change styling a lil - Complete
@@ -36,12 +36,26 @@ async function startMain(){
     let jsonData;
     try {
         jsonData = await loadDataset();
-        console.log("Dataset loaded successfully");
     } catch (err) {
         console.error("Error loading dataset", err);
         return;
     }
     const map = createMap();
+    let resizeTimeout;
+
+    globalThis.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+
+        resizeTimeout = setTimeout(() => {
+            map.invalidateSize();
+
+            // second pass (this fixes the squish)
+            requestAnimationFrame(() => {
+                map.invalidateSize();
+            });
+
+        }, 100);
+    });
     globalThis.hsMap = map;
     globalThis.mapMade = true;
     globalThis.dispatchEvent(
@@ -50,7 +64,6 @@ async function startMain(){
 
     highlighter = new MarkerHighlight(map);
 
-    keyboardAccessbility(map,highlighter);
     const initialFeature = jsonData.features[0];
 
     const languages = Object.keys(initialFeature.properties)
@@ -68,6 +81,7 @@ async function startMain(){
     convertDatasetToLayers(jsonData, markers, highlighter,currentLanguage);
     originalMarkers = markers.getLayers().slice();
     map.addLayer(markers);
+    keyboardAccessbility(map,highlighter,markers);
 
     initRegionFilter(markers,originalMarkers, map);
     init(map);
@@ -135,6 +149,8 @@ async function startMain(){
 
         previousZoom = currentZoom;
     });
+    checkAllTests(map,markers);
+
 }
 
 try{

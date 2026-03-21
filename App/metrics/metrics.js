@@ -14,8 +14,26 @@ async function allMetrics(lat,lng){
             }
         );
         const parsed = await response.json();
+        if (parsed?.status !== "success" || !parsed.data) {
+            console.warn("AirVisual API failed or rate limited", parsed);
+            return {
+                popDensity: 50,
+                medianAge: 30,
+                urbanPopPcnt: 50,
+                population: 1000000
+            };
+        }
         const country = parsed.data.country;
         const populationMetrics = await getPopulation(country);
+        if (!populationMetrics) {
+            console.error("Population API failed for:", country);
+            return {
+                popDensity: 50,
+                medianAge: 30,
+                urbanPopPcnt: 50,
+                population: 1000000
+            };
+        }
         if(populationMetrics){
             // Let's caluclate how polluted the air is:
             const pollutantType = parsed.data.current.pollution.mainus;
@@ -99,7 +117,7 @@ async function allMetrics(lat,lng){
             console.log(metrics);
             return metrics;
         }else{
-            console.error('Error fetching air quality:', error);
+            console.error('Population metrics not available');
             return null;
         }
     }catch(error){
@@ -125,6 +143,15 @@ async function getPopulation(country) {
     );
 
     const data = await response.json();
+    if (!data?.historical_population || data.historical_population.length === 0) {
+        console.error("Invalid population data:", data);
+        return {
+            popDensity: 50,
+            medianAge: 30,
+            urbanPopPcnt: 50,
+            population: 1000000
+        };
+    }
     const mostRecentData = data.historical_population;
     const mostRecentYearData = mostRecentData.at(-1);
     const populationMetrics = {
@@ -153,7 +180,7 @@ export async function results(lat,lng) {
     const cacheName = "allMetrics";
     const cache = JSON.parse(localStorage.getItem(cacheName) || '{}');
 
-    const specificLocationKey = `${lat},${lng}`;
+    const specificLocationKey = `${lat.toFixed(2)},${lng.toFixed(2)}`;
 
     if (cache[specificLocationKey]){
         console.log("Used cache for ",specificLocationKey);
