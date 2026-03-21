@@ -35,6 +35,8 @@ write intro to project here
   mvnw.cmd spring-boot:run"
   for windows/command prompt runs
 
+- **Deployed backend note:** We currently have a deployed backend at `http://217.154.38.248:8080/` (backend only). The frontend is not hosted on that server, so please run the frontend locally.
+
 ## Instructions before making any changes to the code:
 ### 1. If you don't have node.js installed
 - Go to this link: https://nodejs.org/en/download
