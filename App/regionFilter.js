@@ -194,7 +194,7 @@ export function initRegionFilter(markers,originalMarkers,map) {
         regionSelect.value = 'ALL';
         populateCountries(originalMarkers,'ALL');
         countrySelect.value = 'ALL';
-        applyRegionFilter(markers,map,'ALL', 'ALL');
+        applyRegionFilter(markers, originalMarkers, map, 'ALL', 'ALL');
     });
 
     panel.style.display = 'none';

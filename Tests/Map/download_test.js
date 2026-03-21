@@ -38,7 +38,7 @@ async function runDownloadTests() {
     button.click();
 
     // Wait for async html2canvas to finish
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 4000));
 
     // Restore original click
     HTMLAnchorElement.prototype.click = originalClick;
