@@ -1,7 +1,6 @@
 import { buildLanguageSpecificPopup } from './createPopup.js';
 
 export function dynamicallyBuildLanguageSelection(codeValuePairs, currentLanguage, markers, setLanguage){
-    console.log("building language control");
     const biggerContainer = L.DomUtil.create('div','biggerContainer');
     const languageControlArea = L.DomUtil.create('div','lang',biggerContainer);
     const optionBox = L.DomUtil.create('div','language-control',languageControlArea);
