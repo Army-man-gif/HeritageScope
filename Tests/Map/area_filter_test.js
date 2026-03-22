@@ -1,5 +1,4 @@
 // Area filter tests for App/Map.html
-// Run in browser console or include as a script after the app loads.
 
 function assert(condition, message) {
     console.assert(condition, message);
