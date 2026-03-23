@@ -1,2 +1,0 @@
-eg: await import('/Test%20script/F-1Highlighting%20Heritage%20and%20cultural%20sites/areaHighlighting.test.script.js');
-await runAreaHighlightTests();
