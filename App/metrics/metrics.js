@@ -15,7 +15,7 @@ async function allMetrics(lat,lng){
         );
         const parsed = await response.json();
         if (parsed?.status !== "success" || !parsed.data) {
-            console.warn("AirVisual API failed or rate limited", parsed);
+            console.error("AirVisual API failed or rate limited", parsed);
             return {
                 popDensity: 50,
                 medianAge: 30,
@@ -175,25 +175,32 @@ async function getPopulation(country) {
 }
 
 // Creating a caching functionality in localStorage on browser to reduce API calls
-export async function results(lat,lng) {
-    // First fetch from cache
+export async function results(lat, lng) {
     const cacheName = "allMetrics";
     const cache = JSON.parse(localStorage.getItem(cacheName) || '{}');
 
-    const specificLocationKey = `${lat.toFixed(2)},${lng.toFixed(2)}`;
+    const TOLERANCE = 0.9; // 100km radius
 
-    if (cache[specificLocationKey]){
-        console.log("Used cache for ",specificLocationKey);
-        console.log(cache[specificLocationKey]);
-        return cache[specificLocationKey];
+    // Check for a fuzzy match
+    for (const key in cache) {
+        const [cachedLat, cachedLng] = key.split(',').map(Number);
+        const distanceLat = Math.abs(lat - cachedLat);
+        const distanceLng = Math.abs(lng - cachedLng);
+        if (distanceLat <= TOLERANCE && distanceLng <= TOLERANCE) {
+            console.log("Used cache for", key);
+            return cache[key];
+        }
     }
-    const metrics = await allMetrics(lat,lng);
 
-    if(metrics){
-        cache[specificLocationKey]  = metrics;
-        localStorage.setItem(cacheName,JSON.stringify(cache)); 
+    // No match found, fetch from API
+    const metrics = await allMetrics(lat, lng);
+
+    if (metrics) {
+        // Save to cache
+        const cacheKey = `${lat.toFixed(1)},${lng.toFixed(1)}`;
+        cache[cacheKey] = metrics;
+        localStorage.setItem(cacheName, JSON.stringify(cache));
     }
-    console.log(metrics);
+
     return metrics;
-
 }
