@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: site_status; Type: TABLE; Schema: public; Owner: karliewan
+-- Name: site_status; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.site_status (
@@ -35,10 +35,10 @@ CREATE TABLE public.site_status (
 );
 
 
-ALTER TABLE public.site_status OWNER TO karliewan;
+ALTER TABLE public.site_status OWNER TO postgres;
 
 --
--- Name: site_status_id_seq; Type: SEQUENCE; Schema: public; Owner: karliewan
+-- Name: site_status_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.site_status_id_seq
@@ -50,24 +50,24 @@ CREATE SEQUENCE public.site_status_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.site_status_id_seq OWNER TO karliewan;
+ALTER SEQUENCE public.site_status_id_seq OWNER TO postgres;
 
 --
--- Name: site_status_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: karliewan
+-- Name: site_status_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.site_status_id_seq OWNED BY public.site_status.id;
 
 
 --
--- Name: site_status id; Type: DEFAULT; Schema: public; Owner: karliewan
+-- Name: site_status id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.site_status ALTER COLUMN id SET DEFAULT nextval('public.site_status_id_seq'::regclass);
 
 
 --
--- Data for Name: site_status; Type: TABLE DATA; Schema: public; Owner: karliewan
+-- Data for Name: site_status; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.site_status (id, site_name, latitude, longitude, visitor_pressure, weather_condition, risk_level) FROM stdin;
@@ -81,21 +81,21 @@ COPY public.site_status (id, site_name, latitude, longitude, visitor_pressure, w
 
 
 --
--- Name: site_status_id_seq; Type: SEQUENCE SET; Schema: public; Owner: karliewan
+-- Name: site_status_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.site_status_id_seq', 6, true);
 
 
 --
--- Name: site_status site_status_pkey; Type: CONSTRAINT; Schema: public; Owner: karliewan
+-- Name: site_status site_status_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.site_status
     ADD CONSTRAINT site_status_pkey PRIMARY KEY (id);
 
 --
--- Name: area_polygon; Type: TABLE; Schema: public; Owner: karliewan
+-- Name: area_polygon; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.area_polygon (
@@ -107,7 +107,7 @@ CREATE TABLE public.area_polygon (
 
 
 --
--- Data for Name: area_polygon; Type: TABLE DATA; Schema: public; Owner: karliewan
+-- Data for Name: area_polygon; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.area_polygon (id, marker_latitude, marker_longitude, poly_data) FROM stdin;
@@ -145,7 +145,7 @@ COPY public.area_polygon (id, marker_latitude, marker_longitude, poly_data) FROM
 
 
 --
--- Name: area_polygon area_polygon_pkey; Type: CONSTRAINT; Schema: public; Owner: karliewan
+-- Name: area_polygon area_polygon_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.area_polygon
