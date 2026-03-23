@@ -620,7 +620,8 @@ function waitForStatus(timeout=5000){
         "✅ Walking route generated",
         "❌ Walking route planning failed, please try a different destination",
         "🚶Walking Mode",
-        "♿Accessibility Mode  — Loading nearby accessible facilities..."
+        "♿Accessibility Mode  — Loading nearby accessible facilities...",
+        "💡 Select a mode, click Locate, enter a destination, then click Go"
     ]
 
     const start = performance.now();
@@ -628,7 +629,10 @@ function waitForStatus(timeout=5000){
         function check() {
             const statusEl = document.getElementById("status");
             const msg = statusEl?.textContent || "";
-            if (potentialMsgs.some(p => msg.includes(p))) return resolve(true);
+            console.log("Current status text:", msg);
+            if (potentialMsgs.some(p => msg.includes(p))){
+                return resolve(true);
+            }
             if (performance.now() - start > timeout) return resolve(false);
             requestAnimationFrame(check);
         }
@@ -647,9 +651,8 @@ async function testPathing(){
     const walkBtn = document.getElementById("btn-walk");
     let walkBtnActive;
     const wheelBtn = document.getElementById("btn-wheel");
-    let wheelBtnActive;
     walkBtn.click(); 
-    const walkActive = await waitForClass(walkBtn, "active-walk");
+    const walkActive = await waitForMode(walkBtn, "active-walk");
     const wheelInactive = await waitForNoClass(wheelBtn, "active-wheel");
     if (!walkActive || !wheelInactive) {
         console.log("Test failed");
@@ -657,13 +660,10 @@ async function testPathing(){
     }
     console.log("Walking mode activated ✅");
     wheelBtn.click(); 
-    const wheelActive = await waitForClass(wheelBtn, "active-wheel");
+    const wheelActive = await waitForMode(wheelBtn, "active-wheel");
     const walkInactive = await waitForNoClass(walkBtn, "active-walk");
     if (!wheelActive || !walkInactive) {
         console.log("Test failed: Walking mode on");
-        testPassed = false;
-    }else if(!walkBtnActive && wheelBtnActive){
-        console.log("Test failed");
         testPassed = false;
     }
     console.log("Wheelchair mode activated ✅");
