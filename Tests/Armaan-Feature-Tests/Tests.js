@@ -697,7 +697,7 @@ export async function runTests(map, markers) {
 
         console.log(`%c✅ Test ${i + 1} passed`, "font-size: 150%;font-weight: bold; color: lightgreen;");
     }
-    //console.log("%cIgnore the rate limited error. I'm on a free plan, it's unavoidable! The moveend time outs are to catch invisible insta flash movement so it doesnt glitch the popupopen spam tests. I'm trying to use a very fuzzy cache matching system to limit api calls. Some popups may not open if my geojson did not have a description on it. It's still a valid test", "font-size: 150%font-weight: bold; color: yellow;");
+    console.log("%cIgnore the rate limited error. I'm on a free plan, it's unavoidable! The moveend time outs are to catch invisible insta flash movement so it doesnt glitch the popupopen spam tests. I'm trying to use a very fuzzy cache matching system to limit api calls. Some popups may not open if my geojson did not have a description on it. It's still a valid test", "font-size: 150%font-weight: bold; color: yellow;");
 
     console.log("%c🎉 All tests passed", "font-size: 200%;font-weight: bold; color: aquamarine;");
     map.locate({setView: true, maxZoom: 16});
