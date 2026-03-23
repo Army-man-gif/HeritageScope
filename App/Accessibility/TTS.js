@@ -70,12 +70,12 @@ function elementSpeech(id) {
   const element = document.getElementById(id);
   if (!element) return;
   element.addEventListener("click", function () {
-    speak(element.innerHTML);
+    speak(element.innerText);
   });
   element.addEventListener("keydown",function(e){
     if (e.key == "Enter" || e.key == " "){
       e.preventDefault();
-      speak(element.innerHTML);
+      speak(element.innerText);
     }
   });
 }
@@ -109,13 +109,16 @@ addSpeech("info", "The numbers represent the number of cultural sites in that re
 // languages
 
 // navigator part
-elementSpeech("navigatorTitle");
-addSpeech("walking", "This button turns on walking mode for navigating heritage sites.");
-addSpeech("wheelchair", "This button turns on wheelchair mode for navigating heritage sites.");
-elementSpeech("destination");
-addSpeech("destinationInput", "This is a text box for the destination navigator. For example enter Birmingham Museum.");
-classSpeech("routeGhostBtn", "This button routes the area when clicked.");
-classSpeech("routePrimaryBtn", "This button goes to the input area when clicked.");
+addSpeech("navigatorTitle","Heritage sites navigator");
+addSpeech("btn-walk", "This button turns on walking mode for navigating heritage sites.");
+addSpeech("btn-wheel", "This button turns on wheelchair mode for navigating heritage sites.");
+addSpeech("destination", "destination");
+addSpeech("end-input", "This is a text box to search for the place to navigate to");
+addSpeech("gps-btn","This button locates where you are at the moment for the pathing software");
+addSpeech("go-btn","This button calculates the route to the destination for the pathing software");
+elementSpeech("status");
+elementSpeech("wheelchair-banner");
+
 
 // utility section
 elementSpeech("utilityTitle");
@@ -123,6 +126,10 @@ classElementSpeech("utilityLabel");
 addSpeech("status-btn", "This button shows at risk sites when clicked.");
 // gives extra info when it opens
 addSpeech("simulationTrigger", "This button opens the simulation when clicked. This is an environmental simulation, click on text, sliders or images to hear them aloud.");
+// download button
+addSpeech("downloadTrigger","This is a button that downloads a snapshot of the current map view");
+
+// area highlighting tool
 addSpeech("lidInput", "Enter the location id you want to highlight here.");
 addSpeech("areaMarkRun", "Click this button to highlight the inputted location ID.");
 
@@ -134,20 +141,5 @@ classElementSpeech("splitPlaceholderText");
 elementSpeech("simTitle");
 addSpeech("closeSimulationDialog", "This button closes the simulation when clicked.");
 
-// Look have they ACTUALLY been removed. 
-// Also add more for download button part and filter buttons and pathing feature
+// Also add more filter buttons
 
-addSpeech("lidInput", "This is a text box to search for a location ID.");
-addSpeech("areaMarkRun", "This button runs the location search.");
-
-addSpeech("downloadTrigger","This is a button that downloads a snapshot of the current map view");
-
-
-addSpeech("navigatorTitle","This is the a route planning software");
-addSpeech("btn-walk","This is the walking mode for the pathing software");
-addSpeech("btn-wheel","This is the walking mode for the pathing software");
-addSpeech("end-input", "This is a label to search for the place to navigate to");
-addSpeech("gps-btn","This button locates where you are at the moment for the pathing software");
-addSpeech("go-btn","This button calculates the route to the destination for the pathing software");
-addSpeech("status","Shows the current status of the pathing software state");
-addSpeech("wheelchair-banner","Wheelchair mode speicfic information")
