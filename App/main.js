@@ -11,8 +11,8 @@ import { convertDatasetToLayers } from './createMarkers.js';
 import { dynamicallyBuildLanguageSelection } from './languageChangeController.js';
 import { downloadMap } from './offline/Download.js';
 import {init} from './pathing/pathroutingInit.js';
-import { keyboardAccessbility } from './keyboardAccessbility.js';
-import { checkAllTests } from '../Tests/Simulation/Armaan-Feature-Tests/Tests.js';
+import { keyboardAccessbility } from './Accessibility/keyboardAccessbility.js';
+import { runTests } from '../Tests/Simulation/Armaan-Feature-Tests/Tests.js';
 // Add more metrics - poluttion, density etc..
 // Legend describing number thing - Complete
 // Change styling a lil - Complete
@@ -41,20 +41,20 @@ async function startMain(){
         return;
     }
     const map = createMap();
+    
     let resizeTimeout;
 
     globalThis.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
 
         resizeTimeout = setTimeout(() => {
-            map.invalidateSize();
-
-            // second pass (this fixes the squish)
+            // wait for layout + tests to settle
             requestAnimationFrame(() => {
-                map.invalidateSize();
+                requestAnimationFrame(() => {
+                    map.invalidateSize(true);
+                });
             });
-
-        }, 100);
+        }, 150);
     });
     globalThis.hsMap = map;
     globalThis.mapMade = true;
@@ -94,8 +94,8 @@ async function startMain(){
         [90, 200]
     ]);
 
-    document.getElementById('downloadTrigger').addEventListener('click',() => {
-        downloadMap();
+    document.getElementById('downloadTrigger').addEventListener('click',async () => {
+         await downloadMap();
     })
     const LanguageControl = L.Control.extend({
         onAdd: function() {
@@ -111,10 +111,6 @@ async function startMain(){
     const languageController = new LanguageControl({ position: "topright" });
 
     map.addControl(languageController);
-
-    requestAnimationFrame(() => map.invalidateSize());
-    globalThis.addEventListener('resize', () => map.invalidateSize());
-
 
     // to read out popups (areas clicked on)
     map.on("popupopen", function(e){
@@ -149,8 +145,8 @@ async function startMain(){
 
         previousZoom = currentZoom;
     });
-    checkAllTests(map,markers);
 
+    runTests(map, markers);
 }
 
 try{

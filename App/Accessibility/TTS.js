@@ -1,9 +1,12 @@
 // Browsers like Chrome, Edge, and Safari support speech synthesis
 
 // make accessible to any .js
+globalThis.TTSLog = [];
 globalThis.speak = function(text) {
   speechSynthesis.cancel(); // stop previous speech
   const speech = new SpeechSynthesisUtterance(text);
+  console.log("%c🔊 TTS Triggered:", "color: cyan; font-weight: bold;", text);
+  globalThis.TTSLog.push(text);
   speechSynthesis.speak(speech);
 }
 
@@ -16,11 +19,18 @@ globalThis.speakLang = function(text, lang) {
 }
 
 // read out text for ids
+
 function addSpeech(id, text) {
   const element = document.getElementById(id);
   if (!element) return;
   element.addEventListener("click", function () {
     speak(text);
+  });
+  element.addEventListener("keydown",function(e){
+    if (e.key == "Enter" || e.key == " "){
+      e.preventDefault();
+      speak(text);
+    }
   });
 }
 
@@ -31,6 +41,12 @@ function classSpeech(className, text) {
     element.addEventListener("click", function () {
       speak(text);
     });
+    element.addEventListener("keydown",function(e){
+      if (e.key == "Enter" || e.key == " "){
+        e.preventDefault();
+        speak(text);
+      }
+    });
   }
 }
 
@@ -39,6 +55,12 @@ function classElementSpeech(className, text) {
   for (const element of elements) {
     element.addEventListener("click", function () {
       speak(element.innerHTML);
+    });
+    element.addEventListener("keydown",function(e){
+      if (e.key == "Enter" || e.key == " "){
+        e.preventDefault();
+        speak(element.innerHTML);
+      }
     });
   }
 }
@@ -49,6 +71,12 @@ function elementSpeech(id) {
   if (!element) return;
   element.addEventListener("click", function () {
     speak(element.innerHTML);
+  });
+  element.addEventListener("keydown",function(e){
+    if (e.key == "Enter" || e.key == " "){
+      e.preventDefault();
+      speak(element.innerHTML);
+    }
   });
 }
 
@@ -109,9 +137,6 @@ addSpeech("closeSimulationDialog", "This button closes the simulation when click
 // Look have they ACTUALLY been removed. 
 // Also add more for download button part and filter buttons and pathing feature
 
-
-
-addSpeech("status-btn", "This button shows at risk sites.");
 addSpeech("lidInput", "This is a text box to search for a location ID.");
 addSpeech("areaMarkRun", "This button runs the location search.");
 

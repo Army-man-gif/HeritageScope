@@ -32,7 +32,7 @@ function clearHighlightFunctionCall(map,highlighter){
 }
 
 export function keyboardAccessbility(map,highlighter,markers){
-    map.on('click', clearHighlightFunctionCall);
+    map.on('click', () => clearHighlightFunctionCall(map,highlighter));
     document.addEventListener('keydown',function(e){
         if(e.key === "Escape"){
             clearHighlightFunctionCall(map,highlighter);
@@ -63,8 +63,7 @@ export function keyboardAccessbility(map,highlighter,markers){
     });
     container.addEventListener('keydown', function(e){
         const tabbable = getTabbableMarkers(markers, map);
-        if (!markerTabbingActive || tabbable.length === 0) return;
-
+        if (e.key === "Tab" && (!markerTabbingActive || tabbable.length === 0)) return;
         const focused = document.activeElement;
         let index = tabbable.findIndex(m => m._icon === focused);
 
@@ -90,7 +89,7 @@ export function keyboardAccessbility(map,highlighter,markers){
         if (e.key === "Escape") {
             if (map._popup?.isOpen()) {
                 map.closePopup();
-                container.blur();
+                focused.blur();
             } else if (markerTabbingActive) {
                 markerTabbingActive = false;
                 updateMarkerTabIndex(markers, map);
