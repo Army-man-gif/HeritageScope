@@ -23,11 +23,13 @@ globalThis.speakLang = function(text, lang) {
 function addSpeech(id, text) {
   const element = document.getElementById(id);
   if (!element) return;
+  const isInput = element.tagName === "INPUT" || element.tagName === "TEXTAREA";
+
   element.addEventListener("click", function () {
     speak(text);
   });
   element.addEventListener("keydown",function(e){
-    if (e.key == "Enter" || e.key == " "){
+    if (e.key == "Enter" || (!isInput && e.key == " ")){
       e.preventDefault();
       speak(text);
     }

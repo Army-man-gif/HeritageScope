@@ -146,7 +146,7 @@ async function startMain(){
         previousZoom = currentZoom;
     });
 
-    //runTests(map, markers);
+    runTests(map, markers);
 }
 
 try{
