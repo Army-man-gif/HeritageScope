@@ -649,7 +649,6 @@ async function testPathing(){
     }
     console.log("Status recording current state properly");
     const walkBtn = document.getElementById("btn-walk");
-    let walkBtnActive;
     const wheelBtn = document.getElementById("btn-wheel");
     walkBtn.click(); 
     const walkActive = await waitForMode(walkBtn, "active-walk");
