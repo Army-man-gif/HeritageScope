@@ -1,0 +1,11 @@
+eg: 
+run
+""
+await import('./areaHighlighting.test.script.js');
+""
+
+then
+the cli would told you to run 
+""
+await runAreaHighlightTests();
+""
