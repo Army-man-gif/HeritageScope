@@ -612,7 +612,7 @@ function waitForNoClass(element, className, timeout = 5000) {
         requestAnimationFrame(check);
     });
 }
-function waitForStatus(timeout=5000){
+function waitForStatus(previousMsg = "",timeout=5000){
     const potentialMsgs = [
         "❌ Wheelchair route request failed, please check your network connection",
         "⚠️ Accessibility features failed to load. Please check your network connection.",
@@ -630,10 +630,10 @@ function waitForStatus(timeout=5000){
             const statusEl = document.getElementById("status");
             const msg = statusEl?.textContent || "";
             console.log("Current status text:", msg);
-            if (potentialMsgs.some(p => msg.includes(p))){
-                return resolve(true);
+            if (potentialMsgs.some(p => msg.includes(p)) && msg !== previousMsg){
+                return resolve(msg);
             }
-            if (performance.now() - start > timeout) return resolve(false);
+            if (performance.now() - start > timeout) return resolve(null);
             requestAnimationFrame(check);
         }
         requestAnimationFrame(check);
@@ -641,13 +641,19 @@ function waitForStatus(timeout=5000){
 }
 
 async function testPathing(){
-    const statusReady = await waitForStatus();
     let testPassed = true;
-    if(!statusReady){
+    let checkStatus = "";
+    const successStateOutputs = ["💡 Select a mode, click Locate, enter a destination, then click Go","🚶Walking Mode","♿Accessibility Mode  — Loading nearby accessible facilities..."];
+    checkStatus = await waitForStatus(checkStatus);
+    if(checkStatus === null) {
         console.error("Status message not recording state");
         return false;
     }
-    console.log("Status recording current state properly");
+    if(checkStatus === successStateOutputs[0]){
+        console.log("Status recording current state properly");
+    }else{
+        console.log("Status recording current state but not the right message or throwing an error");
+    }
     const walkBtn = document.getElementById("btn-walk");
     const wheelBtn = document.getElementById("btn-wheel");
     walkBtn.click(); 
@@ -657,6 +663,16 @@ async function testPathing(){
         console.log("Test failed");
         testPassed = false;
     }
+    checkStatus = await waitForStatus(checkStatus);
+    if(checkStatus === null) {
+        console.error("Status message not recording state");
+        return false;
+    }
+    if(checkStatus === successStateOutputs[1]){
+        console.log("Status recording current state properly");
+    }else{
+        console.log("Status recording current state but not the right message or throwing an error");
+    }
     console.log("Walking mode activated ✅");
     wheelBtn.click(); 
     const wheelActive = await waitForMode(wheelBtn, "active-wheel");
@@ -664,6 +680,16 @@ async function testPathing(){
     if (!wheelActive || !walkInactive) {
         console.log("Test failed: Walking mode on");
         testPassed = false;
+    }
+    checkStatus = await waitForStatus(checkStatus);
+    if(checkStatus === null) {
+        console.error("Status message not recording state");
+        return false;
+    }
+    if(checkStatus === successStateOutputs[2]){
+        console.log("Status recording current state properly");
+    }else{
+        console.log("Status recording current state but not the right message or throwing an error");
     }
     console.log("Wheelchair mode activated ✅");
     return testPassed;
