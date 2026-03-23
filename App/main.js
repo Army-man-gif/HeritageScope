@@ -11,7 +11,8 @@ import { convertDatasetToLayers } from './createMarkers.js';
 import { dynamicallyBuildLanguageSelection } from './languageChangeController.js';
 import { downloadMap } from './offline/Download.js';
 import {init} from './pathing/pathroutingInit.js';
-
+import { keyboardAccessbility } from './Accessibility/keyboardAccessbility.js';
+import { runTests } from '../Tests/Simulation/Armaan-Feature-Tests/Tests.js';
 // Add more metrics - poluttion, density etc..
 // Legend describing number thing - Complete
 // Change styling a lil - Complete
@@ -35,26 +36,33 @@ async function startMain(){
     let jsonData;
     try {
         jsonData = await loadDataset();
-        console.log("Dataset loaded successfully");
     } catch (err) {
         console.error("Error loading dataset", err);
         return;
     }
     const map = createMap();
+    
+    let resizeTimeout;
+
+    globalThis.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+
+        resizeTimeout = setTimeout(() => {
+            // wait for layout + tests to settle
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    map.invalidateSize(true);
+                });
+            });
+        }, 150);
+    });
     globalThis.hsMap = map;
+    globalThis.mapMade = true;
     globalThis.dispatchEvent(
         new CustomEvent('heritage:map-ready', { detail: { map } })
     );
 
     highlighter = new MarkerHighlight(map);
-
-    /* Yi modified with codex: clicking empty map space clears the yellow marker state and any active area polygon. */
-    map.on('click', () => {
-        highlighter.clear();
-        if (typeof globalThis.hsClearAreaHighlight === 'function') {
-            globalThis.hsClearAreaHighlight();
-        }
-    });
 
     const initialFeature = jsonData.features[0];
 
@@ -73,6 +81,7 @@ async function startMain(){
     convertDatasetToLayers(jsonData, markers, highlighter,currentLanguage);
     originalMarkers = markers.getLayers().slice();
     map.addLayer(markers);
+    keyboardAccessbility(map,highlighter,markers);
 
     initRegionFilter(markers,originalMarkers, map);
     init(map);
@@ -85,8 +94,8 @@ async function startMain(){
         [90, 200]
     ]);
 
-    document.getElementById('downloadTrigger').addEventListener('click',() => {
-        downloadMap();
+    document.getElementById('downloadTrigger').addEventListener('click',async () => {
+         await downloadMap();
     })
     const LanguageControl = L.Control.extend({
         onAdd: function() {
@@ -102,10 +111,6 @@ async function startMain(){
     const languageController = new LanguageControl({ position: "topright" });
 
     map.addControl(languageController);
-
-    requestAnimationFrame(() => map.invalidateSize());
-    globalThis.addEventListener('resize', () => map.invalidateSize());
-
 
     // to read out popups (areas clicked on)
     map.on("popupopen", function(e){
@@ -140,6 +145,8 @@ async function startMain(){
 
         previousZoom = currentZoom;
     });
+
+    runTests(map, markers);
 }
 
 try{

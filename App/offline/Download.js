@@ -1,5 +1,23 @@
+/*
+export async function downloadMap(map){
+    const mapElement = map.getContainer();
 
-export function downloadMap(){
+    try {
+        const canvas = await html2canvas(mapElement, {
+            useCORS: true
+        });
+
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "snapshot.png";
+        link.click();
+
+    } catch (error) {
+        console.error("Error in download", error);
+    }
+}
+*/
+export async function downloadMap(map){
     const mapDOMElement = document.getElementById('map');
     if(!mapDOMElement){
         console.error("Map not found");
@@ -12,7 +30,7 @@ export function downloadMap(){
 
     document.body.appendChild(clonedMap);
     
-    html2canvas(
+    await html2canvas(
         clonedMap,{
         useCORS : true,
         allowTaint: true,

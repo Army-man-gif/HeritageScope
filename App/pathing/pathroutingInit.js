@@ -72,4 +72,5 @@ export function init(map){
     document.getElementById('end-input').addEventListener('keypress', e => {
         if (e.key === 'Enter') goBtn.click();
     });
+    globalThis.dispatchEvent(new CustomEvent('pathing:ready'));
 }
