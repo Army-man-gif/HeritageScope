@@ -12,7 +12,7 @@ import { dynamicallyBuildLanguageSelection } from './languageChangeController.js
 import { downloadMap } from './offline/Download.js';
 import {init} from './pathing/pathroutingInit.js';
 import { keyboardAccessbility } from './Accessibility/keyboardAccessbility.js';
-import { runTests } from '../Tests/Simulation/Armaan-Feature-Tests/Tests.js';
+import { runTests } from '../Tests/Armaan-Feature-Tests/Tests.js';
 // Add more metrics - poluttion, density etc..
 // Legend describing number thing - Complete
 // Change styling a lil - Complete
