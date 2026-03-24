@@ -1,5 +1,6 @@
 
-
+const expectedOutput = "font-size: 110%;font-weight: bold; color: pink;";
+const actualOutput = "font-size: 110%;font-weight: bold; color: violet;"
 // To test
 // Does the map load?
 // Is there a valid map object instance
@@ -7,6 +8,12 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 function testMapCreation(map){
+    console.log("%cExpected output of mapMade global variable: true",expectedOutput);
+    console.log(`%cActual output of mapMade global variable: ${globalThis.mapMade}`,actualOutput);
+    console.log(" ");
+    console.log("%cExpected output of map instance variable: true",expectedOutput);
+    console.log(`%cActual output of map instance variable: ${map instanceof L.Map}`,actualOutput);
+    console.log(" ");
     if(globalThis.mapMade && map instanceof L.Map){
         console.log("Map was made and is a valid map instance");
         console.log("Test passed");
@@ -30,7 +37,6 @@ async function testUserLocationLock(map){
 
             map.once('locationfound',function(e){
                 const center = map.getCenter();
-
                 console.log("Test passed, map center retrieved: ", center.lat, center.lng);
 
                 // Test if center is valid
@@ -50,24 +56,22 @@ async function testUserLocationLock(map){
                 const tolerance = 2000;
                 if(distance < tolerance){
                     console.log(`Test passed. User location within ${tolerance}m of the map's center`);
-                    testPassed = true;
                 }else{
                     console.warn("Test failed");
-                    testPassed = false;
+                    resolve(false);
                 }
                 if(typeof userLocationLat === "number" && typeof userLocationLng === "number"){
                     console.log("Test passed: user location retrieved", userLocationLat, userLocationLng);
-                    testPassed = true;
+                    resolve(true);
                 } else {
                     console.log("Test failed: invalid user location");
-                    testPassed = false;
+                    resolve(false);
                 }
             })
             map.once('locationerror',(err) => {
                 console.warn("Failed to get user location", err.message);
-                testPassed = false;
+                resolve(false);
             })
-            resolve(testPassed);
         })
     })
 }
@@ -144,7 +148,9 @@ async function testMarkers(map,markers){
     const markerLayers = markers.getLayers();
     const validMarkers = markerLayers.filter(layer => layer instanceof L.Marker);
 
-
+    console.log("%cExpected output of number of markers is 1247",expectedOutput);
+    console.log(`%cActual output of number of markers: ${markers.getLayers().length}`,actualOutput);
+    console.log(" ");
     if (markers && markers.getLayers().length > 0) {
         console.log("Markers exist on the map");
     } else {
@@ -205,7 +211,7 @@ async function testMarkers(map,markers){
         console.log("Test passed: All features have matching markers");
         return true;
     }
-    console.warn("One or multiple of the tests failed");
+    console.warn("One or multiple of the features don't have matching markers");
     return false;
 }
 
@@ -526,7 +532,7 @@ async function testingZoomIn(map,testPassed,container){
     }
     return testPassed;    
 }
-async function testKeyboarAccessbility(map,markers){
+async function testKeyboardAccessbility(map,markers){
 
     let testPassed = true;
 
@@ -705,7 +711,7 @@ export async function runTests(map, markers) {
         () => testErrors(map),
         () => testMarkers(map, markers),
         //() => testPopups(map, markers),
-        () => testKeyboarAccessbility(map, markers),
+        () => testKeyboardAccessbility(map, markers),
         () => downloadFunctionalityTest(map, markers),
         () => TTStest(),
         () => testPathing()
