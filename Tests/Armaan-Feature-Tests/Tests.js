@@ -1,4 +1,4 @@
-
+import { resetTransforms,restoreTransforms } from "../../App/offline/Download.js";
 const expectedOutput = "font-size: 110%;font-weight: bold; color: pink;";
 const actualOutput = "font-size: 110%;font-weight: bold; color: violet;"
 // To test
@@ -551,17 +551,15 @@ async function testKeyboardAccessbility(map,markers){
 // Test the integration of the download functionality
 async function downloadFunctionalityTest(map,markers){
     let testPassed = true;
-    const mapDOMElement = document.getElementById('map');
-    const clonedMap = mapDOMElement.cloneNode(true);
+    const mapContainer = map.getContainer();
     // Render the clone as far as visibly possible of the screen so it doesn't affect the user UI
-    clonedMap.style.position = "absolute";
-    clonedMap.style.top = "-9999px";
-    clonedMap.style.left = "-9999px";
+    map.invalidateSize();
+    await new Promise(r => setTimeout(r, 100));
+    resetTransforms();
 
-    document.body.appendChild(clonedMap);
     
     try {
-        const canvas = await html2canvas(clonedMap, {
+        const canvas = await html2canvas(mapContainer, {
             useCORS: true,
             allowTaint: true
         });
@@ -572,13 +570,12 @@ async function downloadFunctionalityTest(map,markers){
             console.log("✅ Test passed: image generated");
         }
 
-        clonedMap.remove();
 
     } catch (err) {
         console.error("❌ Test failed:", err);
-        clonedMap.remove();
         testPassed =  false;
     }
+    restoreTransforms();
     return testPassed;
 }
 

@@ -95,7 +95,7 @@ async function startMain(){
     ]);
 
     document.getElementById('downloadTrigger').addEventListener('click',async () => {
-         await downloadMap();
+         await downloadMap(map);
     })
     const LanguageControl = L.Control.extend({
         onAdd: function() {
