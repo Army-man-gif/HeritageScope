@@ -100,6 +100,10 @@ Initial build complete! Watching for changes...
 ### Additions to our original feature list:
 - Site Status Overlay (Karlie) : A risk overlay that fetches heritage site status (visitor pressure, weather condition, risk level) from a Spring Boot REST API supported by PostgreSQL, displaying red/amber/green circles on the map to show at-risk sites. Built as an extension of F-1.
 
+## Test plan:
+Our test plan is found in this document:
+https://docs.google.com/document/d/1uayuSvuXrsjj2sE6vIspbjBfYhKkpXGeEHkP5162zcg/edit?usp=sharing
+
 ## Unit Testing:
 Our unit testing is found in this document: 
 https://docs.google.com/document/d/1wKu51U5LSkbITz1umVbN2rmAPybO5xwgnA4Y-RrfAWs/edit?usp=sharing
