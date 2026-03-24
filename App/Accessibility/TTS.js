@@ -82,6 +82,43 @@ function elementSpeech(id) {
   });
 }
 
+// for getting region option
+function regionSpeech(id) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  
+  element.addEventListener("change", function () {
+    const value = this.value;
+
+    const messages = {
+        "ALL": "This selects all regions.",
+        "Africa": "This selects the African region.",
+        "Arab States": "This selects the Arab region.",
+        "Asia and the Pacific": "This selects the Asian and the Pacific regions.",
+        "Europe and North America": "This selects the European and North American regions.",
+        "Latin America and the Caribbean": "This selects the Latin American and the Caribbean regions."
+    };
+
+    speak(messages[value]);
+    });
+}
+
+function countrySpeech(id) {
+  const element = document.getElementById(id);
+  if (!element) return;
+
+  element.addEventListener("change", function () {
+    const selectedText = element.options[element.selectedIndex].text;
+
+    if (selectedText === "All countries") {
+      speak("This selects all countries.");
+    } else {
+      speak(`This selects ${selectedText}.`);
+    }
+  });
+}
+
+
 // introduce web page
 /* 
 Issue with this is the voices haven't loaded yet when sites load because no user has interacted
@@ -143,5 +180,29 @@ classElementSpeech("splitPlaceholderText");
 elementSpeech("simTitle");
 addSpeech("closeSimulationDialog", "This button closes the simulation when clicked.");
 
-// Also add more filter buttons
+// Filter by region
+addSpeech("regionFilterToggle", "This button opens and closes the region filter tool.");
+
+const regionEl = document.getElementById("regionSelect");
+
+// only when opened
+regionEl.addEventListener("focus", () => {
+  speak("This button opens up the region options.");
+});
+
+regionSpeech("regionSelect");
+
+// countries
+const countryEl = document.getElementById("countrySelect");
+
+// only when opened
+countryEl.addEventListener("focus", () => {
+  speak("This button opens up the country options.");
+});
+
+countrySpeech("countrySelect");
+
+addSpeech("regionApply", "This button applies the selected region options.");
+addSpeech("regionClear", "This button clears the selected region options.");
+
 
