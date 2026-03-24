@@ -1,5 +1,5 @@
 # HeritageScope
-write intro to project here
+HeritageScope is an interactive web app that promotes the protection of cultural and natural heritage (SDG 11.4) through mapping and environmental impact simulation. It raises awareness of at-risk sites while encouraging responsible visitor behaviour. The platform also improves accessibility with wheelchair-friendly routing, accessible facility mapping, and inclusive design features (SDG 11.2, 11.7).
 
 ## Libraries or requirements required to run it:
 - Java 17 or above
