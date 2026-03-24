@@ -80,8 +80,8 @@ Initial build complete! Watching for changes...
 
 | ID | Description | Develop | Progress | Owners |
 |-----|-------------|--------|----------|--------|
-| F1 | Highlighting Heritage and cultural sites on a map. | Develop (Core functionality) | | Yi & Karlie
-| F2 | Readable text in a large easy to see font | Develop (Core functionality) | | Yi |
+| F1 | Highlighting Heritage and cultural sites on a map. | Develop (Core functionality) | Completed | Yi & Karlie
+| F2 | Readable text in a large easy to see font | Develop (Core functionality) | Completed | Yi |
 | F3 | Colour blind modes | Part-develop (Enhanced functionality) | | Arsam |
 | F4 | Interactive map-based visualisation | Develop (Core functionality) | | Armaan |
 | F5 | Visual environmental simulation tool with additional text description | Develop (Core functionality) | Completed | Jocelyn |
