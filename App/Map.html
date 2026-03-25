@@ -32,6 +32,9 @@
     <link rel="stylesheet" href="./styles/styles.css">
     <link rel="stylesheet" href="./styles/routing.css">
     <link rel="stylesheet" href="./styles/accessibility.css">
+    <link rel="stylesheet" href="./styles/userReports.css">
+    <link rel="stylesheet" href="./styles/colourBlindModes.css">
+
 
 </head>
 
@@ -44,6 +47,7 @@
                 <button class="font-btn" id="mediumText" data-size="large">A+</button>
                 <button class="font-btn" id="largeText" data-size="xlarge">A++</button>
                 <button id="contrast-btn">High Contrast</button>
+                <button id="colourBlindToggle">Colour Blind Mode</button>
             </div>
         </section>
 
@@ -98,6 +102,7 @@
                         <button id="status-btn" onclick="handleStatusToggle()">Show At-Risk Sites</button>
                         <button id="simulationTrigger" type="button">Open Simulation</button>
                         <button id="downloadTrigger" type="button">Download</button>
+                        <button id="openReportDialog" type="button">Open Report</button>
                     </div>
                     <div id="filtersTooldbar" class="toolbar utilitySection">
                         <span class="utilityLabel">Filters</span>
@@ -143,7 +148,26 @@
         </div>
     </dialog>
 
+    <dialog id="reportDialog" class="reportDialog">
+        <div class="reportDialogShell">
+
+            <div class="reportDialogHeader">
+              <h3>Report Issue</h3>
+                <button id="closeReportDialog">Close</button>
+            </div>
+
+            <iframe
+                id="reportDialogFrame"
+                class="reportDialogFrame"
+                src="../userInputs/userInputs.html"
+                loading="lazy">
+            </iframe>
+
+        </div>
+    </dialog>
+
     <script defer src="./Accessibility/TTS.js"></script>
+
 </body>
 
 </html>

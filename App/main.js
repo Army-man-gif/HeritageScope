@@ -13,6 +13,8 @@ import { downloadMap } from './offline/Download.js';
 import {init} from './pathing/pathroutingInit.js';
 import { keyboardAccessbility } from './Accessibility/keyboardAccessbility.js';
 import { runTests } from '../Tests/Armaan-Feature-Tests/Tests.js';
+import { initUserReports } from './userReports.js';
+import { initColourBlindToggle } from './colourBlindMode.js';
 // Add more metrics - poluttion, density etc..
 // Legend describing number thing - Complete
 // Change styling a lil - Complete
@@ -41,6 +43,9 @@ async function startMain(){
         return;
     }
     const map = createMap();
+
+    initUserReports(map);
+    initColourBlindToggle();
     
     let resizeTimeout;
 
