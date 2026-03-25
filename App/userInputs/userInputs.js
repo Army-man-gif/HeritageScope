@@ -4,9 +4,9 @@ function getAffectedGroups() {
     const checkboxes = document.querySelectorAll("fieldset input[type='checkbox']");
     const selectedGroups = [];
 
-    for (let i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            selectedGroups.push(checkboxes[i].value);
+    for (const element of checkboxes) {
+        if (element.checked) {
+            selectedGroups.push(element.value);
         }
     }
 
@@ -23,8 +23,8 @@ async function reportSubmission(event) {
     const affectedgroups = getAffectedGroups();
 
     const reportData = {
-        latitude: parseFloat(selectedLat),
-        longitude: parseFloat(selectedLng),
+        latitude: Number.parseFloat(selectedLat),
+        longitude: Number.parseFloat(selectedLng),
         category: category.toUpperCase(),
         severity: severity.toUpperCase(),
         affectedGroups: affectedgroups,
@@ -99,8 +99,8 @@ async function loadReports() {
         const reportsList = document.getElementById("reportsList");
         reportsList.innerHTML = ""
 
-        for (let i=0; i < reports.length; i++){
-            const report = reports[i];
+        for (const element of reports){
+            const report = element;
 
             const reportsSec = document.createElement("div");
             reportsSec.innerHTML = "<strong>" + report.category + "</strong><br>" +
@@ -112,7 +112,7 @@ async function loadReports() {
 
             reportsList.appendChild(reportsSec);
 
-            if (typeof map != "undefined" && map) {
+            if (map !== undefined && map) {
                 L.marker([report.latitude, report.longitude]).addTo(map).bindPopup(
                     "<b>" + report.category + "</b><br>" +  "Severity: " +report.severity + "<br>" + report.description + 
                     "<br>Upvotes: " + report.upvotes
@@ -162,7 +162,7 @@ function setUpReportForm() {
 
 setUpReportForm();
 createMap();
-loadReports();
+await loadReports();
 
 document.getElementById("colorBlindToggle").addEventListener("click", function () {
     document.body.classList.toggle("colorblind-mode");

@@ -4,9 +4,9 @@ function getAffectedGroups() {
 const checkboxes = document.querySelectorAll("fieldset input[type='checkbox']");
 const selectedGroups = [];
 
-for (let i = 0; i < checkboxes.length; i++) {
-    if (checkboxes[i].checked) {
-        selectedGroups.push(checkboxes[i].value);
+for (const element of checkboxes) {
+    if (element.checked) {
+        selectedGroups.push(element.value);
     }
 }
 
@@ -17,14 +17,18 @@ return selectedGroups;
 async function reportSubmission(event) {
     event.preventDefault();
 
+    if (selectedLat === null || selectedLng === null) {
+        alert("Please click a location on the map first!");
+        return;
+    }
     const category = document.getElementById("category").value;
     const severity = document.getElementById("severity").value;
     const description = document.getElementById("description").value;
     const affectedgroups = getAffectedGroups();
-
+    console.log(selectedLat,selectedLng);
     const reportData = {
-        latitude: parseFloat(selectedLat),
-        longitude: parseFloat(selectedLng),
+        latitude: Number.parseFloat(selectedLat),
+        longitude: Number.parseFloat(selectedLng),
         category: category.toUpperCase(),
         severity: severity.toUpperCase(),
         affectedGroups: affectedgroups,
@@ -70,15 +74,17 @@ let selectedLng = null;
 
 function mapClickHandler(map) {
     map.on('click', function (e) {
-        selectedLat = e.latlng.lat.toFixed(5);
-        selectedLng = e.latlng.lng.toFixed(5);
+        selectedLat = e.latlng.lat;
+        selectedLng = e.latlng.lng;
 
-        const iframe = document.getElementById("reportDialogFrame");
+        const latElement = document.getElementById("lat");
+        const lngElement = document.getElementById("lng");
 
-        if (iframe && iframe.contentWindow) {
-            iframe.contentWindow.postMessage({
-                type: "report-location", lat: selectedLat, lng: selectedLng
-            }, "*");
+        if (latElement && lngElement) {
+            latElement.value = selectedLat;
+            lngElement.value = selectedLng;
+            latElement.textContent = selectedLat;
+            lngElement.textContent = selectedLng;
         }
     })
 }
@@ -89,15 +95,17 @@ async function loadReports() {
     try {
     const response = await fetch("http://localhost:8080/api/reports");
     const reports = await response.json();
-
+    if(reports.length == 0){
+        return;
+    }
     console.log("num = ", reports.length);
     console.log(reports);
 
     const reportsList = document.getElementById("reportsList");
     reportsList.innerHTML = ""
 
-    for (let i=0; i < reports.length; i++){
-        const report = reports[i];
+    for (const element of reports){
+        const report = element;
 
         const reportsSec = document.createElement("div");
         reportsSec.innerHTML = "<strong>" + report.category + "</strong><br>" +
@@ -118,7 +126,7 @@ async function loadReports() {
 
     }
     } catch (error) {
-    console.error("Error loading reports:", error);
+        console.error("Error loading reports:", error);
     }
 }
 
@@ -177,5 +185,5 @@ export function initUserReports(map) {
     }
     loadReports();
 
-    window.upvoteReport = upvoteReport;
+    globalThis.upvoteReport = upvoteReport;
 }

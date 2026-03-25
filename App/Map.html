@@ -25,16 +25,15 @@
     <!-- Import leaflet routing machine -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
     <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
-     <!-- html2canvas -->
-    <script src="https://unpkg.com/leaflet-image/leaflet-image.js"></script>
+    <!-- Accessiblity -->
+    <script defer src="./Accessibility/TTS.js"></script>
+    <!-- html2canvas -->
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <!-- Import custom styles team have made -->
     <link rel="stylesheet" href="./styles/styles.css">
     <link rel="stylesheet" href="./styles/routing.css">
     <link rel="stylesheet" href="./styles/accessibility.css">
-    <link rel="stylesheet" href="./styles/userReports.css">
     <link rel="stylesheet" href="./styles/colourBlindModes.css">
-
 
 </head>
 
@@ -131,7 +130,56 @@
                         <input id="lidInput" placeholder="LID" style="width: 100px;">
                         <button id="areaMarkRun">Run</button>
                     </div>
+                    <div id="reportContainer">
+                        <h1 id="reportHeader">Report Form</h1>
+                        <section>
+                            <h2>Enter Details</h2>
+                            <form id="reportForm">
+                                <label for="category">Category</label>
+                                <select id="category">
+                                    <option value="">Select</option>
+                                    <option value="accessibility">Accessibility</option>
+                                    <option value="safety">Safety</option>
+                                    <option value="environmental">Environmental</option>
+                                </select>
+                                <label for="severity">Severity</label>
+                                <select id="severity">
+                                    <option value="">Select</option>
+                                    <option value="low">Low</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                                <fieldset>
+                                    <legend>Affected Groups</legend>
+                                    <label class="formAcessbilityOptions">
+                                        <input type="checkbox" value="wheelchair-users">
+                                        Wheelchair users
+                                    </label>
+                                    <label class="formAcessbilityOptions">
+                                        <input type="checkbox" value="visually-impaired">
+                                        Visually impaired
+                                    </label>
+                                    <label class="formAcessbilityOptions">
+                                        <input type="checkbox" value="parents-with-prams">
+                                        Parents with prams
+                                    </label>
+                                </fieldset>
+                                <label for="description">Description</label>
+                                <textarea id="description"></textarea>
+                                <div class="locationBox">
+                                    <p>Latitude: <span id="lat">-</span></p>
+                                    <p>Longitude: <span id="lng">-</span></p>
+                                </div>
+                                <button type="submit">Submit</button>
+                            </form>
+                        </section>
+                        <section>
+                            <h2>Reports</h2>
+                            <div id="reportsList"></div>
+                        </section>
+                    </div>
                 </div>
+
             </div>
         </section>
     </div>
@@ -148,25 +196,7 @@
         </div>
     </dialog>
 
-    <dialog id="reportDialog" class="reportDialog">
-        <div class="reportDialogShell">
 
-            <div class="reportDialogHeader">
-              <h3>Report Issue</h3>
-                <button id="closeReportDialog">Close</button>
-            </div>
-
-            <iframe
-                id="reportDialogFrame"
-                class="reportDialogFrame"
-                src="../userInputs/userInputs.html"
-                loading="lazy">
-            </iframe>
-
-        </div>
-    </dialog>
-
-    <script defer src="./Accessibility/TTS.js"></script>
 
 </body>
 
