@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.layout {
+    display: flex;
+    height: 100vh;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+    border: 2px solid #ccc;
+}
+
+.panel {
+    flex: 1;
+    padding: 20px;
+    background: #f4f4f4;
+    overflow-y: auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+select {
+    padding: 8px;
+    font-size: 14px;
+}
+
+textarea {
+    padding: 8px;
+    font-size: 14px;
+    min-height: 80px;
+    resize: vertical;
+}
+
+button {
+    padding: 8px;
+    font-size: 14px;
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.locationBox {
+    background: #e8e8e8;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+#reportList {
+    margin-top: 10px;
+    min-height: 180px;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.colorblind-mode {
+    background-color: #f7f7f7;
+    color: #000;
+}
+
+.colorblind-mode .panel,
+.colorblind-mode .locationBox,
+.colorblind-mode #reportList {
+    background-color: #ffffff;
+    border: 2px solid #000;
+}
+
+.colorblind-mode button {
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #000;
+}
+
+.colorblind-mode input,
+.colorblind-mode select,
+.colorblind-mode textarea {
+    border: 2px solid #000;
+    background-color: #fff;
+    color: #000;
+}
+
+.colorblind-mode #map {
+    filter: grayscale(100%) contrast(140%);
+}
