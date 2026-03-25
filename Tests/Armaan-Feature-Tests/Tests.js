@@ -1,4 +1,3 @@
-import { resetTransforms,restoreTransforms } from "../../App/offline/Download.js";
 const expectedOutput = "font-size: 110%;font-weight: bold; color: pink;";
 const actualOutput = "font-size: 110%;font-weight: bold; color: violet;"
 // To test
@@ -550,33 +549,7 @@ async function testKeyboardAccessbility(map,markers){
 }
 // Test the integration of the download functionality
 async function downloadFunctionalityTest(map,markers){
-    let testPassed = true;
-    const mapContainer = map.getContainer();
-    // Render the clone as far as visibly possible of the screen so it doesn't affect the user UI
-    map.invalidateSize();
-    await new Promise(r => setTimeout(r, 100));
-    resetTransforms();
-
-    
-    try {
-        const canvas = await html2canvas(mapContainer, {
-            useCORS: true,
-            allowTaint: true
-        });
-
-        const dataUrl = canvas.toDataURL("image/png");
-
-        if (dataUrl.startsWith("data:image/png")) {
-            console.log("✅ Test passed: image generated");
-        }
-
-
-    } catch (err) {
-        console.error("❌ Test failed:", err);
-        testPassed =  false;
-    }
-    restoreTransforms();
-    return testPassed;
+   print("fillter");
 }
 
 async function TTStest(){

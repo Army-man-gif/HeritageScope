@@ -2,7 +2,7 @@ import './riskLevelOverlay.js';
 import './collapsibleToolbar.js';
 import './utilityDialog.js';
 import './AreaHighlighter/AreaHighlighterUI.js';
-import {initRegionFilter} from './regionFilter.js';
+import {initRegionFilter,regionOverlay,clearOverlay} from './regionFilter.js';
 import { MarkerHighlight } from './AreaHighlighter/AreaHighlighter.js';
 import './Accessibility/accessbilityUIButtons.js';
 import { createMap } from './createMap.js';
@@ -95,7 +95,7 @@ async function startMain(){
     ]);
 
     document.getElementById('downloadTrigger').addEventListener('click',async () => {
-         await downloadMap(map);
+        setTimeout(() => downloadMap(map), 50);
     })
     const LanguageControl = L.Control.extend({
         onAdd: function() {
