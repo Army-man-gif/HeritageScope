@@ -101,7 +101,9 @@ function bindToolbar() {
         return;
     }
     
-
+    status.addEventListener("click", function () {
+        globalThis.speak(status.textContent);
+    });
 
     runButton.addEventListener('click', async () => {
         await run(input, status);
