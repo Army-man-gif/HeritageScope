@@ -79,12 +79,11 @@ public class ReportRepository {
                     rs.getInt("id"),
                     rs.getDouble("latitude"),
                     rs.getDouble("longitude"),
-                    ReportCategory.valueOf(rs.getString("category")),
-                    SeverityLevel.valueOf(rs.getString("severity")),
+                    ReportCategory.fromString(rs.getString("category")),
+                    SeverityLevel.fromString(rs.getString("severity")),
                     splitAffectedGroups(rs.getString("affected_groups")),
                     rs.getString("description"),
                     rs.getString("photo_path")
-
                 );
                 report.setUpvotes(rs.getInt("upvotes"));
 

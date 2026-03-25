@@ -25,16 +25,18 @@ async function reportSubmission(event) {
     const severity = document.getElementById("severity").value;
     const description = document.getElementById("description").value;
     const affectedgroups = getAffectedGroups();
-    console.log(selectedLat,selectedLng);
+    console.log("Report data:", {selectedLat,selectedLng,category,severity,affectedgroups,description});
     const reportData = {
         latitude: Number.parseFloat(selectedLat),
         longitude: Number.parseFloat(selectedLng),
-        category: category.toUpperCase(),
-        severity: severity.toUpperCase(),
+        category: category,
+        severity: severity,
         affectedGroups: affectedgroups,
         description: description,
         photoPath: ""
     };
+    console.log("Sending:", reportData);
+
 
     try {
 

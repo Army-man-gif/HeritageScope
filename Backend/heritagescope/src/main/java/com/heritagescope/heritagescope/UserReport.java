@@ -3,6 +3,12 @@ package com.heritagescope.heritagescope;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.List;
+import com.heritagescope.heritagescope.Comment;
+
 public class UserReport {
     private int id;
     private double latitude;
@@ -15,6 +21,13 @@ public class UserReport {
     private int upvotes;
     private List<Comment> comments;
 
+    public UserReport() {
+        this.upvotes = 0;
+        this.comments = new ArrayList<>();
+        this.affectedGroups = new ArrayList<>();
+    }
+
+    @JsonIgnore
     public UserReport(int id, double latitude, double longitude, ReportCategory category,
                        SeverityLevel severity, List<String> affectedGroups,
                        String description, String photoPath) {
@@ -30,10 +43,12 @@ public class UserReport {
         this.comments = new ArrayList<>();
     }
 
+    @JsonProperty("id")
     public int getId() {
         return id;
     }
 
+    @JsonProperty("latitude")
     public double getLatitude() {
         return latitude;
     }
@@ -43,6 +58,7 @@ public class UserReport {
 
     }
 
+    @JsonProperty("longitude")
     public double getLongitude() {
         return longitude;
     }
@@ -52,6 +68,7 @@ public class UserReport {
         
     }
 
+    @JsonProperty("category")
     public ReportCategory getCategory() {
         return category;
     }
@@ -61,6 +78,7 @@ public class UserReport {
         
     }
 
+    @JsonProperty("severity")
     public SeverityLevel getSeverity() {
         return severity;
     }
@@ -70,6 +88,7 @@ public class UserReport {
         
     }
 
+    @JsonProperty("affectedGroups")
     public List<String> getAffectedGroups() {
         return new ArrayList<>(affectedGroups);
     }
@@ -78,7 +97,7 @@ public class UserReport {
         this.affectedGroups = new ArrayList<>(affectedGroups);
     }
 
-
+    @JsonProperty("description")
     public String getDescription() {
         return description;
     }
@@ -87,6 +106,7 @@ public class UserReport {
         this.description = description;
     }
 
+    @JsonProperty("photoPath")
     public String getPhotoPath() {
         return photoPath;
     }
@@ -96,6 +116,7 @@ public class UserReport {
     }
     
 
+    @JsonProperty("upvotes")
     public int getUpvotes() {
         return upvotes;
     }
