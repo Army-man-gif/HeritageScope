@@ -1,17 +1,6 @@
 # HeritageScope
 HeritageScope is an interactive web app that promotes the protection of cultural and natural heritage (SDG 11.4) through mapping and environmental impact simulation. It raises awareness of at-risk sites while encouraging responsible visitor behaviour. The platform also improves accessibility with wheelchair-friendly routing, accessible facility mapping, and inclusive design features (SDG 11.2, 11.7).
 
-## Quick Start (No VSCode Needed)
-- 1. Download this repository and unzip it.
-- 2. Open terminal in the project root folder (`digital-dream-team`).
-- 3. Start a local static server from the root (example):
-  - `npx serve .`
-- 4. In terminal output, use the **Local** URL shown by the server (example: `http://localhost:55506`).
-- 5. Open the app with this path:
-  - `http://localhost:55506/App/Map.html`
-  - Replace the port with the one shown in your own terminal.
-- 6. If the terminal says a different port was picked (for example, 3000 is in use), this is expected. Always use the printed **Local** URL.
-
 ## Libraries or requirements required to run it:
 - Java 17 or above
 - PostgreSQL 16
@@ -30,7 +19,18 @@ HeritageScope is an interactive web app that promotes the protection of cultural
 - Nomiatim (geocoding destination text)
 - AirVisual API + API Ninjas API (used by metrics.js for environmental/population metrics)
 
-## Instructions on how to download and run the project:
+## Quick Start (No VSCode Needed)
+- 1. Download this repository and unzip it.
+- 2. Open terminal in the project root folder (`digital-dream-team`).
+- 3. Start a local static server from the root (example):
+  - `npx serve .`
+- 4. In terminal output, use the **Local** URL shown by the server (example: `http://localhost:55506`).
+- 5. Open the app with this path:
+  - `http://localhost:55506/App/Map.html`
+  - Replace the port with the one shown in your own terminal.
+- 6. If the terminal says a different port was picked (for example, 3000 is in use), this is expected. Always use the printed **Local** URL.
+
+## Instructions on how to set up the Database and Backend:
 * **Note:** On Windows, if the path seperator causes issues, replace **`/`** with **`\`** in the file path
 
 ### 1. Database Setup
@@ -66,7 +66,7 @@ HeritageScope is an interactive web app that promotes the protection of cultural
 
 - **Deployed backend note:** We currently have a deployed backend at `http://217.154.38.248:8080/` (backend only). The frontend is not hosted on that server, so please run the frontend locally.
 
-### Area Highlight API configuration
+## Area Highlight API configuration
 - Edit this function directly:
   - `App/AreaHighlighter/AreaHighlighter.js`
   - `resolveAreaApiBase()`
