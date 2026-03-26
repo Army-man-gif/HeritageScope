@@ -28,6 +28,7 @@ HeritageScope is an interactive web app that promotes the protection of cultural
 - OpenRouteService (ORS) API (Wheelchair routing)
 - Overpass API (accessible facility markers)
 - Nomiatim (geocoding destination text)
+- AirVisual API + API Ninjas API (used by metrics.js for environmental/population metrics)
 
 ## Instructions on how to download and run the project:
 * **Note:** On Windows, if the path seperator causes issues, replace **`/`** with **`\`** in the file path
