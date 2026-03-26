@@ -1,0 +1,191 @@
+let reportMap = null;
+
+function getAffectedGroups() {
+const checkboxes = document.querySelectorAll("fieldset input[type='checkbox']");
+const selectedGroups = [];
+
+for (const element of checkboxes) {
+    if (element.checked) {
+        selectedGroups.push(element.value);
+    }
+}
+
+return selectedGroups;
+
+}
+
+async function reportSubmission(event) {
+    event.preventDefault();
+
+    if (selectedLat === null || selectedLng === null) {
+        alert("Please click a location on the map first!");
+        return;
+    }
+    const category = document.getElementById("category").value;
+    const severity = document.getElementById("severity").value;
+    const description = document.getElementById("description").value;
+    const affectedgroups = getAffectedGroups();
+    console.log("Report data:", {selectedLat,selectedLng,category,severity,affectedgroups,description});
+    const reportData = {
+        latitude: Number.parseFloat(selectedLat),
+        longitude: Number.parseFloat(selectedLng),
+        category: category,
+        severity: severity,
+        affectedGroups: affectedgroups,
+        description: description,
+        photoPath: ""
+    };
+    console.log("Sending:", reportData);
+
+
+    try {
+
+    const response = await fetch("http://localhost:8080/api/reports", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(reportData)
+    });
+
+    const result = await response.json();
+    console.log("POST result:", result);
+
+    if (!response.ok) {
+        alert("Server error");
+        return;
+    }
+
+    if (Array.isArray(result) && result.length > 0) {
+        alert("Validation failed: " + result.join(", "));
+        return;
+    }
+
+    alert("Report submitted successfully");
+    await loadReports();
+
+    } catch (error){
+    console.error("Error:", error);
+    alert("Failed to connect to backend");
+    };
+
+}
+
+let selectedLat = null;
+let selectedLng = null;
+
+function mapClickHandler(map) {
+    map.on('click', function (e) {
+        selectedLat = e.latlng.lat;
+        selectedLng = e.latlng.lng;
+
+        const latElement = document.getElementById("lat");
+        const lngElement = document.getElementById("lng");
+
+        if (latElement && lngElement) {
+            latElement.value = selectedLat;
+            lngElement.value = selectedLng;
+            latElement.textContent = selectedLat;
+            lngElement.textContent = selectedLng;
+        }
+    })
+}
+
+
+
+async function loadReports() {
+    try {
+    const response = await fetch("http://localhost:8080/api/reports");
+    const reports = await response.json();
+    if(reports.length == 0){
+        return;
+    }
+    console.log("num = ", reports.length);
+    console.log(reports);
+
+    const reportsList = document.getElementById("reportsList");
+    reportsList.innerHTML = ""
+
+    for (const element of reports){
+        const report = element;
+
+        const reportsSec = document.createElement("div");
+        reportsSec.innerHTML = "<strong>" + report.category + "</strong><br>" +
+        "Severity" + report.severity + "<br>" + "Location: (" + 
+        report.latitude + ", " + report.longitude + ")<br>" +
+        "Affected:" + report.affectedGroups.join(", ") + "<br>" + 
+        "Description:" + report.description + "<br>" + "Upvotes:" +
+        report.upvotes + " " + "<button onclick='upvoteReport(" + report.id + ")'>Upvote</button<hr>";
+
+        reportsList.appendChild(reportsSec);
+
+        if (typeof map != "undefined" && map) {
+            L.marker([report.latitude, report.longitude]).addTo(map).bindPopup(
+                "<b>" + report.category + "</b><br>" +  "Severity: " +report.severity + "<br>" + report.description + 
+                "<br>Upvotes: " + report.upvotes
+            );
+        }
+
+    }
+    } catch (error) {
+        console.error("Error loading reports:", error);
+    }
+}
+
+async function upvoteReport(id) {
+    console.log("Upvote Clicked");
+    try {
+    const response = await fetch("http://localhost:8080/api/reports/" + id + "/upvote", {
+        method: "POST"
+    });
+
+    const result = await response.json();
+
+    if (result) {
+        await loadReports();
+    } else { 
+        alert("Upvote Failed");
+
+    }
+
+    } catch (error) {
+        console.error("Error while upvoting:", error);
+    }
+}
+
+
+function setUpReportForm() {
+
+    const form = document.getElementById("reportForm");
+
+    if (!form) {
+        return;
+
+    }
+
+    form.addEventListener("submit", reportSubmission);
+
+}
+
+function setUpReportDialog() {
+    const dialog = document.getElementById("reportDialog");
+    const openBtn = document.getElementById("openReportDialog");
+    const closeBtn = document.getElementById("closeReportDialog");
+
+    openBtn.addEventListener("click", () => dialog.showModal());
+    closeBtn.addEventListener("click", () => dialog.close());
+}
+
+export function initUserReports(map) {
+    reportMap = map;
+    if (reportMap) {
+        mapClickHandler(reportMap);
+    }
+    setUpReportForm();
+    if (document.getElementById("reportDialog")) {
+        setUpReportDialog();
+    }
+    loadReports();
+
+    globalThis.upvoteReport = upvoteReport;
+}

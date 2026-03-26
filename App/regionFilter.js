@@ -200,5 +200,16 @@ export function initRegionFilter(markers,originalMarkers,map) {
     panel.style.display = 'none';
     panel.setAttribute('hidden', '');
     populateCountries(originalMarkers,'ALL');
+    const overlay = ensureOverlay();
+    const checkPolygonRendered = () => {
+        return overlay && overlay.getLayers().length > 0;
+    };
+    const waitForPolygon = async () => {
+        while (!checkPolygonRendered()) {
+            await new Promise(r => setTimeout(r, 20));
+        }
+    };
+    waitForPolygon();
     return true;
 }
+export { regionOverlay, clearOverlay };

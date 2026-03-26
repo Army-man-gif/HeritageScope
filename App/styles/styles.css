@@ -222,7 +222,8 @@
     justify-content: flex-start;
 }
 
-.utilityLabel {
+.utilityLabel
+{
     display: inline-flex;
     align-items: center;
     min-height: 32px;
@@ -237,6 +238,7 @@
     letter-spacing: 0.08em;
     white-space: nowrap;
 }
+
 
 .area-highlight-status {
     display: inline-flex;
@@ -647,4 +649,88 @@ input {
     .leaflet-control-attribution {
         max-width: calc(100vw - 48px);
     }
+}
+
+
+
+#reportForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+
+
+#category, #severity {
+    display: inline-block;
+    width: 100%;
+    min-height: 40px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid var(--button-border);
+    background: var(--input-bg);
+}
+
+#reportForm fieldset {
+    border: none;
+    padding: 0;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#reportForm legend {
+    padding: 0;
+    margin-bottom: 8px;
+    float: left;
+    width: 100%;
+}
+#reportForm label{
+    display: inline-block;
+}
+.formAcessbilityOptions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    padding: 2px 0;
+}
+#reportContainer{
+    color: #5a7095;
+}
+.formAcessbilityOptions input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
+}
+#reportContainer h1, 
+#reportContainer h2 {
+    display: block;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text-primary);
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+#reportContainer h2 {
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--panel-border);
+    padding-bottom: 5px;
+}
+
+#description {
+    width: 100%;
+    min-height: 80px;
+    border-radius: 10px;
+    border: 1px solid var(--button-border);
+    padding: 10px;
+    font-family: inherit;
 }

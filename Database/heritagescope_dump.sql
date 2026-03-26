@@ -24,6 +24,18 @@ SET default_table_access_method = heap;
 -- Name: site_status; Type: TABLE; Schema: public; Owner: postgres
 --
 
+CREATE TABLE reports (
+    id SERIAL PRIMARY KEY,
+    latitude DOUBLE PRECISION NOT NULL,
+    longitude DOUBLE PRECISION NOT NULL,
+    category VARCHAR(255) NOT NULL,
+    severity VARCHAR(255) NOT NULL,
+    affected_groups VARCHAR(255),
+    description TEXT,
+    photo_path VARCHAR(255),
+    upvotes INT DEFAULT 0
+);
+
 CREATE TABLE public.site_status (
     id bigint NOT NULL,
     site_name character varying(255),

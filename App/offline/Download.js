@@ -1,53 +1,34 @@
-/*
-export async function downloadMap(map){
-    const mapElement = map.getContainer();
-
-    try {
-        const canvas = await html2canvas(mapElement, {
-            useCORS: true
-        });
-
-        const link = document.createElement("a");
-        link.href = canvas.toDataURL("image/png");
-        link.download = "snapshot.png";
-        link.click();
-
-    } catch (error) {
-        console.error("Error in download", error);
+export async function downloadMap(map, regionOverlay) {
+    if (!map) {
+        console.error("Map doesn't exist");
+        return false;
     }
-}
-*/
-export async function downloadMap(map){
-    const mapDOMElement = document.getElementById('map');
-    if(!mapDOMElement){
-        console.error("Map not found");
-    }
-    const clonedMap = mapDOMElement.cloneNode(true);
-    // Render the clone as far as visibly possible of the screen so it doesn't affect the user UI
-    clonedMap.style.position = "absolute";
-    clonedMap.style.top = "-9999px";
-    clonedMap.style.left = "-9999px";
 
-    document.body.appendChild(clonedMap);
-    
-    await html2canvas(
-        clonedMap,{
-        useCORS : true,
-        allowTaint: true,
+    const takeSnapshot = async () => {
+        const mapContainerElement = map.getContainer();
 
-    }).then(clonedPart => {
-        // Make a link and force it to click automatically then remove everything
-        const link = document.createElement("a");
-        link.href = clonedPart.toDataURL("image/png");
-        link.download = "snapshot.png";
-        link.click();
+        // Make sure map is fully ready
+        map.invalidateSize();
+        await new Promise(resolve => setTimeout(resolve, 200));
 
-        // Remove clone from DOM
-        clonedMap.remove();
-        // Remove link element
-        link.remove();
-    }).catch(error => {
-        console.error("Error in download ",error);
-        clonedMap.remove();
-    })
+        try {
+            const canvas = await html2canvas(mapContainerElement, {
+                useCORS: true,    // load external tiles/images if needed
+                allowTaint: true, // allow cross-origin images
+                logging: false
+            });
+
+            // Create a download link
+            const link = document.createElement("a");
+            link.href = canvas.toDataURL("image/png");
+            link.download = "snapshot.png";
+            link.click();
+            link.remove();
+        } catch (err) {
+            console.error("Error taking map snapshot:", err);
+        }
+    };
+
+
+    await takeSnapshot();
 }

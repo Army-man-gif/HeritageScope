@@ -1,5 +1,5 @@
 # HeritageScope
-write intro to project here
+HeritageScope is an interactive web app that promotes the protection of cultural and natural heritage (SDG 11.4) through mapping and environmental impact simulation. It raises awareness of at-risk sites while encouraging responsible visitor behaviour. The platform also improves accessibility with wheelchair-friendly routing, accessible facility mapping, and inclusive design features (SDG 11.2, 11.7).
 
 ## Libraries or requirements required to run it:
 - Java 17 or above
@@ -91,25 +91,31 @@ Initial build complete! Watching for changes...
 
 | ID | Description | Develop | Progress | Owners |
 |-----|-------------|--------|----------|--------|
-| F1 | Highlighting Heritage and cultural sites on a map. | Develop (Core functionality) | | Yi & Karlie
-| F2 | Readable text in a large easy to see font | Develop (Core functionality) | | Yi |
-| F3 | Colour blind modes | Part-develop (Enhanced functionality) | | Arsam |
-| F4 | Interactive map-based visualisation | Develop (Core functionality) | | Armaan |
+| F1 | Highlighting Heritage and cultural sites on a map. | Develop (Core functionality) | Completed | Yi & Karlie
+| F2 | Readable text in a large easy to see font | Develop (Core functionality) | Completed | Yi |
+| F3 | Colour blind modes | Part-develop (Enhanced functionality) | Completed | Arsam |
+| F4 | Interactive map-based visualisation | Develop (Core functionality) | Completed | Armaan |
 | F5 | Visual environmental simulation tool with additional text description | Develop (Core functionality) | Completed | Jocelyn |
 | F6 | High contrast UI. | Develop (Core functionality) | Completed | Karlie |
 | F7 | Magnification capability. | Develop (Core functionality) | Completed | Karlie |
-| F8 | Keyboard accessibility. | Develop (Core functionality) | | Armaan |
-| F9 | Area filtering tool. | Part-develop (Enhanced functionality) | | Issac |
-| F10 | Offline functionalities. | Part-develop (Enhanced functionality) | | Issac |
+| F8 | Keyboard accessibility. | Develop (Core functionality) | Completed | Armaan |
+| F9 | Area filtering tool. | Part-develop (Enhanced functionality) | Completed | Issac |
+| F10 | Offline functionalities. | Part-develop (Enhanced functionality) | Not Completed | May not be done, left to last. |
 | F11 | Text to Speech tool. | Develop (Core functionality) | Completed | Jocelyn |
-| F12 | Path routing. | Part-develop (Enhanced functionality) | | Esther |
-| F13 | User input on accessibility of areas. | Part-develop (Enhanced functionality) | | Arsam |
-| F14 | Reward system for user input | Part-develop (Enhanced functionality) | | Arsam |
-| F15 | Additional resources for areas. | Excluded from first prototype (Future development) | |May not be done, left to last. |
-| F16 | Interactive snapshot of visualisation map / simulation dynamic to user’s filter and selected choices. | Part-develop (Enhanced functionality) | | May not be done, left to last. |
+| F12 | Path routing. | Part-develop (Enhanced functionality) | Completed | Esther |
+| F13 | User input on accessibility of areas. | Part-develop (Enhanced functionality) | Completed | Arsam |
+| F14 | Reward system for user input | Part-develop (Enhanced functionality) | Not completed | May not be done, left to last. |
+| F15 | Additional resources for areas. | Excluded from first prototype (Future development) | Not Completed |May not be done, left to last. |
+| F16 | Interactive snapshot of visualisation map / simulation dynamic to user’s filter and selected choices. | Part-develop (Enhanced functionality) | Completed | Isaac |
+
+In terms of text to speech, this was not done for colour blind modes and user feedback forms as these features were integrated too late for the TTS to be applied.
 
 ### Additions to our original feature list:
 - Site Status Overlay (Karlie) : A risk overlay that fetches heritage site status (visitor pressure, weather condition, risk level) from a Spring Boot REST API supported by PostgreSQL, displaying red/amber/green circles on the map to show at-risk sites. Built as an extension of F-1.
+
+## Test plan:
+Our test plan is found in this document:
+https://docs.google.com/document/d/1uayuSvuXrsjj2sE6vIspbjBfYhKkpXGeEHkP5162zcg/edit?usp=sharing
 
 ## Unit Testing:
 Our unit testing is found in this document: 

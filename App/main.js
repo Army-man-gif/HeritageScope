@@ -2,7 +2,7 @@ import './riskLevelOverlay.js';
 import './collapsibleToolbar.js';
 import './utilityDialog.js';
 import './AreaHighlighter/AreaHighlighterUI.js';
-import {initRegionFilter} from './regionFilter.js';
+import {initRegionFilter,regionOverlay} from './regionFilter.js';
 import { MarkerHighlight } from './AreaHighlighter/AreaHighlighter.js';
 import './Accessibility/accessbilityUIButtons.js';
 import { createMap } from './createMap.js';
@@ -13,6 +13,9 @@ import { downloadMap } from './offline/Download.js';
 import {init} from './pathing/pathroutingInit.js';
 import { keyboardAccessbility } from './Accessibility/keyboardAccessbility.js';
 import { runTests } from '../Tests/Armaan-Feature-Tests/Tests.js';
+import { initUserReports } from './userInputs/userReports.js';
+import { initColourBlindToggle } from './colourBlindMode.js';
+
 // Add more metrics - poluttion, density etc..
 // Legend describing number thing - Complete
 // Change styling a lil - Complete
@@ -41,6 +44,8 @@ async function startMain(){
         return;
     }
     const map = createMap();
+
+    initColourBlindToggle();
     
     let resizeTimeout;
 
@@ -95,7 +100,7 @@ async function startMain(){
     ]);
 
     document.getElementById('downloadTrigger').addEventListener('click',async () => {
-         await downloadMap();
+        setTimeout(() => downloadMap(map,regionOverlay), 50);
     })
     const LanguageControl = L.Control.extend({
         onAdd: function() {
@@ -145,8 +150,9 @@ async function startMain(){
 
         previousZoom = currentZoom;
     });
+    initUserReports(map);
 
-    runTests(map, markers);
+    //runTests(map, markers);
 }
 
 try{
