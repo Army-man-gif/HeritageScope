@@ -88,7 +88,7 @@ Initial build complete! Watching for changes...
 | F6 | High contrast UI. | Develop (Core functionality) | Completed | Karlie |
 | F7 | Magnification capability. | Develop (Core functionality) | Completed | Karlie |
 | F8 | Keyboard accessibility. | Develop (Core functionality) | Completed | Armaan |
-| F9 | Area filtering tool. | Part-develop (Enhanced functionality) | Part-completed | Issac |
+| F9 | Area filtering tool. | Part-develop (Enhanced functionality) | Completed | Issac |
 | F10 | Offline functionalities. | Part-develop (Enhanced functionality) | Not Completed | May not be done, left to last. |
 | F11 | Text to Speech tool. | Develop (Core functionality) | Completed | Jocelyn |
 | F12 | Path routing. | Part-develop (Enhanced functionality) | Completed | Esther |
@@ -96,6 +96,8 @@ Initial build complete! Watching for changes...
 | F14 | Reward system for user input | Part-develop (Enhanced functionality) | Not completed | May not be done, left to last. |
 | F15 | Additional resources for areas. | Excluded from first prototype (Future development) | Not Completed |May not be done, left to last. |
 | F16 | Interactive snapshot of visualisation map / simulation dynamic to user’s filter and selected choices. | Part-develop (Enhanced functionality) | Completed | Isaac |
+
+In terms of text to speech, this was not done for colour blind modes and user feedback forms as these features were integrated too late for the TTS to be applied.
 
 ### Additions to our original feature list:
 - Site Status Overlay (Karlie) : A risk overlay that fetches heritage site status (visitor pressure, weather condition, risk level) from a Spring Boot REST API supported by PostgreSQL, displaying red/amber/green circles on the map to show at-risk sites. Built as an extension of F-1.
