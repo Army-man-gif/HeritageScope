@@ -54,6 +54,17 @@ HeritageScope is an interactive web app that promotes the protection of cultural
 
 - **Deployed backend note:** We currently have a deployed backend at `http://217.154.38.248:8080/` (backend only). The frontend is not hosted on that server, so please run the frontend locally.
 
+### Area Highlight API configuration
+- Edit this function directly:
+  - `App/AreaHighlighter/AreaHighlighter.js`
+  - `resolveAreaApiBase()`
+- Change the final fallback line in that function:
+  - Current: `return 'http://217.154.38.248:8080/api/areas';`
+  - Local backend example: `return 'http://localhost:8080/api/areas';`
+- Controller endpoints remain the same (no API contract changes):
+  - `GET /api/areas/{id}`
+  - `GET /api/areas/by-marker?latitude=...&longitude=...`
+
 ## Instructions before making any changes to the code:
 ### 1. If you don't have node.js installed
 - Go to this link: https://nodejs.org/en/download
