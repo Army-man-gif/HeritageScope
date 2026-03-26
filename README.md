@@ -1,6 +1,17 @@
 # HeritageScope
 HeritageScope is an interactive web app that promotes the protection of cultural and natural heritage (SDG 11.4) through mapping and environmental impact simulation. It raises awareness of at-risk sites while encouraging responsible visitor behaviour. The platform also improves accessibility with wheelchair-friendly routing, accessible facility mapping, and inclusive design features (SDG 11.2, 11.7).
 
+## Quick Start (No VSCode Needed)
+- 1. Download this repository and unzip it.
+- 2. Open terminal in the project root folder (`digital-dream-team`).
+- 3. Start a local static server from the root (example):
+  - `npx serve .`
+- 4. In terminal output, use the **Local** URL shown by the server (example: `http://localhost:55506`).
+- 5. Open the app with this path:
+  - `http://localhost:55506/App/Map.html`
+  - Replace the port with the one shown in your own terminal.
+- 6. If the terminal says a different port was picked (for example, 3000 is in use), this is expected. Always use the printed **Local** URL.
+
 ## Libraries or requirements required to run it:
 - Java 17 or above
 - PostgreSQL 16
