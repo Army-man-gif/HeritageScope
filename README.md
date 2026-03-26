@@ -21,6 +21,13 @@ HeritageScope is an interactive web app that promotes the protection of cultural
 - Leaflet.markercluster 1.4.1 (loaded via CDN)
 - Spring Boot 3.5.11
 - Spring Data JPA ＋ Hibernate
+- Leaflet Routing Machine (required for walking route generation via L.Routing.control /OSRM)
+- html2canvas (required for downloadMap() snapshot feature)
+
+## External Services (requires internat access):
+- OpenRouteService (ORS) API (Wheelchair routing)
+- Overpass API (accessible facility markers)
+- Nomiatim (geocoding destination text)
 
 ## Instructions on how to download and run the project:
 * **Note:** On Windows, if the path seperator causes issues, replace **`/`** with **`\`** in the file path
