@@ -64,9 +64,9 @@ HeritageScope is an interactive web app that promotes the protection of cultural
   mvnw.cmd spring-boot:run"
   for windows/command prompt runs
 
-- **Deployed backend note:** We currently have a deployed backend at `http://217.154.38.248:8080/` (backend only). The frontend is not hosted on that server, so please run the frontend locally.
+- **Deployed backend note:** We currently have a deployed backend at `http://217.154.38.248:8080/` (backend only). The frontend is not hosted on that server, so please run the frontend locally. To use this deployed back end you NEED to follow the Area Highlight API configuration below.
 
-## Area Highlight API configuration
+### Area Highlight API configuration (for delpoyed backend)
 - Edit this function directly:
   - `App/AreaHighlighter/AreaHighlighter.js`
   - `resolveAreaApiBase()`
