@@ -38,12 +38,34 @@
    → backslash form). This is a documented environment quirk, not a code
    bug.
 
-6. **External API keys/credentials are not committed.**
-   ORS, Overpass, Nominatim, AirVisual, and API Ninjas are called from
-   client-side JS (`App/metrics/metrics.js`, `App/pathing/*`,
-   `App/AreaHighlighter/*`). Any API key used must not be committed to the
-   repo; check `.gitignore` coverage before adding new client-side
-   integrations that require a key.
+6. **External API keys/credentials must not be committed — currently VIOLATED, treat as urgent.**
+   Full audit (2026-09-22, [audit/AUDIT.md](../audit/AUDIT.md)) confirmed
+   three live API keys hardcoded in committed, publicly-served client JS:
+   AirVisual + API Ninjas keys in `App/metrics/metrics.js`, and an
+   OpenRouteService key in `App/pathing/pathrouting.js`. These are
+   visible to anyone viewing source on the now-public GitHub repo and
+   must be treated as already compromised. Do not add further keys this
+   way — proxy external API calls through the Spring Boot backend
+   instead, reading the key from `application.properties`/env vars
+   server-side. Rotating the existing three keys and building the proxy
+   is tracked as priority #1 in the audit's recommendations (§9).
+
+7. **Never insert user-submitted content into the DOM via `innerHTML` without escaping.**
+   Audit confirmed a stored-XSS vulnerability: `App/userInputs/userReports.js`'s
+   `loadReports()` concatenates report `category`/`severity`/`description`/
+   `affectedGroups` (all user-submitted, no server-side content
+   sanitization beyond length/range checks in `ReportValidator`) directly
+   into `innerHTML`. Any new code that renders user-submitted or
+   backend-sourced report/comment data must use `textContent` or an
+   explicit sanitizer — never raw `innerHTML` string concatenation.
+
+8. **Database credentials must come from `application.properties`/env vars, never hardcoded in Java source.**
+   `Backend/.../DatabaseConnection.java` currently hardcodes
+   `postgres`/`password123` (and doesn't even match
+   `application.properties`'s `password` — see
+   [known-problems.md](known-problems.md) #8). Any new raw-JDBC code
+   (or its replacement, once `ReportRepository` is migrated to JPA) must
+   source credentials the same way Spring's JPA datasource does.
 
 ## Not Yet Established
 No CSS/layout invariants have been discovered as load-bearing yet (no bug

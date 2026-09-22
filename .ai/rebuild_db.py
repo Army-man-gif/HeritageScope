@@ -125,6 +125,7 @@ FILES = [
     ("Backend/heritagescope/src/main/resources/application.properties", "backend-config", "Spring datasource + JPA config, ddl-auto=update", "backend,database,constraint"),
     ("Database/heritagescope_dump.sql", "database", "Full schema + seed data for heritagescope PostgreSQL db", "database"),
     ("Temp-python-backend/server.py", "backend-mock", "Mock area-highlight API backend, no DB, for frontend-only dev", "backend,mock,area-highlighter"),
+    ("audit/AUDIT.md", "audit", "Full project audit (2026-09-22): backend/frontend/database/security/dead-code findings and prioritised augmentation roadmap", "audit,security,roadmap"),
 ]
 
 DEPENDENCIES = [
@@ -162,7 +163,9 @@ CONSTRAINTS = [
     ("resolveAreaApiBase() is the single switch point for backend host", "In App/AreaHighlighter/AreaHighlighter.js; don't hardcode the backend URL elsewhere.", "hard", "constraints.md"),
     ("spring.jpa.hibernate.ddl-auto=update is active", "Entity field changes auto-alter the live PostgreSQL schema on backend startup, no migration review step.", "hard", "constraints.md"),
     ("Windows path separators", "Replace / with \\ in documented paths on Windows when needed; documented environment quirk not a bug.", "soft", "constraints.md"),
-    ("External API keys must not be committed", "ORS, Overpass, Nominatim, AirVisual, API Ninjas keys used client-side; verify .gitignore coverage before adding new key-based integrations.", "hard", "constraints.md"),
+    ("External API keys must not be committed — currently VIOLATED", "3 live keys (AirVisual, API Ninjas, ORS) hardcoded in committed client JS (metrics.js, pathrouting.js), now on a public GitHub repo, treat as compromised. Proxy external calls through the backend instead.", "hard", "constraints.md"),
+    ("Never insert user-submitted content into the DOM via innerHTML without escaping", "Stored XSS confirmed in userReports.js loadReports() — report fields concatenated into innerHTML unescaped. Use textContent or a sanitizer for any user-submitted or backend-sourced content.", "hard", "constraints.md"),
+    ("Database credentials must come from application.properties/env vars, never hardcoded in Java source", "DatabaseConnection.java hardcodes postgres/password123, mismatched with application.properties's password. Any raw-JDBC or its JPA replacement must source credentials the same way Spring's datasource does.", "hard", "constraints.md"),
 ]
 
 DECISIONS = [
@@ -175,6 +178,14 @@ KNOWN_PROBLEMS = [
     ("No unified test suite", "Tests/ is split per-contributor rather than conventional structure; separate Spring Boot smoke test exists. No single 'run all tests' command.", "testing", "known-problems.md"),
     ("Large binary/generated assets committed to git", "App/bundle.js (~23MB), bundle.js.map (~26MB), dataset.geojson (~23MB) all committed, bloating clone size.", "frontend", "known-problems.md"),
     ("App/.watcher-lock file present", "buildandTrack.js's watcher may not always clean up its lock file on exit; check/remove if npm run track refuses to start.", "frontend-tooling", "known-problems.md"),
+    ("siteStatusOverlay.js crashes when site_status is empty", "statusCircles[0].getBounds() called unconditionally; site_status has zero seed rows in the dump, so this throws on first use of Show At-Risk Sites.", "frontend,backend", "known-problems.md"),
+    ("blindUserHooks referenced but never defined", "pathroutingInit.js:62 calls blindUserHooks.onSearchError() on failed geocode search; not defined anywhere in the repo, throws ReferenceError.", "frontend,pathing", "known-problems.md"),
+    ("Two backend persistence strategies coexist", "AreaPolygon/SiteStatus use JPA; Reporting/UserReport use hand-written JDBC via DatabaseConnection.getConnection(), unpooled, duplicated credentials.", "backend", "known-problems.md"),
+    ("Backend-URL resolution inconsistent across frontend modules", "Only AreaHighlighter.js's resolveAreaApiBase() resolves the backend host correctly; siteStatusOverlay.js and userReports.js hardcode localhost:8080.", "frontend", "known-problems.md"),
+    ("UserReportController CORS origin likely blocks real usage", "Locked to http://127.0.0.1:5500 only, unlike sibling controllers' origins=\"*\"; blocks report submission from most real setups.", "backend", "known-problems.md"),
+    ("Comment.java is orphaned", "Plain POJO, no controller/repository/JPA annotations; only touched by UserReport.addComment() which nothing calls.", "backend", "known-problems.md"),
+    ("Dead duplicate frontend modules", "App/userInputs/userInputs.js and testReports.js are not imported by any HTML/JS file in the repo.", "frontend", "known-problems.md"),
+    ("Geocoding hardcoded to Birmingham, UK bounding box", "pathrouting.js's geocode() passes countrycodes=gb&viewbox=... to Nominatim; destinations outside that box won't be found.", "frontend,pathing", "known-problems.md"),
 ]
 
 VERIFICATION_RULES = [

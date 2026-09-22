@@ -1,5 +1,47 @@
 # Handoff
 
+## What Was Just Done (2026-09-22, full audit)
+**Task:** Full repository audit (backend, frontend, database, every
+feature, build/test setup) to inform project augmentation, written to
+`audit/AUDIT.md`, then folded into the context system.
+
+**Completed:**
+- Read all 18 backend files (100% of `src/main`), 24+ frontend JS/config
+  files, the full database dump, and build tooling. Did not read
+  `App/bundle.js`/`.js.map` (generated, 23-26MB) or `App/dataset.geojson`
+  (23MB data) in full — see AUDIT.md appendix for exactly what was and
+  wasn't read and why.
+- Wrote `audit/AUDIT.md` — exec summary, system map, per-subsystem
+  audits, ranked security findings, build/test/tooling audit, dead-code
+  inventory, prioritised recommendations, explicit "don't touch" list.
+- Folded findings into `known-problems.md` (#6-13) and `constraints.md`
+  (#6-8) — see those files for the durable version of each finding.
+- Ran `python .ai/rebuild_db.py` to re-index the new constraints/known
+  problems into `.ai/knowledge.db` (structured data changed, so a full
+  rebuild was used, not `sync_context.py`).
+
+**Important discoveries (full detail in audit/AUDIT.md):**
+- 🔴 3 hardcoded API keys in committed client JS (AirVisual, API Ninjas,
+  ORS) — now on a public GitHub repo, treat as compromised.
+- 🔴 Stored XSS in `userReports.js`'s report list rendering.
+- 🟠 Hardcoded, mismatched DB credentials in `DatabaseConnection.java`.
+- 🟠 No auth/rate-limiting on report submit/upvote endpoints.
+- Real bugs: `siteStatusOverlay.js` crashes on empty `site_status` data
+  (which is the actual current DB state), undefined `blindUserHooks`
+  reference in `pathroutingInit.js`.
+- Dead code: `App/userInputs/userInputs.js`, `testReports.js`,
+  orphaned `Comment.java`.
+- Systemic inconsistency: only `AreaHighlighter` resolves the backend
+  host correctly; `siteStatusOverlay.js` and `userReports.js` hardcode
+  `localhost:8080`.
+- Two coexisting backend persistence strategies (JPA vs raw JDBC).
+
+**Next recommended step:** Work through `audit/AUDIT.md` §9's
+"Do immediately" list first (API key rotation + backend proxy, XSS fix,
+DB credential fix, empty-data crash guard, dead `blindUserHooks` call,
+delete dead files) before adding new features on top of the affected
+modules.
+
 ## What Was Just Done (2026-09-22, later same day)
 **Task:** Migrate remote from university GitLab to owner's personal
 GitHub repo (`https://github.com/Army-man-gif/HeritageScope.git`), then
